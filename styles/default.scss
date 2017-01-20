@@ -1,0 +1,50 @@
+.q-election {
+	&-update,
+	&-item {
+		margin-bottom: 10px;
+
+		&-party {
+			float:left;
+			width: 15%;
+		}
+
+		&-current,
+		&-previous {
+			float: left;
+			width: 10%;
+		}
+
+		&-bar {
+			clear: left;
+			height: 20px;
+
+		/*	&--dots {
+				background: url(<add url>);
+				height: 100%;
+				width: 100%;
+				z-index: 1
+			}*/
+		}
+	}
+
+	&-threshold {
+		&-line,
+		&-caption-symbol {
+			position: absolute;
+			width: 1px;
+			height: 20px;
+			border-right-color: #000;
+			border-right-style: dotted;
+			border-right-width: 1px;
+		}
+	}
+
+		&-caption-desc {
+			margin-left: 10px;
+			line-height: 20px; 
+		}
+
+	&-sources {
+		margin-top: 5px;
+	}
+}

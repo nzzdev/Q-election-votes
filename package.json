@@ -1,0 +1,28 @@
+{
+  "name": "q-elections-votes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzzdev/Q-elections-votes.git"
+  },
+  "author": "sharon.funke@nzz.ch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nzzdev/Q-elections-votes/issues"
+  },
+  "homepage": "https://github.com/nzzdev/Q-elections-votes#readme",
+  "dependencies": {
+    "enjoi": "^2.1.0",
+    "hapi": "^16.1.0",
+    "hoek": "^4.1.0",
+    "inert": "^4.1.0",
+    "json-schema-faker": "^0.4.0",
+    "node-sass": "^4.3.0",
+    "svelte": "^1.6.3"
+  }
+}
