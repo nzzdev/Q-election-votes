@@ -17,13 +17,9 @@ before_script:
 script:
 - npm test
 - docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .
-#after_success:
-#- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG
-#  nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
-#- if [ "$TRAVIS_BRANCH" == "staging" ]; then docker run --rm -it -e RANCHER_URL -e CATTLE_ACCESS_KEY
-#  -e CATTLE_SECRET_KEY etlweather/gaucho upgrade $RANCHER_SERVICE_ID_STAGING --auto_complete
-#  --start_first --imageUuid="docker:nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG" || true;
-#  fi
 cache:
   directories:
   - node_modules
+notifications:
+  slack:
+    secure: YuiwAADTb4oWIrcizzHSS2TSSP3hR2mdjjrNVIp9VqMh+EBsDCw39aiHpG6W5GaLR1HWV+1Zlqy0PmwNnVCTczJCcevT1ESZDWbsqM9N9VnMeKPW2LOH9M+yBrKUGnouGTxy9EFhC7oTcpBKvuTWk7LIGCNv1/idYLUgc7+m3JHXTkconyxqZ7QCs2jGq9aKMfGgYq5vHHZRT3ri/0lMy7bK0rjJILNASPiV1USmxNzkX/h9oXhTygnpVLFzxDFtPPxH9bZ+bOVKaHY6G46GyLHRpckxePHO+9pCwy0ZiWA9K2QGOUAnbpPmQYlBcimeWuPvcRF+9IL/u6d/oUfsvUAyhrsLXiiT6NMW7yM+dIT21CDWik7Dcmw9EKnntnIfdRMikWRH2QIu70Bv/pKnTZdw3M5Ngl8WX0T5gsGZxs+qYBrWimlDINqpPZHYB65tcasVf0jL5WnWAxAG8U9nX0G3MUTH9gdD+Pc2iKapMPQmKhYIxN6sivEmLuhy0JtIUqrGPTwNA6zlufxXdC0NYaYMUU71VEYW1bpuPFgeS3qmMHH5K9Cr9x2GODbLzxZSuBJLoDz+on/rfJE6Nq1lLKIeFlxZMmvBP1g70o7a4HpFYsc4lu8c5QeryLo9hTCm/E4pASgmsPZLhSlFJ7fBvQxyaJbvUEWOMvv28+a6ZL4=
