@@ -54,7 +54,8 @@
 					"type": "array",
           "Q:default": {
             "type": "value-depending",
-            "key": "data/parliament"
+            "key": "parliament:data/parliament",
+            "path": "data/parties?parliament={parliament}"
           },
 					"items": {
 						"type": "object",
