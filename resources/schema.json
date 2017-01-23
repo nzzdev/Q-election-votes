@@ -43,8 +43,19 @@
         "intermediate": {
           "type": "boolean"
         },
+        "parliament": {
+          "type": "string",
+          "Q:enum": {
+            "type": "remote",
+            "path": "/data/parliaments"
+          }
+        },
 				"parties": {
 					"type": "array",
+          "Q:default": {
+            "type": "value-depending",
+            "key": "data/parliament"
+          },
 					"items": {
 						"type": "object",
 						"properties": {
