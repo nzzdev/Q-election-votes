@@ -42,7 +42,7 @@ describe('Q required API', () => {
 
 });
 
-const mockData = require('./resources/mock-data.js');
+const mockData = JSON.parse(JSON.stringify(require('./resources/mock-data.js')));
 
 describe('rendering-info endpoints', () => {
   

@@ -1,5 +1,8 @@
 .q-election {
-	&-update,
+	&-update {
+		margin-bottom: 10px;
+	}
+
 	&-item {
 		margin-bottom: 10px;
 
@@ -18,7 +21,7 @@
 			clear: left;
 			height: 20px;
 
-		/*	&--dots {
+		/*	&--dotted {
 				background: url(<add url>);
 				height: 100%;
 				width: 100%;

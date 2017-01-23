@@ -9,6 +9,7 @@ module.exports = {
 		}],
 	data: {
 		subtitle: "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+		intermediate: "true",
 		threshold: "5",
 		parties: [
 			{
