@@ -18,7 +18,7 @@ server.register(plugins, err => {
 });
 
 describe('Q required API', () => {
-  
+
   it('should return 200 for /schema.json', function(done) {
     server.inject('/schema.json', (res) => {
       expect(res.statusCode).to.be.equal(200);
@@ -45,12 +45,12 @@ describe('Q required API', () => {
 const mockData = JSON.parse(JSON.stringify(require('./resources/mock-data.js')));
 
 describe('rendering-info endpoints', () => {
-  
+
   it('should return 200 for /rendering-info/html-static', function(done) {
     const request = {
       method: 'POST',
       url: '/rendering-info/html-static',
-      payload: JSON.stringify({item: mockData})
+      payload: JSON.stringify({ item: mockData })
     };
     server.inject(request, (res) => {
       expect(res.statusCode).to.be.equal(200);

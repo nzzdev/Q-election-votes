@@ -1,95 +1,96 @@
 <div class="q-item-container">
-	<h3 class="s-q-item__title">{{title}}</h3>
-	<div class="q-election-update s-font-note-s">Update {{updateInfo}}</div>
-	<!-- TODO: has to be aligned correctly and show png with dots - will be done if design final -->
-	{{#if data.intermediate}}
-	<div class="q-election-intermediate s-font-note-s">Zwischenergebnis</div>
-	{{/if}} {{#if data.subtitle}}
-	<div class="q-election-subtitle s-font-note-s">{{data.subtitle}}</div>
-	{{/if}}
-	<div class="q-election">
-		{{#each data.parties as party}}
-		<div class="q-election-item">
-			<div class="q-election-item-info">
-				<div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
-				<div class="s-font-note-s q-election-item-current">{{party.percentage}}%</div>
-				<div class="s-font-note-s q-election-item-previous">{{party.percentage - party.previous}}%</div>
-			</div>
-			<div class="{{barCssClass}}" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"> 
-				{{#if data.threshold}}
-				<div class="q-election-threshold-line" style="left: {{(data.threshold * 100) / maxResult}}%"></div>
-				{{/if}}
-			</div>
-		</div>
-		{{/each}}
-	</div>
-	<div class="q-election-footer">
-		<div class="q-election-caption">
-			{{#if data.threshold}}
-			<div class="q-election-threshold-caption-symbol"></div>
-			<div class="q-election-threshold-caption-desc s-font-note-s">{{data.threshold}} Prozent Hürde</div>
-			{{/if}}
-		</div>
-		{{#if data.notes}}
-		<div class="q-election-notes">{{data.notes}}</div>
-		{{/if}} 
-		{{#if sources.length > 0}}
-		<div class="q-election-sources s-font-note-s">
-			{{#if sources.length > 1}}
-				Quellen:
-			{{else}}
-				Quelle:
-			{{/if}}
-			{{#each sources as source, index}}
-				<!-- 	If you separate DOM siblings with newlines whitespaces cannot be removed by svelte renderer
-							To avoid unwanted whitespaces around commas separating each source, we keep render infos for sources at one line here.
-							See also: https://github.com/sveltejs/svelte/issues/189  -->
-				{{#if source.text !== ''}}{{#if source.validHref}}<a href="{{source.href}}" target="blank" rel="noopener noreferrer">{{source.text}}</a>{{else}}{{source.text}}{{/if}}{{#if index !== sources.length - 1 && sources[index + 1] !== ''}}, {{/if}}{{/if}}
-			{{/each}}
-		</div>
-		{{/if}}
-	</div>
+  <h3 class="s-q-item__title">{{title}}</h3>
+  <div class="q-election-update s-font-note-s">Update {{updateInfo}}</div>
+  <!-- TODO: has to be aligned correctly and show png with dots - will be done if design final -->
+  {{#if data.intermediate}}
+    <div class="q-election-intermediate s-font-note-s">Zwischenergebnis</div>
+  {{/if}} 
+  {{#if data.subtitle}}
+    <div class="q-election-subtitle s-font-note-s">{{data.subtitle}}</div>
+  {{/if}}
+  <div class="q-election">
+    {{#each data.parties as party}}
+      <div class="q-election-item">
+        <div class="q-election-item-info">
+          <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
+          <div class="s-font-note-s q-election-item-current">{{party.percentage}}%</div>
+          <div class="s-font-note-s q-election-item-previous">{{party.percentage - party.previous}}%</div>
+        </div>
+        <div class="{{barCssClass}}" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"> 
+          {{#if data.threshold}}
+            <div class="q-election-threshold-line" style="left: {{(data.threshold * 100) / maxResult}}%"></div>
+          {{/if}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="q-election-footer">
+    <div class="q-election-caption">
+      {{#if data.threshold}}
+        <div class="q-election-threshold-caption-symbol"></div>
+        <div class="q-election-threshold-caption-desc s-font-note-s">{{data.threshold}} Prozent Hürde</div>
+      {{/if}}
+    </div>
+    {{#if data.notes}}
+    <div class="q-election-notes">{{data.notes}}</div>
+    {{/if}} 
+      {{#if sources.length > 0}}
+        <div class="q-election-sources s-font-note-s">
+          {{#if sources.length > 1}} 
+            Quellen: 
+          {{else}} 
+            Quelle: 
+          {{/if}} 
+          {{#each sources as source, index}}
+            <!-- 	If you separate DOM siblings with newlines whitespaces cannot be removed by svelte renderer
+                  To avoid unwanted whitespaces around commas separating each source, we keep render infos for sources at one line here.
+                  See also: https://github.com/sveltejs/svelte/issues/189  -->
+            {{#if source.text !== ''}}{{#if source.validHref}}<a href="{{source.href}}" target="blank" rel="noopener noreferrer">{{source.text}}</a>{{else}}{{source.text}}{{/if}}{{#if index !== sources.length - 1 && sources[index + 1] !== ''}}, {{/if}}{{/if}} 
+          {{/each}}
+        </div>
+      {{/if}}
+  </div>
 </div>
 
 <script>
-	 export default {
-		computed: {
-			maxResult: (data) => {
-				let parties = data.parties;
-				let maxResult = 0;
-				parties.forEach((party) => {
-					if (party.percentage > maxResult) {
-						maxResult = party.percentage;
-					}
-				})
-				return maxResult;
-			},
-			updateInfo: (updatedDate) => {
-				let updated = new Date(updatedDate);
-				if (updated.getTime()) {
-					let now = new Date();
-					let diff = now.getTime() + now.getTimezoneOffset() - updated.getTime(); // "updated" of q item already in UTC => "now" has to be normalized with timezone offset
-					let diffMinutes = Math.floor(diff / (1000 * 60));
-					if (diffMinutes < 60) { // update less than an hour ago
-						return `vor ${diffMinutes} Minute${diffMinutes > 1 || diffMinutes === 0 ? 'n' : ''}`;
-					} else if (diffMinutes < 60 * 24) { // update less than a day ago
-						let hours = Math.floor(diffMinutes / 60);
-						return `vor ${hours} Stunde${hours > 1 || hours === 0 ? 'n' : ''}`;
-					} else if (diffMinutes > 7 * 60 * 24) { // update more than 7 days ago -> show date
-						return `am ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-					} else {
-						let days = Math.floor(diffMinutes / (60 * 24));
-						return `vor ${days} Tag${days > 1 || days === 0 ? 'en' : ''}`;
-					}
-				}
-			},
-			barCssClass: (data) => {
-				if (data.intermediate) {
-					return 'q-election-item-bar q-election-item-bar--dotted';
-				} else {
-					return 'q-election-item-bar';
-				}
-			}
-		}
-	};
+  export default {
+    computed: {
+      maxResult: (data) => {
+        let parties = data.parties;
+        let maxResult = 0;
+        parties.forEach((party) => {
+          if (party.percentage > maxResult) {
+            maxResult = party.percentage;
+          }
+        })
+        return maxResult;
+      },
+      updateInfo: (updatedDate) => {
+        let updated = new Date(updatedDate);
+        if (updated.getTime()) {
+          let now = new Date();
+          let diff = now.getTime() + now.getTimezoneOffset() - updated.getTime(); // "updated" of q item already in UTC => "now" has to be normalized with timezone offset
+          let diffMinutes = Math.floor(diff / (1000 * 60));
+          if (diffMinutes < 60) { // update less than an hour ago
+            return `vor ${diffMinutes} Minute${diffMinutes > 1 || diffMinutes === 0 ? 'n' : ''}`;
+          } else if (diffMinutes < 60 * 24) { // update less than a day ago
+            let hours = Math.floor(diffMinutes / 60);
+            return `vor ${hours} Stunde${hours > 1 || hours === 0 ? 'n' : ''}`;
+          } else if (diffMinutes > 7 * 60 * 24) { // update more than 7 days ago -> show date
+            return `am ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+          } else {
+            let days = Math.floor(diffMinutes / (60 * 24));
+            return `vor ${days} Tag${days > 1 || days === 0 ? 'en' : ''}`;
+          }
+        }
+      },
+      barCssClass: (data) => {
+        if (data.intermediate) {
+          return 'q-election-item-bar q-election-item-bar--dotted';
+        } else {
+          return 'q-election-item-bar';
+        }
+      }
+    }
+  };
 </script>

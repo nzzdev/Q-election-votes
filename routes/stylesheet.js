@@ -18,7 +18,7 @@ module.exports = {
         {
           file: filePath,
           outputStyle: 'compressed'
-        }, 
+        },
         (err, result) => {
           if (err) {
             reply(Boom.badImplementation(err));

@@ -5,6 +5,9 @@
     "title": {
       "type": "string"
     },
+    "subtitle": {
+      "type": "string"
+    },
     "annotations": {
       "type": "string"
     },
@@ -31,9 +34,6 @@
     "data": {
 			"type": "object",
 			"properties": {
-        "subtitle": {
-          "type": "string"
-        },
         "notes" : {
           "type": "string"
         },
