@@ -1,5 +1,4 @@
 module.exports = {
-  updatedDate: "2017-01-20T13:00:25.978Z",
   title: "Stimmanteile Parlament",
   subtitle: "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
   sources: [
