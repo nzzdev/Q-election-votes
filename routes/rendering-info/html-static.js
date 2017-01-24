@@ -11,6 +11,7 @@ const schema = Enjoi(schemaString);
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'html-static.html');
 
+// TODO: add updated date as query param
 module.exports = {
   method: 'POST',
   path: '/rendering-info/html-static',

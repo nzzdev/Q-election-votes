@@ -11,14 +11,11 @@
     "annotations": {
       "type": "string"
     },
-    "updatedDate": {
-      "type": "string"
-    },
     "intermediate": {
       "type": "boolean"
     },
     "threshold": {
-      "type": "string"
+      "type": "number"
     },
     "parties": {
       "type": "array",
