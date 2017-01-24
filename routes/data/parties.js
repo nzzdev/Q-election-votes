@@ -1,5 +1,10 @@
 const Joi = require('joi');
-const parliaments = JSON.parse(process.env.PARLIAMENTS).parliaments;
+const Boom = require('boom');
+
+var parliaments = [];
+if (process.env.PARLIAMENTS !== undefined) {
+  parliaments = JSON.parse(process.env.PARLIAMENTS).parliaments;
+}
 
 module.exports = {
   method: 'GET',
