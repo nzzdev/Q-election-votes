@@ -14,6 +14,35 @@
     "updatedDate": {
       "type": "string"
     },
+    "intermediate": {
+      "type": "boolean"
+    },
+    "threshold": {
+      "type": "string"
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "colour": {
+            "type": "string"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "previous": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
     "sources": {
       "type": "array",
       "items": {
@@ -30,44 +59,9 @@
           }
         }
       }
-    },
-    "data": {
-			"type": "object",
-			"properties": {
-        "notes" : {
-          "type": "string"
-        },
-				"threshold": {
-					"type": "string"
-				},
-        "intermediate": {
-          "type": "boolean"
-        },
-				"parties": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string"
-							},
-              "colour": {
-                "type": "string"
-              },
-							"percentage": {
-								"type": "number"
-							},
-							"previous": {
-								"type": "number"
-							}
-						}
-					}
-				}
-			}
-		}
+    }
   },
   "required": [
-    "title",
-    "data"
+    "title"
   ]
 }

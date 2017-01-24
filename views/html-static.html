@@ -2,14 +2,14 @@
   <h3 class="s-q-item__title">{{title}}</h3>
   <div class="q-election-update s-font-note-s">Update {{updateInfo}}</div>
   <!-- TODO: has to be aligned correctly and show png with dots - will be done if design final -->
-  {{#if data.intermediate}}
+  {{#if intermediate}}
     <div class="q-election-intermediate s-font-note-s">Zwischenergebnis</div>
   {{/if}} 
-  {{#if data.subtitle}}
-    <div class="q-election-subtitle s-font-note-s">{{data.subtitle}}</div>
+  {{#if subtitle}}
+    <div class="q-election-subtitle s-font-note-s">{{subtitle}}</div>
   {{/if}}
   <div class="q-election">
-    {{#each data.parties as party}}
+    {{#each parties as party}}
       <div class="q-election-item">
         <div class="q-election-item-info">
           <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
@@ -17,8 +17,8 @@
           <div class="s-font-note-s q-election-item-previous">{{party.percentage - party.previous}}%</div>
         </div>
         <div class="{{barCssClass}}" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"> 
-          {{#if data.threshold}}
-            <div class="q-election-threshold-line" style="left: {{(data.threshold * 100) / maxResult}}%"></div>
+          {{#if threshold}}
+            <div class="q-election-threshold-line" style="left: {{(threshold * 100) / maxResult}}%"></div>
           {{/if}}
         </div>
       </div>
@@ -26,13 +26,13 @@
   </div>
   <div class="q-election-footer">
     <div class="q-election-caption">
-      {{#if data.threshold}}
+      {{#if threshold}}
         <div class="q-election-threshold-caption-symbol"></div>
-        <div class="q-election-threshold-caption-desc s-font-note-s">{{data.threshold}} Prozent Hürde</div>
+        <div class="q-election-threshold-caption-desc s-font-note-s">{{threshold}} Prozent Hürde</div>
       {{/if}}
     </div>
-    {{#if data.notes}}
-    <div class="q-election-notes">{{data.notes}}</div>
+    {{#if notes}}
+    <div class="q-election-notes">{{notes}}</div>
     {{/if}} 
       {{#if sources.length > 0}}
         <div class="q-election-sources s-font-note-s">
@@ -55,8 +55,7 @@
 <script>
   export default {
     computed: {
-      maxResult: (data) => {
-        let parties = data.parties;
+      maxResult: (parties) => {
         let maxResult = 0;
         parties.forEach((party) => {
           if (party.percentage > maxResult) {
@@ -84,8 +83,8 @@
           }
         }
       },
-      barCssClass: (data) => {
-        if (data.intermediate) {
+      barCssClass: (intermediate) => {
+        if (intermediate) {
           return 'q-election-item-bar q-election-item-bar--dotted';
         } else {
           return 'q-election-item-bar';

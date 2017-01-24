@@ -39,7 +39,7 @@ describe('Q election votes dom tests', function() {
 
   it('should pass if for each data entry a DOM element is created', function() {
     return elementCount('div.q-election-item-info').then(value => {
-      expect(value).to.be.equal(mockData.data.parties.length);
+      expect(value).to.be.equal(mockData.parties.length);
     })
   })
 
