@@ -1,11 +1,6 @@
-var parliamentsInfo = {};
+var parliaments = {};
 if (process.env.PARLIAMENTS !== undefined) {
-  parliamentsInfo = JSON.parse(process.env.PARLIAMENTS);
-} 
-
-var parliaments = parliamentsInfo.parliaments;
-if (parliaments === undefined) {
-  parliaments = {};
+  parliaments = JSON.parse(process.env.PARLIAMENTS);
 }
 
 module.exports = parliaments;
