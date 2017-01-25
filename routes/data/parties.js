@@ -1,10 +1,7 @@
 const Joi = require('joi');
 const Boom = require('boom');
-
-var parliaments = [];
-if (process.env.PARLIAMENTS !== undefined) {
-  parliaments = JSON.parse(process.env.PARLIAMENTS).parliaments;
-}
+const resourcesDir = __dirname + '/../../resources/';
+const parliaments = require(resourcesDir + 'data/parliaments.js');
 
 module.exports = {
   method: 'GET',
@@ -17,7 +14,11 @@ module.exports = {
     }
   },
   handler: function(request, reply) {
-    let parliament = request.query.parliament;
-    return reply(parliaments[parliament].parties);
+    let parliamentName = request.query.parliament;
+    if (parliaments[parliamentName] !== undefined) {
+      return reply(parliaments[parliamentName].parties);
+    } else {
+      return reply(Boom.notFound());
+    }
   }
 }
