@@ -15,8 +15,9 @@ module.exports = {
   },
   handler: function(request, reply) {
     let parliamentName = request.query.parliament;
-    if (parliaments[parliamentName] !== undefined) {
-      return reply(parliaments[parliamentName].parties);
+    let parliament = parliaments[parliamentName];
+    if (parliament !== undefined && parliament.parties !== undefined) {
+      return reply(parliament.parties);
     } else {
       return reply(Boom.notFound());
     }
