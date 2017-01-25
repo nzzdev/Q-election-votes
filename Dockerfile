@@ -5,7 +5,7 @@ FROM node:7.3
 WORKDIR /app
 
 # ENV variable for parliaments
-ENV PARLIAMENTS='{"parliaments": {}}'
+ENV PARLIAMENTS='{}'
 
 # Copy package.json into work directory and install dependencies
 COPY package.json /app/package.json
