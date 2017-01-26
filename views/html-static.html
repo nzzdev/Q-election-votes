@@ -1,36 +1,45 @@
 <div class="q-item-container">
   <h3 class="s-q-item__title">{{title}}</h3>
-  <div class="q-election-update s-font-note-s">Update {{updateInfo}}</div>
-  <!-- TODO: has to be aligned correctly and show png with dots - will be done if design final -->
-  {{#if intermediate}}
-    <div class="q-election-intermediate s-font-note-s">Zwischenergebnis</div>
-  {{/if}} 
-  {{#if subtitle}}
-    <div class="q-election-subtitle s-font-note-s">{{subtitle}}</div>
-  {{/if}}
+  <div class="q-election-info s-font-note-s">
+    <div>
+      {{#if intermediate}}Zwischenergebnis, {{/if}}Update {{updateInfo}}
+    </div>
+    {{#if subtitle}}
+      <div>{{subtitle}}</div>
+    {{/if}}
+  </div>   
+  
   <div class="q-election">
-    {{#each parties as party}}
+    {{#if threshold}}
+      <div class="q-election-threshold" style="left: {{(threshold * 100) / maxResult}}%; height: {{numberParties * (40 + 10)}};">
+        <div class="q-election-threshold-arrow" style="top: {{(numberParties * (40 + 10)) - 5}};"></div>
+        <!-- maybe with switch to left if text is not fitting to right -->
+        <div class="q-election-threshold-label s-font-note-s" style="left: {{(threshold * 100) / maxResult}}%; top: {{numberParties * (40 + 10)}}; width: {{100 - ((threshold * 100) / maxResult)}}%">
+          <div class="q-election-threshold-label-text">{{threshold}} Prozent Hürde</div>
+        </div>
+      </div>
+    {{/if}}
+    {{#each parties as party, index}}
+      {{#if parties.length > numberParties && parties.length === index + 1 && threshold}}
+        <div class="q-election-threshold-gap"></div>
+      {{/if}}
       <div class="q-election-item">
-        <div class="q-election-item-info">
+        <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%">
           <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
-          <div class="s-font-note-s q-election-item-current">{{party.percentage}}%</div>
-          <div class="s-font-note-s q-election-item-previous">{{party.percentage - party.previous}}%</div>
         </div>
-        <div class="{{barCssClass}}" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"> 
-          {{#if threshold}}
-            <div class="q-election-threshold-line" style="left: {{(threshold * 100) / maxResult}}%"></div>
-          {{/if}}
+        <div class="s-font-note-s s-font-note-s--strong q-election-item-current">{{party.percentage}}%</div>
+        <div class="s-font-note-s q-election-item-previous">
+          {{#if (party.percentage - party.previous).toFixed(1) > 0}}+{{/if}}{{(party.percentage - party.previous).toFixed(1)}}
         </div>
+        <!-- include real icon with css class "q-election-item-trend" here, this is just for static test -->
+        <img src="arrow.png" class="q-election-item-trend" width="16px"/>
       </div>
     {{/each}}
   </div>
+  {{#if numberParties === parties.length && threshold}}
+    <div class="q-election-threshold-gap"></div>
+  {{/if}}
   <div class="q-election-footer">
-    <div class="q-election-caption">
-      {{#if threshold}}
-        <div class="q-election-threshold-caption-symbol"></div>
-        <div class="q-election-threshold-caption-desc s-font-note-s">{{threshold}} Prozent Hürde</div>
-      {{/if}}
-    </div>
     {{#if notes}}
       <div class="q-election-notes">{{notes}}</div>
     {{/if}} 
@@ -53,6 +62,7 @@
 </div>
 
 <script>
+
   export default {
     computed: {
       maxResult: (parties) => {
@@ -65,6 +75,9 @@
         return maxResult;
       },
       updateInfo: (updatedDate) => {
+        if (updatedDate === undefined) {
+          return 'vor weniger als einer Minute';
+        }
         let updated = new Date(updatedDate);
         if (updated.getTime()) {
           let now = new Date();
@@ -83,12 +96,17 @@
           }
         }
       },
-      barCssClass: (intermediate) => {
-        if (intermediate) {
-          return 'q-election-item-bar q-election-item-bar--dotted';
-        } else {
-          return 'q-election-item-bar';
-        }
+      numberParties: (parties) => {
+        let number = parties.length;
+        parties.forEach((party) => {
+          // other naming options for "other parties"?
+          // at the moment also open for "die Anderen" or "sonstige Parteien" or something similiar
+          let others = /((.*(A|a)ndere.*)|(.*(S|s)onstig.*))/; 
+          if (others.test(party.name)) {
+            number--;
+          }
+        })
+        return number;
       }
     }
   };
