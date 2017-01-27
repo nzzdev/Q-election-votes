@@ -21,7 +21,7 @@
     &-label {
       position: absolute;
       background-color: #d3d3d3;
-      width: 2px;
+      width: 1px;
       height: 20px;
 
       &-text {
@@ -50,6 +50,8 @@
 			float:left;
 			width: 100%;
       margin: 5px 0 0 5px;
+      position: relative;
+      z-index: 1;
 		}
 
 		&-current,

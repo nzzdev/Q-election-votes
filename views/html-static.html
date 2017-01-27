@@ -1,20 +1,14 @@
 <div class="q-item-container">
   <h3 class="s-q-item__title">{{title}}</h3>
   <div class="q-election-info s-font-note-s">
-    <div>
-      {{#if intermediate}}Zwischenergebnis, {{/if}}Update {{updateInfo}}
-    </div>
-    {{#if subtitle}}
-      <div>{{subtitle}}</div>
-    {{/if}}
-  </div>   
-  
+      {{#if intermediate}}Zwischenergebnis, {{/if}}Update {{updateInfo}}{{#if subtitle}}, {{subtitle}}{{/if}}
+  </div>
   <div class="q-election">
     {{#if threshold}}
       <div class="q-election-threshold" style="left: {{(threshold * 100) / maxResult}}%; height: {{numberParties * (40 + 10)}};">
         <div class="q-election-threshold-arrow" style="top: {{(numberParties * (40 + 10)) - 5}};"></div>
         <!-- maybe with switch to left if text is not fitting to right -->
-        <div class="q-election-threshold-label s-font-note-s" style="left: {{(threshold * 100) / maxResult}}%; top: {{numberParties * (40 + 10)}}; width: {{100 - ((threshold * 100) / maxResult)}}%">
+        <div class="q-election-threshold-label s-font-note-s" style="left: {{(threshold * 100) / maxResult}}%; top: {{numberParties * (40 + 10)}};">
           <div class="q-election-threshold-label-text">{{threshold}} Prozent Hürde</div>
         </div>
       </div>
@@ -24,15 +18,23 @@
         <div class="q-election-threshold-gap"></div>
       {{/if}}
       <div class="q-election-item">
-        <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%">
+        {{#if party.percentage}}
+          <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"></div>
           <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
-        </div>
-        <div class="s-font-note-s s-font-note-s--strong q-election-item-current">{{party.percentage}}%</div>
-        <div class="s-font-note-s q-election-item-previous">
-          {{#if (party.percentage - party.previous).toFixed(1) > 0}}+{{/if}}{{(party.percentage - party.previous).toFixed(1)}}
-        </div>
-        <!-- include real icon with css class "q-election-item-trend" here, this is just for static test -->
-        <img src="arrow.png" class="q-election-item-trend" width="16px"/>
+          <div class="s-font-note-s s-font-note-s--strong q-election-item-current">{{party.percentage}}%</div>
+            <div class="s-font-note-s q-election-item-previous">
+              {{#if party.previous}}
+                {{#if (party.percentage - party.previous).toFixed(1) > 0}}+{{/if}}{{(party.percentage - party.previous).toFixed(1)}}
+              {{else}}
+                +{{party.percentage}}
+              {{/if}}
+            </div>
+            <!-- include real icon with css class "q-election-item-trend" here, this is just for static test -->
+            <img src="arrow.png" class="q-election-item-trend" width="16px"/>
+        {{else}}
+          <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: 1px"></div>
+          <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
+        {{/if}}
       </div>
     {{/each}}
   </div>
@@ -41,7 +43,7 @@
   {{/if}}
   <div class="q-election-footer">
     {{#if notes}}
-      <div class="q-election-notes">{{notes}}</div>
+      <div class="q-election-notes s-font-note-s">{{notes}}</div>
     {{/if}} 
     {{#if sources.length > 0}}
       <div class="q-election-sources s-font-note-s">
@@ -72,6 +74,11 @@
             maxResult = party.percentage;
           }
         })
+        if (maxResult === 0) {
+          // if there are no results yet, we set the maximum to 50 
+          // -> it's closer to real results than setting it to 100
+          maxResult = 50;
+        }
         return maxResult;
       },
       updateInfo: (updatedDate) => {
