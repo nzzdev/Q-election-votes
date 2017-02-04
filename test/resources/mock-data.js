@@ -7,24 +7,30 @@ module.exports = {
       href: "https://www.nzz.ch",
       validHref: true
     }],
-  intermediate: true,
+  isIntermediate: true,
   threshold: 5,
   parties: [
     {
       name: "CDU",
-      colour: "#0084c7",
+      color: {
+        colorCode: "#0084c7"
+      },
       percentage: 30,
       previous: 35
     },
     {
       name: "SPD",
-      colour: "#c31906",
+      color: {
+        colorCode: "#c31906"
+      },
       percentage: 20,
       previous: 18
     },
     {
       name: "B90/Die Grünen",
-      colour: "#66a622",
+      color: {
+        colorCode: "#66a622"
+      },
       percentage: 10,
       previous: 7
     }

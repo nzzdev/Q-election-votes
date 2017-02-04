@@ -1,120 +1,108 @@
 <div class="q-item-container">
   <h3 class="s-q-item__title">{{title}}</h3>
-  <div class="q-election-info s-font-note-s">
-      {{#if intermediate}}Zwischenergebnis, {{/if}}Update {{updateInfo}}{{#if subtitle}}, {{subtitle}}{{/if}}
-  </div>
-  <div class="q-election">
-    {{#if threshold}}
-      <div class="q-election-threshold" style="left: {{(threshold * 100) / maxResult}}%; height: {{numberParties * (40 + 10)}};">
-        <div class="q-election-threshold-arrow" style="top: {{(numberParties * (40 + 10)) - 5}};"></div>
-        <!-- maybe with switch to left if text is not fitting to right -->
-        <div class="q-election-threshold-label s-font-note-s" style="left: {{(threshold * 100) / maxResult}}%; top: {{numberParties * (40 + 10)}};">
-          <div class="q-election-threshold-label-text">{{threshold}} Prozent Hürde</div>
-        </div>
-      </div>
-    {{/if}}
-    {{#each parties as party, index}}
-      {{#if parties.length > numberParties && parties.length === index + 1 && threshold}}
-        <div class="q-election-threshold-gap"></div>
-      {{/if}}
-      <div class="q-election-item">
-        {{#if party.percentage}}
-          <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: {{(party.percentage * 100) / maxResult}}%"></div>
-          <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
-          <div class="s-font-note-s s-font-note-s--strong q-election-item-current">{{party.percentage}}%</div>
-            <div class="s-font-note-s q-election-item-previous">
-              {{#if party.previous}}
-                {{#if (party.percentage - party.previous).toFixed(1) > 0}}+{{/if}}{{(party.percentage - party.previous).toFixed(1)}}
-              {{else}}
-                +{{party.percentage}}
-              {{/if}}
-            </div>
-            <!-- include real icon with css class "q-election-item-trend" here, this is just for static test -->
-            <img src="arrow.png" class="q-election-item-trend" width="16px"/>
-        {{else}}
-          <div class="q-election-item-bar" style="background-color: {{party.colour}}; width: 1px"></div>
-          <div class="s-font-note-s s-font-note-s--strong q-election-item-party">{{party.name}}</div>
-        {{/if}}
-      </div>
+  <Header subtitle='{{subtitle}}' isIntermediate='{{isIntermediate}}' updatedDate='{{updatedDate}}' />
+  <div class="q-election-parties">
+    <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
+    {{#each partyItems as party}}
+      <ElectionItem item='{{party}}' maxResult='{{maxResult}}' />
     {{/each}}
   </div>
-  {{#if numberParties === parties.length && threshold}}
-    <div class="q-election-threshold-gap"></div>
+  {{#if otherPartiesItem}}
+    <div class="q-election-others {{thresholdSpaceClass}}">
+      <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
+    </div>
   {{/if}}
-  <div class="q-election-footer">
-    {{#if notes}}
-      <div class="q-election-notes s-font-note-s">{{notes}}</div>
-    {{/if}} 
-    {{#if sources.length > 0}}
-      <div class="q-election-sources s-font-note-s">
-        {{#if sources.length > 1}} 
-          Quellen: 
-        {{else}} 
-          Quelle: 
-        {{/if}} 
-        {{#each sources as source, index}}
-          <!-- 	If you separate DOM siblings with newlines whitespaces cannot be removed by svelte renderer
-                To avoid unwanted whitespaces around commas separating each source, we keep render infos for sources at one line here.
-                See also: https://github.com/sveltejs/svelte/issues/189  -->
-          {{#if source.text !== ''}}{{#if source.validHref}}<a href="{{source.href}}" target="blank" rel="noopener noreferrer">{{source.text}}</a>{{else}}{{source.text}}{{/if}}{{#if index !== sources.length - 1 && sources[index + 1] !== ''}}, {{/if}}{{/if}} 
-        {{/each}}
-      </div>
-    {{/if}}
-  </div>
+  <Footer sources='{{sources}}' notes='{{notes}}' thresholdSpaceClass='{{thresholdSpaceClass}}'/>
 </div>
 
 <script>
+  import Header from './Header.html';
+  import Threshold from './Threshold.html';
+  import ElectionItem from './ElectionItem.html';
+  import Footer from './Footer.html';
 
   export default {
     computed: {
-      maxResult: (parties) => {
-        let maxResult = 0;
-        parties.forEach((party) => {
-          if (party.percentage > maxResult) {
-            maxResult = party.percentage;
+      sortedParties: (parties) => {
+        return parties.sort(function(partyA, partyB) {
+          if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
+            return 0;
           }
+          if ((partyA.percentage === undefined && partyB.percentage !== undefined) || (partyA.percentage < partyB.percentage)) {
+            return 1;
+          }
+          return -1;
         })
-        if (maxResult === 0) {
-          // if there are no results yet, we set the maximum to 50 
-          // -> it's closer to real results than setting it to 100
-          maxResult = 50;
+      },
+      maxResult: (sortedParties) => {
+        // if there are already any votes the first party 
+        // of sorted list of party has max percentage
+        let maxResult = 0;
+        if (sortedParties[0] && sortedParties[0].percentage) {
+          maxResult = sortedParties[0].percentage;
         }
         return maxResult;
       },
-      updateInfo: (updatedDate) => {
-        if (updatedDate === undefined) {
-          return 'vor weniger als einer Minute';
-        }
-        let updated = new Date(updatedDate);
-        if (updated.getTime()) {
-          let now = new Date();
-          let diff = now.getTime() + now.getTimezoneOffset() - updated.getTime(); // "updated" of q item already in UTC => "now" has to be normalized with timezone offset
-          let diffMinutes = Math.floor(diff / (1000 * 60));
-          if (diffMinutes < 60) { // update less than an hour ago
-            return `vor ${diffMinutes} Minute${diffMinutes > 1 || diffMinutes === 0 ? 'n' : ''}`;
-          } else if (diffMinutes < 60 * 24) { // update less than a day ago
-            let hours = Math.floor(diffMinutes / 60);
-            return `vor ${hours} Stunde${hours > 1 || hours === 0 ? 'n' : ''}`;
-          } else if (diffMinutes > 7 * 60 * 24) { // update more than 7 days ago -> show date
-            return `am ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-          } else {
-            let days = Math.floor(diffMinutes / (60 * 24));
-            return `vor ${days} Tag${days > 1 || days === 0 ? 'en' : ''}`;
+      enhancedParties: (sortedParties, maxResult) => {
+        sortedParties.forEach(party => {
+          // define width of each party's bar
+          let width = '1px';
+          let colorStyle = '';
+          let colorClass = '';
+          if (maxResult > 0 && party.percentage && party.percentage > 0) {
+            let widthPercentage = party.percentage * 100 / maxResult;
+            width = widthPercentage + '%';
+          }
+          party.width = width;
+          
+          // define color of each party's bar either via class attribute or color code
+          if (party.color) {
+            if (party.color.classAttribute) {
+              colorClass = party.color.classAttribute;
+            } else {
+              colorStyle = 'background-color: ' + party.color.colorCode + ';';
+            }
+          }
+          party.colorClass = colorClass;
+          party.colorStyle = colorStyle;
+          
+        })
+        
+        let othersIndex = sortedParties.findIndex(party => {
+          let othersPattern = /((.*(A|a)ndere.*)|(.*(S|s)onstig.*))/; 
+          return othersPattern.test(party.name);
+        })
+        if (othersIndex >= 0) {
+          let others = sortedParties.splice(othersIndex, 1);
+          return {
+            parties: sortedParties,
+            others: others[0]
+          }
+        } else {
+          return {
+            parties: sortedParties
           }
         }
       },
-      numberParties: (parties) => {
-        let number = parties.length;
-        parties.forEach((party) => {
-          // other naming options for "other parties"?
-          // at the moment also open for "die Anderen" or "sonstige Parteien" or something similiar
-          let others = /((.*(A|a)ndere.*)|(.*(S|s)onstig.*))/; 
-          if (others.test(party.name)) {
-            number--;
-          }
-        })
-        return number;
+      partyItems: (enhancedParties) => {
+        return enhancedParties.parties
+      },
+      otherPartiesItem : (enhancedParties) => {
+        return enhancedParties.others;
+      },
+      thresholdSpaceClass: (threshold, maxResult) => {
+        if (threshold !== undefined && threshold > 0 && maxResult > 0) {
+          return 'q-election-threshold-gap';
+        }
+        else '';
       }
+    },
+
+    components: {
+      Header,
+      Threshold,
+      ElectionItem,
+      Footer
     }
   };
 </script>

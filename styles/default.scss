@@ -1,43 +1,53 @@
 .q-election {
-	&-info {
-		margin-bottom: 5px;
+  &-parties {
+	  position: relative;
+  }
+  
+  &-info {
+		margin-bottom: 16px;
 	}
 
   &-threshold {
     position: absolute;
-    background-color: #d3d3d3;
+    background-color: currentColor;
     width: 1px;
+    top: 0;
+    bottom: 0;
 
     &-arrow {
-      position: relative;
-      left:-3px;
-      width: 0; 
-      height: 0; 
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-bottom: 5px solid #d3d3d3 ;
+      position: absolute;
+      bottom: -19px;
+      height: 19px;
+      left: -2px;
     }
 
-    &-label {
+    &-text {
       position: absolute;
-      background-color: #d3d3d3;
-      width: 1px;
-      height: 20px;
+      bottom: -19px;
+      width: 150px;
 
-      &-text {
-        width: 150px;
-        line-height: 30px;
-        margin-left: 5px;
+      &--left {
+        text-align: left;
+        left: 10px;
       }
+
+      &--right {
+        text-align: right;
+        right: 10px;
+      }
+    }
+
+    &-gap {
+      position: relative;
+      top: 19px;
     }
   }
 
 	&-item {
     position: relative;
     height: 40px;
-    background-color: #d3d3d3; 
+    background-color: currentColor; 
 		margin-bottom: 10px;
-    top: 5px;
 
     &-bar {
 			height: 40px;
@@ -73,14 +83,11 @@
 
     &-trend {
       right: 5px;
+      width: 16px;
     }
 	}
 
-  &-threshold-gap {
-    height: 20px
-  }
-
 	&-footer {
-		margin-top: 20px;
+		margin-top: 16px;
 	}
 }
