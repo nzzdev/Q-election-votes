@@ -37,9 +37,8 @@
       }
     }
 
-    &-gap {
-      position: relative;
-      top: 19px;
+    &-offset {
+      margin-bottom: 27px;
     }
   }
 
@@ -74,7 +73,7 @@
 		}
 
     &-current {
-      right: 60px;
+      right: 65px;
     }
 		
     &-previous {

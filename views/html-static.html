@@ -1,18 +1,18 @@
 <div class="q-item-container">
   <h3 class="s-q-item__title">{{title}}</h3>
   <Header subtitle='{{subtitle}}' isIntermediate='{{isIntermediate}}' updatedDate='{{updatedDate}}' />
-  <div class="q-election-parties">
+  <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
       <ElectionItem item='{{party}}' maxResult='{{maxResult}}' />
     {{/each}}
   </div>
   {{#if otherPartiesItem}}
-    <div class="q-election-others {{thresholdSpaceClass}}">
+    <div class="q-election-others">
       <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
     </div>
   {{/if}}
-  <Footer sources='{{sources}}' notes='{{notes}}' thresholdSpaceClass='{{thresholdSpaceClass}}'/>
+  <Footer sources='{{sources}}' notes='{{notes}}' />
 </div>
 
 <script>
@@ -35,9 +35,9 @@
         })
       },
       maxResult: (sortedParties) => {
+        let maxResult = 0;
         // if there are already any votes the first party 
         // of sorted list of party has max percentage
-        let maxResult = 0;
         if (sortedParties[0] && sortedParties[0].percentage) {
           maxResult = sortedParties[0].percentage;
         }
@@ -47,8 +47,6 @@
         sortedParties.forEach(party => {
           // define width of each party's bar
           let width = '1px';
-          let colorStyle = '';
-          let colorClass = '';
           if (maxResult > 0 && party.percentage && party.percentage > 0) {
             let widthPercentage = party.percentage * 100 / maxResult;
             width = widthPercentage + '%';
@@ -56,6 +54,8 @@
           party.width = width;
           
           // define color of each party's bar either via class attribute or color code
+          let colorStyle = '';
+          let colorClass = '';
           if (party.color) {
             if (party.color.classAttribute) {
               colorClass = party.color.classAttribute;
@@ -66,6 +66,19 @@
           party.colorClass = colorClass;
           party.colorStyle = colorStyle;
           
+          // calculate trend out of previous and current result and use it 
+          // to calculate rotation degree of trend arrow
+          if (party.previous && party.previous > 0) {
+            party.trend = (party.percentage - party.previous).toFixed(1);
+          } else {
+            party.trend = party.percentage.toFixed(1);
+          }
+          
+          let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
+          if (party.trend > 0) {
+            trendDegree = -trendDegree;
+          }
+          party.trendDegree = trendDegree;
         })
         
         let othersIndex = sortedParties.findIndex(party => {
@@ -90,9 +103,9 @@
       otherPartiesItem : (enhancedParties) => {
         return enhancedParties.others;
       },
-      thresholdSpaceClass: (threshold, maxResult) => {
+      thresholdOffset: (threshold, maxResult) => {
         if (threshold !== undefined && threshold > 0 && maxResult > 0) {
-          return 'q-election-threshold-gap';
+          return 'q-election-threshold-offset';
         }
         else '';
       }
