@@ -28,8 +28,8 @@ function elementCount(selector) {
 }
 
 describe('Q election votes dom tests', function() {
-  it('should pass if vote bars marked as intermediate results are found', function() {
-    return elementCount('div.q-election-threshold-gap').then(value => {
+  it('should pass if threshold marker is found', function() {
+    return elementCount('div.q-election-threshold').then(value => {
         expect(value).to.be.equal(1);
     })
   })
