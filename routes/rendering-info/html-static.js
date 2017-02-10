@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Enjoi = require('enjoi');
+const Joi = require('joi');
 const resourcesDir = __dirname + '/../../resources/';
 const viewsDir = __dirname + '/../../views/';
 
@@ -17,12 +18,20 @@ module.exports = {
   path: '/rendering-info/html-static',
   config: {
     validate: {
+      options: {
+        allowUnknown: true
+      },
       payload: {
-        item: schema
+        item: schema,
+        toolRuntimeConfig: Joi.object()
       }
-    }
+    },
+    cors: true
   },
   handler: function(request, reply) {
+    if (request.query.updatedDate) {
+      request.payload.item.updatedDate = request.query.updatedDate;
+    }
     let data = {
       stylesheets: [
         {

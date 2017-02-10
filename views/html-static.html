@@ -1,6 +1,5 @@
 <div class="q-item-container">
-  <h3 class="s-q-item__title">{{title}}</h3>
-  <Header subtitle='{{subtitle}}' isIntermediate='{{isIntermediate}}' updatedDate='{{updatedDate}}' />
+  <Header subtitle='{{subtitle}}' title='{{title}}' />
   <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
@@ -12,7 +11,7 @@
       <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
     </div>
   {{/if}}
-  <Footer sources='{{sources}}' notes='{{notes}}' />
+  <Footer sources='{{sources}}' notes='{{notes}}' updatedDate='{{updatedDate}}' maxResult='{{maxResult}}'/>
 </div>
 
 <script>
@@ -24,15 +23,19 @@
   export default {
     computed: {
       sortedParties: (parties) => {
-        return parties.sort(function(partyA, partyB) {
-          if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
-            return 0;
-          }
-          if ((partyA.percentage === undefined && partyB.percentage !== undefined) || (partyA.percentage < partyB.percentage)) {
-            return 1;
-          }
-          return -1;
-        })
+        if (parties !== undefined) {
+          return parties.sort(function(partyA, partyB) {
+            if (partyA.percentage === undefined) {
+              partyA = 0;
+            }
+            if (partyB.percentage === undefined) {
+              partyB = 0;
+            }
+            return partyB.percentage - partyA.percentage;
+          })
+        } else {
+          return [];
+        }
       },
       maxResult: (sortedParties) => {
         let maxResult = 0;

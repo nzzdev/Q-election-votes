@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Q Election Votes</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@^0.1.0,sophie-color@~1.0.0,sophie-viz-color@^1.0.0[diverging-6].css">
+    <script src="https://rawgit.com/filamentgroup/loadCSS/master/src/loadCSS.js"></script>
+  </head>
+  <body>
+    <div id="votes" style="background-color: #f5f5f5; color:#f5f5f5;"></div>
+    <script>
+      let data = {
+        "item": {
+          "title": "Parlamentswahlen Frankreich",
+          "sources": [
+            {
+              "text": "asdjfh",
+              "link": {
+                "url": "www.nzz.ch",
+                "isValid": true
+              }
+            }
+          ],
+          "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+          "notes": "Jemand musste Josef K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+          "threshold": 5,
+          "parties": [
+            {
+              "name": "Die Union",
+              "abbreviation": "CDU/CSU",
+              "color": 
+                {
+                  "colorCode": "#0084c7"
+                },
+              "percentage": 27,
+              "previous": 31
+            },
+            {
+              "name": "Sozialdemokratische Partei Deutschlands",
+              "abbreviation": "SPD",
+              "color": 
+                {
+                  "colorCode": "#c31906" 
+                },
+              "percentage": 35,
+              "previous": 26
+            },
+            {
+              "name": "Bündnis 90/Die Grünen",
+              "abbreviation": "Die Grünen",
+              "color": 
+                {
+                  "colorCode": "#66a622"
+                },
+              "previous": 12,
+              "percentage": 14
+            },
+            {
+              "name": "Die Linke",
+              "party": "Die Linke",
+              "color": 
+              {
+                "colorCode": "#a35fd1"
+              },
+              "previous": 8,
+              "percentage": 9
+            }
+          ]
+        },
+        "toolRuntimeConfig": {
+          "toolBaseUrl": "http://localhost:3000"
+        }
+      };
+      fetch("http://localhost:3000/rendering-info/html-static?updatedDate=2017-02-09T17:16:49.120Z", {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          data.stylesheets.forEach(stylesheet => {
+            if (stylesheet.name) {
+              stylesheet.url = `http://localhost:3000/stylesheet/${stylesheet.name}`
+            }
+            loadCSS(stylesheet.url)
+          })
+          document.getElementById('votes').innerHTML = data.markup;
+        })
+    </script>
+  </body>
+</html>
