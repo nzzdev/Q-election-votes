@@ -26,10 +26,10 @@
         if (parties !== undefined) {
           return parties.sort(function(partyA, partyB) {
             if (partyA.percentage === undefined) {
-              partyA = 0;
+              partyA.percentage = 0;
             }
             if (partyB.percentage === undefined) {
-              partyB = 0;
+              partyB.percentage = 0;
             }
             return partyB.percentage - partyA.percentage;
           })
@@ -71,17 +71,18 @@
           
           // calculate trend out of previous and current result and use it 
           // to calculate rotation degree of trend arrow
-          if (party.previous && party.previous > 0) {
-            party.trend = (party.percentage - party.previous).toFixed(1);
-          } else {
-            party.trend = party.percentage.toFixed(1);
+          if (party.percentage) {
+            if (party.previous && party.previous > 0) {
+              party.trend = (party.percentage - party.previous).toFixed(1);
+            } else {
+              party.trend = party.percentage.toFixed(1);
+            }
+            let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
+            if (party.trend > 0) {
+              trendDegree = -trendDegree;
+            }
+            party.trendDegree = trendDegree;
           }
-          
-          let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
-          if (party.trend > 0) {
-            trendDegree = -trendDegree;
-          }
-          party.trendDegree = trendDegree;
         })
         
         let othersIndex = sortedParties.findIndex(party => {
