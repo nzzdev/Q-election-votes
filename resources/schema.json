@@ -43,7 +43,7 @@
                 "type": "string"
               },
               "classAttribute": {
-                "title": "CSS Klasse",
+                "title": "CSS Klassename",
                 "type": "string"
               }
             }
