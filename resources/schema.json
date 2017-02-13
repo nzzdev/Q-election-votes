@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Parlamentswahlen",
+  "properties": {
+    "title": {
+      "title": "Titel",
+      "type": "string"
+    },
+    "subtitle": {
+      "title": "Untertitel",
+      "type": "string"
+    },
+    "isIntermediate": {
+      "title": "Zwischenergebnis",
+      "type": "boolean"
+    },
+    "threshold": {
+      "title": "% Hürde",
+      "description": "Falls eine % Hürde exisitert, bitte Prozentzahl eintragen",
+      "type": "number"
+    },
+    "parties": {
+      "title": "Parteien",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Parteiname",
+            "type": "string"
+          },
+          "abbreviation": {
+            "title": "Kürzel",
+            "type": "string"
+          },
+          "color": {
+            "title": "Farbe",
+            "type": "object",
+            "properties": {
+              "colorCode": {
+                "title": "Farbcode",
+                "type": "string"
+              },
+              "classAttribute": {
+                "title": "CSS Klasse",
+                "type": "string"
+              }
+            }
+          },
+          "percentage": {
+            "title": "Stimmen in %",
+            "type": "number"
+          },
+          "previous": {
+            "title": "Stimmen letzte Wahl in %",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "notes": {
+      "title": "Bemerkungen",
+      "type": "string"
+    },
+    "sources": {
+      "title": "Quellen",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "href": {
+            "title": "URL",
+            "type": "string"
+          },
+          "validHref": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

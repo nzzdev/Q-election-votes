@@ -1,0 +1,33 @@
+<div class="q-election-info s-font-note">
+  {{#if subtitle}}{{subtitle}}{{#if intermediate || updatedDate}},{{/if}}{{/if}}
+  {{#if intermediate}}Zwischenergebnis{{#if updatedDate}}, {{/if}}{{/if}}{{#if updatedDate}}Update {{updateInfo}}{{/if}}
+</div>
+
+<script>
+  export default {
+    computed: {
+      updateInfo: (updatedDate) => {
+        if (updatedDate === undefined) {
+          return 'vor weniger als einer Minute';
+        }
+        let updated = new Date(updatedDate);
+        if (updated.getTime()) {
+          let now = new Date();
+          let diff = now.getTime() + now.getTimezoneOffset() - updated.getTime(); // "updated" of q item already in UTC => "now" has to be normalized with timezone offset
+          let diffMinutes = Math.floor(diff / (1000 * 60));
+          if (diffMinutes < 60) { // update less than an hour ago
+            return `vor ${diffMinutes} Minute${diffMinutes > 1 || diffMinutes === 0 ? 'n' : ''}`;
+          } else if (diffMinutes < 60 * 24) { // update less than a day ago
+            let hours = Math.floor(diffMinutes / 60);
+            return `vor ${hours} Stunde${hours > 1 || hours === 0 ? 'n' : ''}`;
+          } else if (diffMinutes > 7 * 60 * 24) { // update more than 7 days ago -> show date
+            return `am ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+          } else {
+            let days = Math.floor(diffMinutes / (60 * 24));
+            return `vor ${days} Tag${days > 1 || days === 0 ? 'en' : ''}`;
+          }
+        }
+      }
+    }
+  }
+</script>

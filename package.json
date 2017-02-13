@@ -1,0 +1,45 @@
+{
+  "name": "@nzz/q-election-votes",
+  "version": "1.0.0",
+  "description": "Q Election Votes",
+  "keywords": [
+    "storytelling",
+    "nzz"
+  ],
+  "homepage": "https://github.com/nzzdev/Q-election-votes",
+  "bugs": {
+    "url": "https://github.com/nzzdev/Q-election-votes/issues"
+  },
+  "license": "",
+  "contributors": [
+    {
+      "name": "Beni Buess",
+      "email": "beni.buess@nzz.ch"
+    },
+    {
+      "name": "Sharon Funke",
+      "email": "sharon.funke@nzz.ch"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzzdev/Q-election-votes.git"
+  },
+  "dependencies": {
+    "chai": "^3.5.0",
+    "enjoi": "^2.1.0",
+    "hapi": "^16.1.0",
+    "hoek": "^4.1.0",
+    "inert": "^4.1.0",
+    "joi": "^10.2.0",
+    "jsdom": "^9.9.1",
+    "json-schema-faker": "^0.4.0",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.3.0",
+    "svelte": "^1.6.3"
+  }
+}

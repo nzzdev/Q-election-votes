@@ -1,0 +1,92 @@
+.q-election {
+  &-parties {
+	  position: relative;
+  }
+  
+  &-info {
+		margin-bottom: 16px;
+	}
+
+  &-threshold {
+    position: absolute;
+    background-color: currentColor;
+    width: 1px;
+    top: 0;
+    bottom: 0;
+
+    &-arrow {
+      position: absolute;
+      bottom: -19px;
+      height: 19px;
+      left: -2px;
+    }
+
+    &-text {
+      position: absolute;
+      bottom: -19px;
+      width: 150px;
+
+      &--left {
+        text-align: left;
+        left: 10px;
+      }
+
+      &--right {
+        text-align: right;
+        right: 10px;
+      }
+    }
+
+    &-offset {
+      margin-bottom: 27px;
+    }
+  }
+
+	&-item {
+    position: relative;
+    height: 40px;
+    background-color: currentColor; 
+		margin-bottom: 10px;
+
+    &-bar {
+			height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+		}
+
+		&-party {
+			float:left;
+			width: 100%;
+      margin: 5px 0 0 5px;
+      position: relative;
+      z-index: 1;
+		}
+
+		&-current,
+		&-previous,
+    &-trend {
+			float: right;
+      position: absolute;
+      top: 20;
+      z-index: 1;
+		}
+
+    &-current {
+      right: 65px;
+    }
+		
+    &-previous {
+      right: 30px;
+    }
+
+    &-trend {
+      right: 5px;
+      width: 16px;
+    }
+	}
+
+	&-footer {
+		margin-top: 16px;
+	}
+}
