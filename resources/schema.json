@@ -11,10 +11,6 @@
       "title": "Untertitel",
       "type": "string"
     },
-    "isIntermediate": {
-      "title": "Zwischenergebnis",
-      "type": "boolean"
-    },
     "threshold": {
       "title": "% Hürde",
       "description": "Falls eine % Hürde exisitert, bitte Prozentzahl eintragen",
@@ -43,7 +39,7 @@
                 "type": "string"
               },
               "classAttribute": {
-                "title": "CSS Klasse",
+                "title": "CSS Klassename",
                 "type": "string"
               }
             }
@@ -73,12 +69,19 @@
             "title": "Text",
             "type": "string"
           },
-          "href": {
-            "title": "URL",
-            "type": "string"
-          },
-          "validHref": {
-            "type": "boolean"
+          "link": {
+            "Q:type": "link",
+            "title": "Link",
+            "type": "object",
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "isValid": {
+                "type": "boolean"
+              }    
+            }
           }
         }
       }

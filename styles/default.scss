@@ -43,46 +43,46 @@
   }
 
 	&-item {
-    position: relative;
-    height: 40px;
-    background-color: currentColor; 
-		margin-bottom: 10px;
-
     &-bar {
-			height: 40px;
-      position: absolute;
-      top: 0;
-      left: 0;
-		}
+      position: relative;
+      height: 26px;
+      background-color: currentColor; 
+      margin-bottom: 10px;
 
-		&-party {
-			float:left;
-			width: 100%;
-      margin: 5px 0 0 5px;
+      &-color {
+        background-color: currentColor;
+        height: 26px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    &-text {
+      background-color: currentColor;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
       position: relative;
       z-index: 1;
-		}
 
-		&-current,
-		&-previous,
-    &-trend {
-			float: right;
-      position: absolute;
-      top: 20;
-      z-index: 1;
-		}
+      &-party {
+        margin-right: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-    &-current {
-      right: 65px;
-    }
-		
-    &-previous {
-      right: 30px;
-    }
+      &-current,
+      &-previous {
+        padding-right: 7px; 
+      }
 
-    &-trend {
-      right: 5px;
-      width: 16px;
+      &-trend {
+        height: 14px;
+        width: 14px;
+      }
     }
 	}
 

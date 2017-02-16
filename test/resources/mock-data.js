@@ -4,10 +4,11 @@ module.exports = {
   sources: [
     {
       text: "some source",
-      href: "https://www.nzz.ch",
-      validHref: true
+      link: {
+        url: "https://www.nzz.ch",
+        isValid: true
+      }
     }],
-  isIntermediate: true,
   threshold: 5,
   parties: [
     {
