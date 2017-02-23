@@ -38,7 +38,7 @@
             let hours = Math.floor(diffMinutes / 60);
             return `vor ${hours} Stunde${hours > 1 || hours === 0 ? 'n' : ''}`;
           } else if (diffMinutes > 7 * 60 * 24) { // update more than 7 days ago -> show date
-            return `am ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+            return `am ${updated.getDate()}.${updated.getMonth() + 1}.${updated.getFullYear()}`;
           } else {
             let days = Math.floor(diffMinutes / (60 * 24));
             return `vor ${days} Tag${days > 1 || days === 0 ? 'en' : ''}`;
