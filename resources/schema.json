@@ -14,7 +14,10 @@
     "threshold": {
       "title": "% Hürde",
       "description": "Falls eine % Hürde exisitert, bitte Prozentzahl eintragen",
-      "type": "number"
+      "type": "number",
+      "Q:options": {
+        "steps": "0.1"
+      }
     },
     "parties": {
       "title": "Parteien",
@@ -42,11 +45,17 @@
           },
           "percentage": {
             "title": "Stimmen in %",
-            "type": "number"
+            "type": "number",
+            "Q:options": {
+              "steps": "0.1"
+            }
           },
           "previous": {
             "title": "Stimmen letzte Wahl in %",
-            "type": "number"
+            "type": "number",
+            "Q:options": {
+              "steps": "0.1"
+            }
           }
         }
       }
