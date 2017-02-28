@@ -16,12 +16,17 @@
       "description": "Falls eine % Hürde exisitert, bitte Prozentzahl eintragen",
       "type": "number",
       "Q:options": {
-        "steps": "0.1"
+        "step": "0.1"
       }
     },
     "parties": {
       "title": "Parteien",
       "type": "array",
+      "Q:options": {
+        "expandable": {
+          "itemLabelProperty": "name"
+        }
+      },
       "items": {
         "type": "object",
         "properties": {
@@ -47,14 +52,14 @@
             "title": "Stimmen in %",
             "type": "number",
             "Q:options": {
-              "steps": "0.1"
+              "step": "0.1"
             }
           },
           "previous": {
             "title": "Stimmen letzte Wahl in %",
             "type": "number",
             "Q:options": {
-              "steps": "0.1"
+              "step": "0.1"
             }
           }
         }
