@@ -26,10 +26,6 @@
             "title": "Parteiname",
             "type": "string"
           },
-          "abbreviation": {
-            "title": "Kürzel",
-            "type": "string"
-          },
           "color": {
             "title": "Farbe",
             "type": "object",
