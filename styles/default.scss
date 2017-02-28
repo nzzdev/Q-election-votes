@@ -77,6 +77,11 @@
       &-current,
       &-previous {
         padding-right: 7px; 
+        text-align: right;
+      }
+
+      &-previous {
+        width: 30px;
       }
 
       &-trend {

@@ -4,7 +4,7 @@
     {{#if item.percentage}}
       <div class="s-font-note q-election-item-text-current">{{item.percentage.toFixed(1)}}%</div>
       <div class="s-font-note q-election-item-text-previous">
-        {{#if item.trend >= 0}}+{{/if}}{{item.trend}}
+        {{#if item.trend > 0}}+{{/if}}{{item.trend}}
       </div>
       <svg style="transform: rotate({{item.trendDegree}}deg);" width=14 height=14 class="q-election-item-text-trend s-color-gray-8" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg">
         <g fill="currentColor" fill-rule="evenodd">
