@@ -47,6 +47,46 @@
         return maxResult;
       },
       enhancedParties: (sortedParties, maxResult) => {
+        function getDecimals(percentages) {
+          return percentages.map(percentageValue => {
+            if (percentageValue !== undefined) {
+              let percentageString = percentageValue.toString();
+              let parts = percentageString.split('.');
+              if (parts[1] !== undefined) {
+                return parseInt(parts[1]);
+              }
+            }
+            return 0;
+          })
+        }
+
+        function getNumberDecimals(decimals) {
+          let percentageNumberDecimals = 0;
+          let twoDecimals = decimals.findIndex(value => {
+            return value > 9;
+          });
+          if (twoDecimals > -1) {
+            percentageNumberDecimals = 2;
+          } else {
+            let oneDecimal = decimals.findIndex(value => {
+              return value > 0 && value < 10;
+            });
+            if (oneDecimal > -1) {
+              percentageNumberDecimals = 1;
+            }
+          }
+          return percentageNumberDecimals;
+        }
+
+        let currentPercentages = sortedParties.map(party => party.percentage);
+        let previousPercentages = sortedParties.map(party => party.previous);
+
+        let currentDecimals = getDecimals(currentPercentages);
+        let previousDecimals = getDecimals(previousPercentages);
+        
+        let currentNumberDecimals = getNumberDecimals(currentDecimals);
+        let previousNumberDecimals = getNumberDecimals(previousDecimals);
+
         sortedParties.forEach(party => {
           // define width of each party's bar
           let width = '1px';
@@ -72,10 +112,11 @@
           // calculate trend out of previous and current result and use it 
           // to calculate rotation degree of trend arrow
           if (party.percentage) {
+            party.percentage = party.percentage.toFixed(currentNumberDecimals);
             if (party.previous && party.previous > 0) {
-              party.trend = (party.percentage - party.previous).toFixed(1);
+              party.trend = (party.percentage - party.previous).toFixed(previousNumberDecimals);
             } else {
-              party.trend = party.percentage.toFixed(1);
+              party.trend = party.percentage.toFixed(previousNumberDecimals);
             }
             let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
             if (party.trend > 0) {
