@@ -2,8 +2,8 @@
   <div class="q-election-item-text">
     <div class="s-font-title-xs q-election-item-text-party">{{item.name}}</div>
     {{#if item.percentage}}
-      <div class="s-font-note q-election-item-text-current">{{item.percentage.toFixed(1)}}%</div>
-      <div class="s-font-note q-election-item-text-previous">
+      <div class="s-font-note q-election-item-text-current">{{item.percentage}}%</div>
+      <div class="s-font-note q-election-item-text-previous" style="width: {{item.trendWidth}};">
         {{#if item.trend > 0}}+{{/if}}{{item.trend}}
       </div>
       <svg style="transform: rotate({{item.trendDegree}}deg);" width=14 height=14 class="q-election-item-text-trend s-color-gray-8" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg">
