@@ -50,7 +50,9 @@
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
             if (percentageValue !== undefined) {
+              console.log('percentageValue: ', percentageValue);
               let percentageString = percentageValue.toString();
+              console.log('percentageString: ', percentageString);
               let parts = percentageString.split('.');
               if (parts[1] !== undefined) {
                 return parts[1].length;
@@ -73,13 +75,16 @@
         }
 
         let currentPercentages = sortedParties.map(party => party.percentage);
-        let trendPercentages = sortedParties.map(party => party.percentage - party.previous);
+        let trendPercentages = sortedParties.map(party => parseFloat((party.percentage - party.previous).toFixed(2)));
+        console.log('trendPercentages: ', trendPercentages);
         
         let currentDecimals = getDecimalsInput(currentPercentages);
         let trendDecimals = getDecimalsInput(trendPercentages);
+        // console.log('trendDecimals: ', trendDecimals);
         
         let currentNumberDecimals = setDecimalsOutput(currentDecimals);
         let trendNumberDecimals = setDecimalsOutput(trendDecimals);
+        // console.log('trendNumberDecimals: ', trendNumberDecimals);
 
         sortedParties.forEach(party => {
           // define width of each party's bar
