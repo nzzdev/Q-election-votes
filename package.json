@@ -30,16 +30,20 @@
     "url": "git+https://github.com/nzzdev/Q-election-votes.git"
   },
   "dependencies": {
+    "autoprefixer": "^6.7.2",
     "chai": "^3.5.0",
     "enjoi": "^2.1.0",
+    "forever": "^0.15.3",
     "hapi": "^16.1.0",
     "hoek": "^4.1.0",
     "inert": "^4.1.0",
     "joi": "^10.2.0",
     "jsdom": "^9.9.1",
     "json-schema-faker": "^0.4.0",
+    "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
+    "postcss": "^5.2.12",
     "svelte": "^1.6.3"
   }
 }

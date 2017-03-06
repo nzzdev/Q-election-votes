@@ -11,27 +11,27 @@
       "title": "Untertitel",
       "type": "string"
     },
-    "isIntermediate": {
-      "title": "Zwischenergebnis",
-      "type": "boolean"
-    },
     "threshold": {
       "title": "% Hürde",
       "description": "Falls eine % Hürde exisitert, bitte Prozentzahl eintragen",
-      "type": "number"
+      "type": "number",
+      "Q:options": {
+        "step": "0.01"
+      }
     },
     "parties": {
       "title": "Parteien",
       "type": "array",
+      "Q:options": {
+        "expandable": {
+          "itemLabelProperty": "name"
+        }
+      },
       "items": {
         "type": "object",
         "properties": {
           "name": {
             "title": "Parteiname",
-            "type": "string"
-          },
-          "abbreviation": {
-            "title": "Kürzel",
             "type": "string"
           },
           "color": {
@@ -43,18 +43,24 @@
                 "type": "string"
               },
               "classAttribute": {
-                "title": "CSS Klasse",
+                "title": "CSS Klassename",
                 "type": "string"
               }
             }
           },
           "percentage": {
             "title": "Stimmen in %",
-            "type": "number"
+            "type": "number",
+            "Q:options": {
+              "step": "0.01"
+            }
           },
           "previous": {
             "title": "Stimmen letzte Wahl in %",
-            "type": "number"
+            "type": "number",
+            "Q:options": {
+              "step": "0.01"
+            }
           }
         }
       }
@@ -73,12 +79,19 @@
             "title": "Text",
             "type": "string"
           },
-          "href": {
-            "title": "URL",
-            "type": "string"
-          },
-          "validHref": {
-            "type": "boolean"
+          "link": {
+            "Q:type": "link",
+            "title": "Link",
+            "type": "object",
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "isValid": {
+                "type": "boolean"
+              }    
+            }
           }
         }
       }
