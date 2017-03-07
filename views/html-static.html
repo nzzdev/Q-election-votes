@@ -73,7 +73,7 @@
         }
 
         let currentPercentages = sortedParties.map(party => party.percentage);
-        let trendPercentages = sortedParties.map(party => party.percentage - party.previous);
+        let trendPercentages = sortedParties.map(party => parseFloat((party.percentage - party.previous).toFixed(2)));
         
         let currentDecimals = getDecimalsInput(currentPercentages);
         let trendDecimals = getDecimalsInput(trendPercentages);
