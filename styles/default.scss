@@ -61,14 +61,12 @@
     &-text {
       background-color: currentColor;
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
       width: 100%;
       position: relative;
       z-index: 1;
 
       &-party {
-        margin-right: auto;
+        flex: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
