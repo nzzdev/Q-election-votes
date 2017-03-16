@@ -47,6 +47,7 @@
         return maxResult;
       },
       enhancedParties: (sortedParties, maxResult) => {
+        // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
             if (percentageValue !== undefined) {
@@ -59,7 +60,8 @@
             return 0;
           })
         }
-
+        
+        // define the number of decimal places which shall be displayed, max = 2
         function setDecimalsOutput(decimals) {
           let bigDecimals = decimals.filter(value => value > 1);
           if (bigDecimals !== undefined && bigDecimals.length > 0) {
@@ -72,12 +74,15 @@
           return 0;
         }
 
+        // create an array for vote values (currentPercentages) and trend values (trendPercentages)
         let currentPercentages = sortedParties.map(party => party.percentage);
         let trendPercentages = sortedParties.map(party => parseFloat((party.percentage - party.previous).toFixed(2)));
         
+        // get number of decimal places for vote values and trend values
         let currentDecimals = getDecimalsInput(currentPercentages);
         let trendDecimals = getDecimalsInput(trendPercentages);
         
+        // set number of decimals which should be displayed for vote values and trend values separately
         let currentNumberDecimals = setDecimalsOutput(currentDecimals);
         let trendNumberDecimals = setDecimalsOutput(trendDecimals);
 
@@ -121,6 +126,7 @@
           }
         })
         
+        // process the group of other parties differently - not part of the threshold
         let othersIndex = sortedParties.findIndex(party => {
           let othersPattern = /((.*(A|a)ndere.*)|(.*(S|s)onstig.*))/; 
           return othersPattern.test(party.name);

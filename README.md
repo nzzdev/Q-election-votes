@@ -8,7 +8,11 @@ Here is what the tool looks like on mobile and other devices. The example shows 
 ![Election results as shown on other devices](https://github.com/nzzdev/Q-election-votes/blob/feat-readme/readme-images/votes_desk.png)
 ![Election results as shown on mobile](https://github.com/nzzdev/Q-election-votes/blob/feat-readme/readme-images/votes_mob.png)
 
+Each graphic has the following three sections:
+- Header: contains specified title and subtitle
+- Main Part: displays results for each party including the trend compared to last elections and - if present - a threshold line indicating if a party will be part of the parliament
+- Footer: contains further notes (e.g. how many municipalities already finished counting), source(s) and update information
 
 ## Implementation details
-For general information on how to develop a Q tool see [Q documentation](https://nzzdev.github.io/Q-server/developing-tools.html).
+The tool structure follows the general structure of each Q tool. Further information can be found in [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html).
 
