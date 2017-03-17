@@ -110,15 +110,17 @@
           
           // calculate trend out of previous and current result and use it 
           // to calculate rotation degree of trend arrow
-          if (party.percentage) {
-            party.percentage = party.percentage.toFixed(currentNumberDecimals);
+          if (party.percentage !== undefined) {
+            let currentPercentageNumber = party.percentage;
+            party.percentage = currentPercentageNumber.toFixed(currentNumberDecimals);
             if (party.previous && party.previous > 0) {
-              party.trend = (party.percentage - party.previous).toFixed(trendNumberDecimals);
+              party.trend = (currentPercentageNumber - party.previous).toFixed(trendNumberDecimals);
             } else {
-              party.trend = party.percentage.toFixed(trendNumberDecimals);
+              party.trend = currentPercentageNumber.toFixed(trendNumberDecimals);
             }
-            let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
-            if (party.trend > 0) {
+            let trendNumber = parseFloat(party.trend);
+            let trendDegree = (Math.min(Math.abs(trendNumber),5) * 90) / 5;
+            if (trendNumber > 0) {
               trendDegree = -trendDegree;
             }
             party.trendDegree = trendDegree;
