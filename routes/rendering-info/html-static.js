@@ -47,8 +47,7 @@ module.exports = {
     let data = {
       stylesheets: [
         {
-          name: 'default',
-          type: 'critical'
+          name: 'default'
         }
       ],
       markup: staticTemplate.render(request.payload.item)
@@ -56,8 +55,7 @@ module.exports = {
 
     if (isSophieVizColorDefined) {
       data.stylesheets.push({
-        url: 'https://service.sophie.nzz.ch/bundle/sophie-viz-color@^1.0.0[parties].css',
-        type: 'critical'
+        url: 'https://service.sophie.nzz.ch/bundle/sophie-viz-color@^1.0.0[parties].css'
       });
     }
 

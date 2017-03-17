@@ -47,6 +47,7 @@
         return maxResult;
       },
       enhancedParties: (sortedParties, maxResult) => {
+        // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
             if (percentageValue !== undefined) {
@@ -59,7 +60,8 @@
             return 0;
           })
         }
-
+        
+        // define the number of decimal places which shall be displayed, max = 2
         function setDecimalsOutput(decimals) {
           let bigDecimals = decimals.filter(value => value > 1);
           if (bigDecimals !== undefined && bigDecimals.length > 0) {
@@ -72,12 +74,15 @@
           return 0;
         }
 
+        // create an array for vote values (currentPercentages) and trend values (trendPercentages)
         let currentPercentages = sortedParties.map(party => party.percentage);
         let trendPercentages = sortedParties.map(party => parseFloat((party.percentage - party.previous).toFixed(2)));
         
+        // get number of decimal places for vote values and trend values
         let currentDecimals = getDecimalsInput(currentPercentages);
         let trendDecimals = getDecimalsInput(trendPercentages);
         
+        // set number of decimals which should be displayed for vote values and trend values separately
         let currentNumberDecimals = setDecimalsOutput(currentDecimals);
         let trendNumberDecimals = setDecimalsOutput(trendDecimals);
 
@@ -105,12 +110,11 @@
           
           // calculate trend out of previous and current result and use it 
           // to calculate rotation degree of trend arrow
-          if (party.percentage) {
-            party.percentage = party.percentage.toFixed(currentNumberDecimals);
-            if (party.previous && party.previous > 0) {
-              party.trend = (party.percentage - party.previous).toFixed(trendNumberDecimals);
+          if (party.percentage !== undefined) {
+            if (party.previous !== undefined) {
+              party.trend = party.percentage - party.previous;
             } else {
-              party.trend = party.percentage.toFixed(trendNumberDecimals);
+              party.trend = party.percentage;
             }
             let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
             if (party.trend > 0) {
@@ -118,9 +122,14 @@
             }
             party.trendDegree = trendDegree;
             party.trendWidth = 24 + (trendNumberDecimals * 8) + 'px';
+
+            party.percentage = party.percentage.toFixed(currentNumberDecimals);
+            party.trend = party.trend.toFixed(trendNumberDecimals);
+
           }
         })
         
+        // process the group of other parties differently - not part of the threshold
         let othersIndex = sortedParties.findIndex(party => {
           let othersPattern = /((.*(A|a)ndere.*)|(.*(S|s)onstig.*))/; 
           return othersPattern.test(party.name);
