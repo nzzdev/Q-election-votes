@@ -1,5 +1,5 @@
-<div class="q-item-container">
-  <Header title='{{item.title}}' titleClassAttribute='{{titleClassAttribute}}' subtitle='{{item.subtitle}}' />
+<div class="q-item-container" style="opacity: 0;">
+  <Header title='{{item.title}}' hideTitle='{{hideTitle}}' subtitle='{{item.subtitle}}' />
   <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
@@ -25,11 +25,8 @@
       parties: (item) => {
         return item.parties;
       },
-      titleClassAttribute: (toolRuntimeConfig) => {
-        if (toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle) {
-          return 'q-election-title--hidden';
-        }
-        return '';
+      hideTitle: (toolRuntimeConfig) => {
+        return toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle;
       },
       sortedParties: (parties) => {
         if (parties !== undefined) {
