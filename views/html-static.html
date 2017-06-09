@@ -1,5 +1,5 @@
 <div class="q-item-container">
-  <Header subtitle='{{subtitle}}' title='{{title}}' />
+  <Header title='{{item.title}}' titleClassAttribute='{{titleClassAttribute}}' subtitle='{{item.subtitle}}' />
   <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
@@ -11,7 +11,7 @@
       <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
     </div>
   {{/if}}
-  <Footer sources='{{sources}}' notes='{{notes}}' updatedDate='{{updatedDate}}' maxResult='{{maxResult}}'/>
+  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' maxResult='{{maxResult}}'/>
 </div>
 
 <script>
@@ -22,6 +22,15 @@
 
   export default {
     computed: {
+      parties: (item) => {
+        return item.parties;
+      },
+      titleClassAttribute: (toolRuntimeConfig) => {
+        if (toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle) {
+          return 'q-election-title--hidden';
+        }
+        return '';
+      },
       sortedParties: (parties) => {
         if (parties !== undefined) {
           return parties.sort(function(partyA, partyB) {
@@ -151,6 +160,9 @@
       },
       otherPartiesItem : (enhancedParties) => {
         return enhancedParties.others;
+      },
+      threshold: (item) => {
+        return item.threshold;
       },
       thresholdOffset: (threshold, maxResult) => {
         if (threshold !== undefined && threshold > 0 && maxResult > 0) {
