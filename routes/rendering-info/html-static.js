@@ -35,6 +35,21 @@ module.exports = {
     cors: true
   },
   handler: function(request, reply) {
+
+    let item = request.payload.item;
+    // gray levels start from 4, other levels are either used or too light
+    const defaultGrayLevels = [4, 5, 6, 7, 8, 9];
+
+    // if party has no color we assign a gray level as default
+    item.parties.map((party, index) => {
+      if (!party.color || (!party.color.classAttribute && !party.color.colorCode)) {
+        party.color = {
+          classAttribute: `s-color-gray-${defaultGrayLevels[index % defaultGrayLevels.length]}`
+        }
+      }
+      return party;
+    })
+    
     // rendering data will be used by template to create the markup
     // it contains the item itself and additional options impacting the markup
     let renderingData = {
