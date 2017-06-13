@@ -1,5 +1,5 @@
-<div class="q-item-container">
-  <Header subtitle='{{subtitle}}' title='{{title}}' />
+<div class="q-election" style="opacity: 0;">
+  <Header title='{{item.title}}' hideTitle='{{hideTitle}}' subtitle='{{item.subtitle}}' />
   <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
@@ -11,7 +11,7 @@
       <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
     </div>
   {{/if}}
-  <Footer sources='{{sources}}' notes='{{notes}}' updatedDate='{{updatedDate}}' maxResult='{{maxResult}}'/>
+  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' maxResult='{{maxResult}}'/>
 </div>
 
 <script>
@@ -22,6 +22,12 @@
 
   export default {
     computed: {
+      parties: (item) => {
+        return item.parties;
+      },
+      hideTitle: (toolRuntimeConfig) => {
+        return toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle;
+      },
       sortedParties: (parties) => {
         if (parties !== undefined) {
           return parties.sort(function(partyA, partyB) {
@@ -86,7 +92,11 @@
         let currentNumberDecimals = setDecimalsOutput(currentDecimals);
         let trendNumberDecimals = setDecimalsOutput(trendDecimals);
 
-        sortedParties.forEach(party => {
+        // if no color is defined for parties we assign a default color, which is one of the following
+        // gray levels - other levels are either used or too light
+        const defaultGrayLevels = [4, 5, 6, 7, 8, 9];
+
+        sortedParties.forEach((party, index) => {
           // define width of each party's bar
           let width = '1px';
           if (maxResult > 0 && party.percentage && party.percentage > 0) {
@@ -101,10 +111,16 @@
           if (party.color) {
             if (party.color.classAttribute) {
               colorClass = party.color.classAttribute;
-            } else {
+            } else if (party.color.colorCode) {
               colorStyle = 'background-color: ' + party.color.colorCode + ';';
             }
           }
+
+          // if no color is defined assign a default color
+          if (!colorClass && !colorStyle) {
+            colorClass = `s-color-gray-${defaultGrayLevels[index % defaultGrayLevels.length]}`;
+          }
+
           party.colorClass = colorClass;
           party.colorStyle = colorStyle;
           
@@ -151,6 +167,9 @@
       },
       otherPartiesItem : (enhancedParties) => {
         return enhancedParties.others;
+      },
+      threshold: (item) => {
+        return item.threshold;
       },
       thresholdOffset: (threshold, maxResult) => {
         if (threshold !== undefined && threshold > 0 && maxResult > 0) {
