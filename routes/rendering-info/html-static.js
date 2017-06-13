@@ -15,7 +15,7 @@ const displayOptionsSchema = Enjoi(JSON.parse(fs.readFileSync(resourcesDir + 'di
 })));
 
 require('svelte/ssr/register');
-const staticTemplate = require(viewsDir + 'html-static.html');
+const staticTemplate = require(viewsDir + 'HtmlStatic.html');
 
 module.exports = {
   method: 'POST',
@@ -34,7 +34,7 @@ module.exports = {
     },
     cors: true
   },
-  handler: function(request, reply) {
+  handler: function(request, reply) {    
     // rendering data will be used by template to create the markup
     // it contains the item itself and additional options impacting the markup
     let renderingData = {
