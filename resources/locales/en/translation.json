@@ -7,7 +7,7 @@
   "Partei": "party",
   "Parteiname": "party name",
   "Farbe": "color",
-  "Farbcode (Hex-Wert oder vordefinierter CSS Farbname, z.B. green)": "color code (hex value or one of the predefined CSS color names, e.g. green)",
+  "Farbcode": "color code",
   "CSS Klassenname": "CSS class name",
   "Stimmen in %": "votes in %",
   "Stimmen letzte Wahl in %": "votes previous election in %",
