@@ -3,12 +3,12 @@
   <div class="q-election-parties {{thresholdOffset}}">
     <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
     {{#each partyItems as party}}
-      <ElectionItem item='{{party}}' maxResult='{{maxResult}}' />
+      <ElectionItem item='{{party}}' maxResult='{{maxResult}}' hasTrendSpace='{{hasTrendSpace}}'/>
     {{/each}}
   </div>
   {{#if otherPartiesItem}}
     <div class="q-election-others">
-      <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}' />
+      <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}'  hasTrendSpace='{{hasTrendSpace}}'/>
     </div>
   {{/if}}
   <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' maxResult='{{maxResult}}'/>
@@ -42,6 +42,12 @@
         } else {
           return [];
         }
+      },
+      hasTrendSpace: (parties) => {
+        const partiesWithPreviousResult = parties.filter(party => {
+          return party.previous !== undefined && party.previous > 0;
+        });
+        return partiesWithPreviousResult.length > 0;
       },
       maxResult: (sortedParties) => {
         let maxResult = 0;
@@ -127,22 +133,20 @@
           // calculate trend out of previous and current result and use it 
           // to calculate rotation degree of trend arrow
           if (party.percentage !== undefined) {
-            if (party.previous !== undefined) {
-              party.trend = party.percentage - party.previous;
-            } else {
-              party.trend = party.percentage;
-            }
-            let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
-            if (party.trend > 0) {
-              trendDegree = -trendDegree;
-            }
-            party.trendDegree = trendDegree;
-            party.trendWidth = 24 + (trendNumberDecimals * 8) + 'px';
-
             party.percentage = party.percentage.toFixed(currentNumberDecimals);
-            party.trend = party.trend.toFixed(trendNumberDecimals);
 
+            if (party.previous !== undefined && party.previous > 0) {
+              party.trend = party.percentage - party.previous;
+              
+              let trendDegree = (Math.min(Math.abs(party.trend),5) * 90) / 5;
+              if (party.trend > 0) {
+                trendDegree = -trendDegree;
+              }
+              party.trendDegree = trendDegree;
+              party.trend = party.trend.toFixed(trendNumberDecimals);
+            }
           }
+          party.trendWidth = 24 + (trendNumberDecimals * 8) + 'px';
         })
         
         // process the group of other parties differently - not part of the threshold
