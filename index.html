@@ -5,11 +5,11 @@
     <title>Q Election Votes</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@^0.1.0,sophie-color@~1.0.0,sophie-viz-color@^1.0.0[diverging-6].css">
+    <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@^1.2.0-rc,sophie-font@^1.2.0-rc,sophie-color@^1.1.0-rc,sophie-viz-color@^1.2.0-rc[diverging-6].css">
     <script src="https://rawgit.com/filamentgroup/loadCSS/master/src/loadCSS.js"></script>
   </head>
   <body>
-    <div id="votes" style="background-color: #f5f5f5; color:#f5f5f5;"></div>
+    <div id="votes" style="background-color: #fff; color:#fff;"></div>
     <script>
       let data = {
         "item": {
@@ -28,71 +28,49 @@
           "threshold": 5,
           "parties": [
             {
-              "name": "Socialistische Partij",
               "color": {
+                "colorCode": "#0a0a0a"
               },
-              "percentage": "10",
-              "previous": "9.5"
+              "name": "Union",
+              "previous": 41.5,
+              "percentage": 40
             },
             {
-              "name": "Partij van de Arbeid",
-              "percentage": "25.50",
-
-            },
-            {
-              "name": "GroenLinks",
               "color": {
+                "colorCode": "#d1cc00"
               },
-              "percentage": "2",
-
+              "name": "FDP",
+              "previous": 4.8,
+              "percentage": 0
             },
             {
-              "name": "Democraten 66",
               "color": {
-                "classAttribute": "",
-                "colorCode": "#22a682"
+                "colorCode": "#0084c7"
               },
-              "percentage": "8.2",
+              "name": "AfD",
+              "percentage": 4.7,
+              "previous": 0
             },
             {
-              "name": "ChristenUnie",
               "color": {
-                "classAttribute": ""
+                "colorCode": "#8440a3"
               },
-              "percentage": "3",
-              "previous": "3"
+              "name": "Die Linke",
+              "previous": 8.6
             },
             {
-              "name": "Christen-Democratisch Appèl",
               "color": {
-                
+                "colorCode": "#66a622"
               },
-              "percentage": "8",
-              "previous": "8"
+              "name": "Grüne ",
+              "previous": 8.4
             },
             {
-              "name": "Volkspartij voor Vrijheid en Democratie",
               "color": {
-                
+                "colorCode": "#616161"
               },
-              "percentage": "27",
-              "previous": "26"
-            },
-            {
-              "name": "Partij voor de Vrijheid",
-              "color": {
-                
-              },
-              "percentage": "10",
-              "previous": "10"
-            },
-            {
               "name": "andere",
-              "color": {
-                
-              },
-              "percentage": "7",
-              "previous": "6"
+              "previous": 6.3
             }
           ]
         },
