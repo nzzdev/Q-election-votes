@@ -63,6 +63,7 @@
     &-text {
       background-color: currentColor;
       display: flex;
+      align-items: baseline;
       width: 100%;
       position: relative;
       z-index: 1;
@@ -82,8 +83,7 @@
       }
 
       &-trend {
-        height: 14px;
-        width: 14px;
+        vertical-align: middle;
       }
     }
 	}

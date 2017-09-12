@@ -1,5 +1,5 @@
-{{#if threshold && maxResult > 0}}
-  <div class="q-election-threshold s-color-gray-5" style="left: {{(threshold * 100) / maxResult}}%;">
+{{#if threshold && base > 0}}
+  <div class="q-election-threshold s-color-gray-5" style="left: {{(threshold * 100) / base}}%;">
     <svg class="q-election-threshold-arrow" height=20 width=7 viewBox="0 0 7 20" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 5v15H3V5H0l3.5-5L7 5H4z" fill="currentColor" fill-rule="evenodd"/>
     </svg>
@@ -10,8 +10,8 @@
 <script>
   export default {
     computed: {
-      thresholdTextAlignClass : (maxResult, threshold) => {
-        if (maxResult === 0 || ((threshold * 100 / maxResult) > 50)) {
+      thresholdTextAlignClass : (base, threshold) => {
+        if (base === 0 || ((threshold * 100 / base) > 50)) {
           return "right";
         } else {
           return "left";
