@@ -1,14 +1,14 @@
 <div class="q-election" style="opacity: 0;">
   <Header title='{{item.title}}' hideTitle='{{hideTitle}}' subtitle='{{item.subtitle}}' />
   <div class="q-election-parties {{thresholdOffset}}">
-    <Threshold threshold='{{threshold}}' maxResult='{{maxResult}}' />
+    <Threshold threshold='{{threshold}}' base='{{base}}' />
     {{#each partyItems as party}}
-      <ElectionItem item='{{party}}' maxResult='{{maxResult}}' hasTrendSpace='{{hasTrendSpace}}'/>
+      <ElectionItem item='{{party}}' hasTrendSpace='{{hasTrendSpace}}'/>
     {{/each}}
   </div>
   {{#if otherPartiesItem}}
     <div class="q-election-others">
-      <ElectionItem item='{{otherPartiesItem}}' maxResult='{{maxResult}}'  hasTrendSpace='{{hasTrendSpace}}'/>
+      <ElectionItem item='{{otherPartiesItem}}' hasTrendSpace='{{hasTrendSpace}}'/>
     </div>
   {{/if}}
   <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' maxResult='{{maxResult}}'/>
@@ -28,16 +28,22 @@
       hideTitle: (toolRuntimeConfig) => {
         return toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle;
       },
+      hasCurrentResults: (parties) => {
+        let currentResults = parties.filter(party => {
+          return party.percentage !== undefined;
+        });
+        return currentResults.length > 0;
+      },
       sortedParties: (parties) => {
         if (parties !== undefined) {
           return parties.sort(function(partyA, partyB) {
-            if (partyA.percentage === undefined) {
-              partyA.percentage = 0;
+            if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
+              return 0;
             }
-            if (partyB.percentage === undefined) {
-              partyB.percentage = 0;
+            if ((partyA.percentage === undefined && partyB.percentage !== undefined) || (partyA.percentage < partyB.percentage)) {
+              return 1;
             }
-            return partyB.percentage - partyA.percentage;
+            return -1;
           })
         } else {
           return [];
@@ -57,6 +63,13 @@
           maxResult = sortedParties[0].percentage;
         }
         return maxResult;
+      },
+      base: (maxResult, hasCurrentResults) => {
+        let base = maxResult;
+        if (!hasCurrentResults) {
+          base = 100;
+        }
+        return base;
       },
       enhancedParties: (sortedParties, maxResult) => {
         // return the number of decimal places for each percentage number
@@ -175,8 +188,8 @@
       threshold: (item) => {
         return item.threshold;
       },
-      thresholdOffset: (threshold, maxResult) => {
-        if (threshold !== undefined && threshold > 0 && maxResult > 0) {
+      thresholdOffset: (threshold, base) => {
+        if (threshold !== undefined && threshold > 0 && base > 0) {
           return 'q-election-threshold-offset';
         }
         else '';
