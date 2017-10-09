@@ -75,7 +75,7 @@ module.exports = {
 
     if (isSophieVizColorDefined) {
       data.stylesheets.push({
-        url: 'https://service.sophie.nzz.ch/bundle/sophie-viz-color@^1.0.0[parties].css'
+        url: 'https://service.sophie.nzz.ch/bundle/sophie-viz-color@^1[parties].css'
       });
     }
 
