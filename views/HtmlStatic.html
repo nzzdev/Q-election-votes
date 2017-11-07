@@ -11,7 +11,7 @@
       <ElectionItem item='{{otherPartiesItem}}' hasTrendSpace='{{hasTrendSpace}}'/>
     </div>
   {{/if}}
-  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' maxResult='{{maxResult}}'/>
+  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' hideUpdatedDate='{{hideUpdatedDate}}'/>
 </div>
 
 <script>
@@ -193,6 +193,12 @@
           return 'q-election-threshold-offset';
         }
         else '';
+      },
+      hideUpdatedDate: (item) => {
+        if (item.options && item.options.hideUpdatedDate) {
+          return true;
+        }
+        return false;
       }
     },
 
