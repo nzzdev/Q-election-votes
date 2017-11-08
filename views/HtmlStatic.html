@@ -195,10 +195,7 @@
         else '';
       },
       hideUpdatedDate: (item) => {
-        if (item.options && item.options.hideUpdatedDate) {
-          return true;
-        }
-        return false;
+        return item.options && item.options.hideUpdatedDate;
       }
     },
 
