@@ -45,8 +45,8 @@
           }
         }
       },
-      shouldHaveUpdateInfo: (updatedDate, maxResult) => {
-        return updatedDate !== undefined && maxResult > 0;
+      shouldHaveUpdateInfo: (updatedDate, hideUpdatedDate) => {
+        return updatedDate !== undefined && !hideUpdatedDate;
       },
       shouldHaveSources: (sources) => {
         return sources !== undefined && sources.length > 0;
