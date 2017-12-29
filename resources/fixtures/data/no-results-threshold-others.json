@@ -1,0 +1,59 @@
+{
+  "title": "FIXTURE: no results - threshold - others",
+  "sources": [
+    {
+      "text": "NZZ",
+      "link": {
+        "url": "https://nzz.ch",
+        "isValid": true
+      }
+    }
+  ],
+  "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+  "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+  "threshold": 5,
+  "parties": [
+    {
+      "color": {
+        "colorCode": "#0a0a0a"
+      },
+      "name": "Union",
+      "previous": 41.5
+    },
+    {
+      "color": {
+        "colorCode": "#d1cc00"
+      },
+      "name": "FDP",
+      "previous": 4.8
+    },
+    {
+      "color": {
+        "colorCode": "#0084c7"
+      },
+      "name": "AfD",
+      "previous": 0
+    },
+    {
+      "color": {
+        "colorCode": "#8440a3"
+      },
+      "name": "Die Linke",
+      "previous": 8.6
+    },
+    {
+      "color": {
+        "colorCode": "#66a622"
+      },
+      "name": "Grüne ",
+      "previous": 8.4
+    },
+    {
+      "color": {
+        "colorCode": "#616161"
+      },
+      "name": "andere",
+      "previous": 6.3
+    }
+  ]
+}

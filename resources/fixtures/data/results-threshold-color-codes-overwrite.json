@@ -1,0 +1,68 @@
+{
+  "title": "FIXTURE: results - threshold - classes overwrite color",
+  "sources": [
+    {
+      "text": "NZZ",
+      "link": {
+        "url": "https://nzz.ch",
+        "isValid": true
+      }
+    }
+  ],
+  "subtitle": "Color codes contain party color, class attribute is set to default party color, so every bar should have the same default color",
+  "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+  "threshold": 5,
+  "parties": [
+    {
+      "color": {
+        "colorCode": "#01b1c0",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "SVP",
+      "previous": 41.5,
+      "percentage": 40
+    },
+    {
+      "color": {
+        "colorCode": "#0084c7",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "FDP",
+      "percentage": 4
+    },
+    {
+      "color": {
+        "colorCode": "#22a682",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "GLP",
+      "previous": 0,
+      "percentage": 1
+    },
+    {
+      "color": {
+        "colorCode": "#c31906",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "SP",
+      "percentage": 12
+    },
+    {
+      "color": {
+        "colorCode": "#66a622",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "Grüne",
+      "previous": 8.4,
+      "percentage": 16
+    },
+    {
+      "color": {
+        "colorCode": "#000",
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "andere",
+      "percentage": 6
+    }
+  ]
+}

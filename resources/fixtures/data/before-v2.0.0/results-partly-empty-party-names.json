@@ -1,0 +1,60 @@
+{
+  "title": "FIXTURE: results - partly previous - color classes",
+  "sources": [
+    {
+      "text": "NZZ",
+      "link": {
+        "url": "https://nzz.ch",
+        "isValid": true
+      }
+    }
+  ],
+  "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+  "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+  "parties": [
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-svp-5"
+      },
+      "name": "",
+      "previous": 41.5,
+      "percentage": 40
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-fdp-5"
+      },
+      "percentage": 4
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-glp-5"
+      },
+      "name": "GLP",
+      "previous": 0,
+      "percentage": 1
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-sp-5"
+      },
+      "name": "SP",
+      "percentage": 12
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-gps-5"
+      },
+      "name": "Grüne",
+      "previous": 8.4,
+      "percentage": 16
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "andere",
+      "percentage": 6
+    }
+  ]
+}

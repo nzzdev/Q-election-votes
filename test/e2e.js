@@ -21,42 +21,58 @@ async function start() {
   server.route(routes);
   await server.start();
 
-  describe('Q required API', () => {
+  describe('basic routes', () => {
+    it('starts the server', () => {
+      expect(server.info.port).to.be.equal(3000);
+    });
+  
+    it('is healthy', async () => {
+      const response = await server.inject('/health');
+      expect(response.payload).to.be.equal('ok');
+    });
+  });
 
-    it('should return 200 for /schema.json', async () => {
+
+  describe('schema endpoint', () => {
+    
+    it('returns 200 for /schema.json', async () => {
       const response = await server.inject('/schema.json');
       expect(response.statusCode).to.be.equal(200);
     });
-
-    it('should return 200 for /stylesheet/default.123.css', async () => {
-      const response = await server.inject('/stylesheet/default.123.css');
+  
+  });
+    
+  describe('stylesheet endpoint', () => {
+    
+    it('returns 200 for /stylesheet/default.123.css', async () => {
+      const response = await server.inject('/stylesheet/default.123.css')
       expect(response.statusCode).to.be.equal(200);
     });
-
-    it('should return 404 for inexistent stylesheet', async () => {
-      const response = await server.inject('/stylesheet/inexisting.123.css');
+  
+    it('returns 404 for inexistent stylesheet', async () => {
+      const response = await server.inject('/stylesheet/inexisting.123.css')
       expect(response.statusCode).to.be.equal(404);
     });
-
+  
   });
 
-  const mockDataV1 = JSON.parse(JSON.stringify(require('./resources/mock-data-v1.0.0')));
-  const mockDataV2 = JSON.parse(JSON.stringify(require('./resources/mock-data-v2.0.0')));
+  const fixtureDataV1 = require('../resources/fixtures/data/before-v2.0.0/results-partly-empty-party-names.json');
+  const fixtureDataV2 = require('../resources/fixtures/data/results-partly-previous-color-class.json');
 
-  describe('rendering-info endpoints', () => {
+  describe('rendering-info endpoint', () => {
 
     it('should return 200 for /rendering-info/html-static', async () => {
       const request = {
         method: 'POST',
         url: '/rendering-info/html-static',
-        payload: JSON.stringify({ 
-          item: mockDataV2,
+        payload: { 
+          item: fixtureDataV2,
           toolRuntimeConfig: {
             displayOptions: {
 
             }
           }
-        })
+        }
       };
       const response = await server.inject(request);
       expect(response.statusCode).to.be.equal(200);
@@ -70,7 +86,9 @@ async function start() {
       const request = {
         method: 'POST',
         url: '/migration',
-        payload: JSON.stringify({ item: mockDataV1 })
+        payload: { 
+          item: fixtureDataV1 
+        }
       } ;
       const response = await server.inject(request);
       expect(Joi.validate(response.result.item, schema).error).to.be.null;
@@ -80,13 +98,23 @@ async function start() {
       const request = {
         method: 'POST',
         url: '/migration',
-        payload: JSON.stringify({ item: mockDataV2 })
+        payload: { 
+          item: fixtureDataV2 
+        }
       } ;
       const response = await server.inject(request);
       expect(response.statusCode).to.be.equal(304);
     });
 
-  })
+  });
+
+  describe('fixture data endpoint', () => {
+    it('returns 0 fixture data items for /fixtures/data', async () => {
+      const response = await server.inject('/fixtures/data');
+      expect(response.statusCode).to.be.equal(200);
+      expect(response.result.length).to.be.equal(4);
+    })
+  });
 }
 
 start();
