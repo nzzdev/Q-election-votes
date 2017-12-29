@@ -1,6 +1,5 @@
 'use strict';
 
-const Hoek = require('hoek');
 const expect = require('chai').expect;
 const server = require('../server.js');
 const plugins = require('../server-plugins.js');
@@ -16,92 +15,78 @@ const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
 }));
 const schema = Enjoi(schemaString); 
 
-server.register(plugins, err => {
-  Hoek.assert(!err, err);
 
+async function start() {
+  await server.register(plugins);
   server.route(routes);
+  await server.start();
 
-  server.start(err => {
-    Hoek.assert(!err, err);
-  })
+  describe('Q required API', () => {
 
-});
-
-describe('Q required API', () => {
-
-  it('should return 200 for /schema.json', function(done) {
-    server.inject('/schema.json', (res) => {
-      expect(res.statusCode).to.be.equal(200);
-      done();
+    it('should return 200 for /schema.json', async () => {
+      const response = await server.inject('/schema.json');
+      expect(response.statusCode).to.be.equal(200);
     });
-  })
 
-  it('should return 200 for /stylesheet/default.123.css', function(done) {
-    server.inject('/stylesheet/default.123.css', (res) => {
-      expect(res.statusCode).to.be.equal(200);
-      done()
+    it('should return 200 for /stylesheet/default.123.css', async () => {
+      const response = await server.inject('/stylesheet/default.123.css');
+      expect(response.statusCode).to.be.equal(200);
     });
-  })
 
-  it('should return 404 for inexistent stylesheet', function(done) {
-    server.inject('/stylesheet/inexisting.123.css', (res) => {
-      expect(res.statusCode).to.be.equal(404);
-      done()
+    it('should return 404 for inexistent stylesheet', async () => {
+      const response = await server.inject('/stylesheet/inexisting.123.css');
+      expect(response.statusCode).to.be.equal(404);
     });
-  })
 
-});
+  });
 
-const mockDataV1 = JSON.parse(JSON.stringify(require('./resources/mock-data-v1.0.0')));
-const mockDataV2 = JSON.parse(JSON.stringify(require('./resources/mock-data-v2.0.0')));
+  const mockDataV1 = JSON.parse(JSON.stringify(require('./resources/mock-data-v1.0.0')));
+  const mockDataV2 = JSON.parse(JSON.stringify(require('./resources/mock-data-v2.0.0')));
 
-describe('rendering-info endpoints', () => {
+  describe('rendering-info endpoints', () => {
 
-  it('should return 200 for /rendering-info/html-static', function(done) {
-    const request = {
-      method: 'POST',
-      url: '/rendering-info/html-static',
-      payload: JSON.stringify({ 
-        item: mockDataV2,
-        toolRuntimeConfig: {
-          displayOptions: {
+    it('should return 200 for /rendering-info/html-static', async () => {
+      const request = {
+        method: 'POST',
+        url: '/rendering-info/html-static',
+        payload: JSON.stringify({ 
+          item: mockDataV2,
+          toolRuntimeConfig: {
+            displayOptions: {
 
+            }
           }
-        }
-      })
-    };
-    server.inject(request, (res) => {
-      expect(res.statusCode).to.be.equal(200);
-      done();
+        })
+      };
+      const response = await server.inject(request);
+      expect(response.statusCode).to.be.equal(200);
     });
+
+  });
+
+  describe('migration endpoint', () => {
+    
+    it('should pass validation against schema after migration via endpoint /migration', async () => {
+      const request = {
+        method: 'POST',
+        url: '/migration',
+        payload: JSON.stringify({ item: mockDataV1 })
+      } ;
+      const response = await server.inject(request);
+      expect(Joi.validate(response.result.item, schema).error).to.be.null;
+    });
+
+    it('should return 304 for /migration', async () => {
+      const request = {
+        method: 'POST',
+        url: '/migration',
+        payload: JSON.stringify({ item: mockDataV2 })
+      } ;
+      const response = await server.inject(request);
+      expect(response.statusCode).to.be.equal(304);
+    });
+
   })
+}
 
-});
-
-describe('migration endpoint', () => {
-  
-  it('should pass validation against schema after migration via endpoint /migration', function(done) {
-    const request = {
-      method: 'POST',
-      url: '/migration',
-      payload: JSON.stringify({ item: mockDataV1 })
-    } ;
-    server.inject(request, (res) => {
-      expect(Joi.validate(res.result.item, schema).error).to.be.null;
-      done();
-    })
-  })
-
-  it('should return 304 for /migration', function(done) {
-    const request = {
-      method: 'POST',
-      url: '/migration',
-      payload: JSON.stringify({ item: mockDataV2 })
-    } ;
-    server.inject(request, (res) => {
-      expect(res.statusCode).to.be.equal(304);
-      done();
-    })
-  })
-
-})
+start();

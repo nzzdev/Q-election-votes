@@ -22,7 +22,7 @@ const staticTemplate = require(viewsDir + 'HtmlStatic.html');
 module.exports = {
   method: 'POST',
   path: '/rendering-info/html-static',
-  config: {
+  options: {
     validate: {
       options: {
         allowUnknown: true
@@ -37,7 +37,7 @@ module.exports = {
     cache: false, // do not send cache control header to let it be added by Q Server
     cors: true
   },
-  handler: function(request, reply) {    
+  handler: function(request, h) {    
     // rendering data will be used by template to create the markup
     // it contains the item itself and additional options impacting the markup
     let renderingData = {
@@ -79,6 +79,6 @@ module.exports = {
       });
     }
 
-    return reply(data);
+    return data;
   }
 }
