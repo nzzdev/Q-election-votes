@@ -80,7 +80,7 @@
       }
     },
     "notes": {
-      "title": "Bemerkungen",
+      "title": "Anmerkungen",
       "type": "string"
     },
     "sources": {
