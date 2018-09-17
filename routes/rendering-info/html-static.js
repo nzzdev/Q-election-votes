@@ -85,7 +85,7 @@ module.exports = {
 
     if (isSophieVizColorDefined) {
       data.sophieModules.push({
-        name: "sophie-viz-color@^1",
+        name: "sophie-viz-color@1",
         submodules: ["parties"]
       });
     }
