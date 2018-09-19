@@ -7,14 +7,14 @@
       "title": "Titel",
       "type": "string",
       "Q:options": {
-        "placeholder": "Der Titel bringt die Kernaussage der Grafik auf den Punkt, zB. 'Die CVP stürzt ab'."
+        "placeholder": "Der Titel bringt die Kernaussage der Grafik auf den Punkt, zB&#46; 'Die CVP stürzt ab'&#46;"
       }
     },
     "subtitle": {
       "title": "Untertitel",
       "type": "string",
       "Q:options": {
-        "placeholder": "Der Untertitel benennt präzise, um welche Wahl es sich handelt."
+        "placeholder": "Der Untertitel benennt präzise, um welche Wahl es sich handelt&#46;"
       }
     },
     "threshold": {
@@ -22,7 +22,7 @@
       "type": "number",
       "Q:options": {
         "step": "0.01",
-        "placeholder": "Falls eine Prozenthürde exisitert, bitte Zahl eintragen."
+        "placeholder": "Falls eine Prozenthürde exisitert, bitte Zahl eintragen&#46;"
       }
     },
     "parties": {
@@ -63,7 +63,7 @@
                 "title": "CSS Klassenname",
                 "type": "string",
                 "Q:options": {
-                  "placeholder": "s-viz-color-party-..."
+                  "placeholder": "s-viz-color-party-&#46;&#46;&#46;"
                 }
               }
             }
@@ -80,7 +80,7 @@
             "type": "number",
             "Q:options": {
               "step": "0.01",
-              "placeholder" : "Die Veränderung von der vergangenen zur aktuellen Wahl wird dann automatisch berechnet."
+              "placeholder" : "Die Veränderung von der vergangenen zur aktuellen Wahl wird dann automatisch berechnet&#46;"
             }
           }
         },
@@ -113,7 +113,7 @@
                 "title": "Link",
                 "type": "string",
                 "Q:options": {
-                  "placeholder": "Direktlink zur Quelle, http://..."
+                  "placeholder": "Direktlink zur Quelle, http://&#46;&#46;&#46;"
                 }
               },
               "isValid": {
