@@ -2,7 +2,8 @@ const Lab = require("lab");
 const Code = require("code");
 const Hapi = require("hapi");
 const lab = (exports.lab = Lab.script());
-const JsDom = require("jsdom");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 const expect = Code.expect;
 const before = lab.before;
@@ -36,17 +37,15 @@ after(async () => {
 
 function element(markup, selector) {
   return new Promise((resolve, reject) => {
-    JsDom.env(markup, (err, window) => {
-      resolve(window.document.querySelector(selector));
-    });
+    const dom = new JSDOM(markup);
+    resolve(dom.window.document.querySelector(selector));
   });
 }
 
 function elementCount(markup, selector) {
   return new Promise((resolve, reject) => {
-    JsDom.env(markup, (err, window) => {
-      resolve(window.document.querySelectorAll(selector).length);
-    });
+    const dom = new JSDOM(markup);
+    resolve(dom.window.document.querySelectorAll(selector).length);
   });
 }
 
