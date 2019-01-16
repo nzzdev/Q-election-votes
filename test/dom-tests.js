@@ -3,14 +3,15 @@ const Code = require("code");
 const Hapi = require("hapi");
 const lab = (exports.lab = Lab.script());
 const JsDom = require("jsdom");
-require("svelte/ssr/register");
-const staticTpl = require("../views/HtmlStatic.html");
+
 const expect = Code.expect;
 const before = lab.before;
 const after = lab.after;
 const it = lab.it;
 
 const routes = require("../routes/routes.js");
+require("svelte/ssr/register");
+const staticTpl = require("../views/HtmlStatic.html");
 
 let server;
 
