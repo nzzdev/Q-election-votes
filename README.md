@@ -1,5 +1,7 @@
 # Q Election Votes
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-election-votes.svg)](https://greenkeeper.io/)
+
 **Maintainer**: [benib](https://github.com/benib)
 
 Q election votes is one tool of the Q toolbox to display results of parliamentary elections.
