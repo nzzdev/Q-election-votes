@@ -65,7 +65,7 @@ module.exports = {
         }
       ],
       sophieModules: [],
-      markup: staticTemplate.render(renderingData)
+      markup: staticTemplate.render(renderingData).html
     };
 
     // add sophie viz color module to stylesheets in response iff necessary
