@@ -1,17 +1,17 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{{item.title}}' hideTitle='{{hideTitle}}' subtitle='{{item.subtitle}}' />
-  <div class="q-election-parties {{thresholdOffset}}">
-    <Threshold threshold='{{threshold}}' base='{{base}}' />
-    {{#each partyItems as party}}
-      <ElectionItem item='{{party}}' hasTrendSpace='{{hasTrendSpace}}'/>
-    {{/each}}
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' />
+  <div class="q-election-parties {thresholdOffset}">
+    <Threshold threshold='{threshold}' base='{base}' />
+    {#each partyItems as party}
+      <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
+    {/each}
   </div>
-  {{#if otherPartiesItem}}
+  {#if otherPartiesItem}
     <div class="q-election-others">
-      <ElectionItem item='{{otherPartiesItem}}' hasTrendSpace='{{hasTrendSpace}}'/>
+      <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
     </div>
-  {{/if}}
-  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' hideUpdatedDate='{{hideUpdatedDate}}'/>
+  {/if}
+  <Footer sources='{item.sources}' notes='{item.notes}' updatedDate='{item.updatedDate}' hideUpdatedDate='{hideUpdatedDate}'/>
 </div>
 
 <script>
@@ -22,19 +22,19 @@
 
   export default {
     computed: {
-      parties: (item) => {
+      parties: ({ item }) => {
         return item.parties;
       },
-      hideTitle: (toolRuntimeConfig) => {
+      hideTitle: ({ toolRuntimeConfig }) => {
         return toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle;
       },
-      hasCurrentResults: (parties) => {
+      hasCurrentResults: ({ parties }) => {
         let currentResults = parties.filter(party => {
           return party.percentage !== undefined;
         });
         return currentResults.length > 0;
       },
-      sortedParties: (parties) => {
+      sortedParties: ({ parties }) => {
         if (parties !== undefined) {
           return parties.sort(function(partyA, partyB) {
             if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
@@ -49,13 +49,13 @@
           return [];
         }
       },
-      hasTrendSpace: (parties) => {
+      hasTrendSpace: ({ parties }) => {
         const partiesWithPreviousResult = parties.filter(party => {
           return party.previous !== undefined;
         });
         return partiesWithPreviousResult.length > 0;
       },
-      maxResult: (sortedParties) => {
+      maxResult: ({ sortedParties }) => {
         let maxResult = 0;
         // if there are already any votes the first party 
         // of sorted list of party has max percentage
@@ -64,17 +64,18 @@
         }
         return maxResult;
       },
-      base: (maxResult, hasCurrentResults) => {
+      base: ({ maxResult, hasCurrentResults }) => {
         let base = maxResult;
         if (!hasCurrentResults) {
           base = 100;
         }
         return base;
       },
-      enhancedParties: (sortedParties, maxResult) => {
+      enhancedParties: ({ sortedParties, maxResult }) => {
         // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
+            debugger;
             if (percentageValue !== undefined) {
               let percentageString = percentageValue.toString();
               let parts = percentageString.split('.');
@@ -179,22 +180,22 @@
           }
         }
       },
-      partyItems: (enhancedParties) => {
+      partyItems: ({ enhancedParties }) => {
         return enhancedParties.parties
       },
-      otherPartiesItem : (enhancedParties) => {
+      otherPartiesItem : ({ enhancedParties }) => {
         return enhancedParties.others;
       },
-      threshold: (item) => {
+      threshold: ({ item }) => {
         return item.threshold;
       },
-      thresholdOffset: (threshold, base) => {
+      thresholdOffset: ({ threshold, base }) => {
         if (threshold !== undefined && threshold > 0 && base > 0) {
           return 'q-election-threshold-offset';
         }
         else '';
       },
-      hideUpdatedDate: (item) => {
+      hideUpdatedDate: ({ item }) => {
         return item.options && item.options.hideUpdatedDate;
       }
     },
