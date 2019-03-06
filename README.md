@@ -11,16 +11,18 @@ Test it in the demo: https://editor.q.tools
 - [Configuration](#configuration)
 - [Development](#development)
 - [Testing](#testing)
-- [Tool implementation details](#tool-implementation-details)
-- [Features](#features)
-- [Options](#options)
+- [Deployment](#deployment)
+- [Functionality](#functionality)
+- [License](#license)
 
 ## Installation
 
 ```bash
-$ nvm use
-$ npm install
-$ npm run build
+git clone git@github.com:nzzdev/Q-election-votes.git
+cd ./Q-election-votes
+nvm use
+npm install
+npm run build
 ```
 
 ## Configuration
@@ -29,13 +31,19 @@ No configuration is needed for this tool.
 
 ## Development
 
+Start the Q dev server:
+
 ```
-nvm use
-npm install
+npx @nzz/q-cli server
 ```
 
-Make sure to build at least once: `npm run build`.
-Run the tool with `node index.js`.
+Run the Q tool:
+
+```
+node index.js
+
+```
+
 [to the top](#table-of-contents)
 
 ## Testing
@@ -57,7 +65,20 @@ When changing or implementing...
 
 [to the top](#table-of-contents)
 
-## Tool implentation details
+## Deployment
+
+We provide automatically built docker images at https://hub.docker.com/r/nzzonline/q-election-votes/.
+There are three options for deployment:
+
+- Use the provided images
+- Build your own docker images
+- Deploy the service using another technology
+
+### Use the provided docker images
+
+1. Deploy `nzzonline/q-election-votes` to a docker environment
+
+## Functionality
 
 Here is what the tool looks like on mobile and other devices. The example shows intermediate results of the elections in the Netherlands in 2017. It's in German because we do not have multilanguage support (yet).
 
@@ -72,19 +93,15 @@ Each graphic has the following three sections:
 
 The tool structure follows the general structure of each Q tool. Further information can be found in [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html).
 
-[to the top](#table-of-contents)
-
-## Features
-
-There is only one endpoint to get `renderingInfo` in this tool.
+There is only one endpoint to get `renderingInfo` in this tool:
 
 ### `/rendering-info/html-static`
 
 This endpoint returns a renderingInfo object with static HTML/CSS/SVG that is fully responsive.
 
-## Options
+### Options
 
-### hideUpdatedDate
+#### hideUpdatedDate
 
 This option is only available for users with the `expert-election-votes` roles. It hides the updated date and is mainly used when you enter historic data where the last updated date makes no sense.
 
