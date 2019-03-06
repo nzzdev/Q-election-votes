@@ -2,6 +2,7 @@ const Lab = require("lab");
 const Code = require("code");
 const Hapi = require("hapi");
 const lab = (exports.lab = Lab.script());
+const glob = require("glob");
 
 const expect = Code.expect;
 const before = lab.before;
@@ -90,23 +91,6 @@ lab.experiment("stylesheets endpoint", () => {
   });
 });
 
-lab.experiment("rendering-info endpoint", () => {
-  it("returns 200 for /rendering-info/html-static", async () => {
-    const request = {
-      method: "POST",
-      url: "/rendering-info/html-static",
-      payload: {
-        item: require("../resources/fixtures/data/results-partly-previous-color-class.json"),
-        toolRuntimeConfig: {
-          displayOptions: {}
-        }
-      }
-    };
-    const response = await server.inject(request);
-    expect(response.statusCode).to.be.equal(200);
-  });
-});
-
 lab.experiment("migration endpoint", () => {
   it("returns 304 for /migration", async () => {
     const request = {
@@ -126,5 +110,45 @@ lab.experiment("fixture data endpoint", () => {
     const response = await server.inject("/fixtures/data");
     expect(response.statusCode).to.be.equal(200);
     expect(response.result.length).to.be.equal(4);
+  });
+});
+
+// all the fixtures render
+lab.experiment("all fixtures render", async () => {
+  const fixtureFiles = glob.sync(
+    `${__dirname}/../resources/fixtures/data/*.json`
+  );
+  for (let fixtureFile of fixtureFiles) {
+    const fixture = require(fixtureFile);
+    it(`doesnt fail in rendering fixture ${fixture.title}`, async () => {
+      const request = {
+        method: "POST",
+        url: "/rendering-info/html-static",
+        payload: {
+          item: fixture,
+          toolRuntimeConfig: {}
+        }
+      };
+      const response = await server.inject(request);
+      expect(response.statusCode).to.be.equal(200);
+    });
+  }
+});
+
+lab.experiment("rendering-info", async () => {
+  it("html-static: returns error 400 if invalid item is given", async () => {
+    const request = {
+      method: "POST",
+      url: "/rendering-info/html-static",
+      payload: {
+        item: {
+          some: "object",
+          that: "doesn't validate against the schema"
+        },
+        toolRuntimeConfig: {}
+      }
+    };
+    const response = await server.inject(request);
+    expect(response.statusCode).to.be.equal(400);
   });
 });
