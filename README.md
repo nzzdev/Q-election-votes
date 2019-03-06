@@ -3,7 +3,7 @@
 **Maintainer**: [benib](https://github.com/benib)
 
 Q election votes is one tool of the Q toolbox to display results of parliamentary elections.
-Test it in the demo: https://editor.q.tools
+Test it in the [demo](https://editor.q.tools)
 
 ## Table of contents
 
@@ -106,6 +106,12 @@ This endpoint returns a renderingInfo object with static HTML/CSS/SVG that is fu
 This option is only available for users with the `expert-election-votes` roles. It hides the updated date and is mainly used when you enter historic data where the last updated date makes no sense.
 
 [to the top](#table-of-contents)
+
+#### Display options
+
+##### hideTitle
+
+If checked the title doesn't get rendered.
 
 ## LICENSE
 
