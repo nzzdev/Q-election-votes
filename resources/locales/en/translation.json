@@ -12,6 +12,8 @@
   "Parteifarbe": "party color",
   "Farbcode": "color code",
   "CSS Klassenname": "CSS class name",
+  "min. Stimmen in %": "min. votes in %",
+  "max. Stimmen in %": "max. votes in %",
   "Stimmen in %": "votes in %",
   "Stimmen vergangene Wahl in %": "votes previous election in %",
   "Die Veränderung von der vergangenen zur aktuellen Wahl wird dann automatisch berechnet&#46;": "the change from the past to the current election is then calculated automatically&#46;",
