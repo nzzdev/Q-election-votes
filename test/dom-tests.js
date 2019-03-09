@@ -78,3 +78,21 @@ lab.experiment("Q election votes dom tests", function() {
     });
   });
 });
+
+lab.experiment("projection data", function() {
+  it("should show projection layout if isProjection is set to true", function() {
+    const renderingData = {
+      item: require("../resources/fixtures/data/results-partly-previous-color-class-uncertainty.json"),
+      toolRuntimeConfig: {
+        displayOptions: {}
+      }
+    };
+    var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
+
+    return elementCount(markup, "div.q-election-item-bar--projection").then(
+      value => {
+        expect(value).to.be.equal(6);
+      }
+    );
+  });
+});
