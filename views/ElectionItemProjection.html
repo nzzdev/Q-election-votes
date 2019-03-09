@@ -14,13 +14,13 @@
   export default {
     computed: {
       barWidthPercentage: ({ item, maxProjection }) => {
-        if (!item.projection || item.projection.lower === undefined || !item.projection.upper === undefined) {
+        if (maxProjection === undefined || !item.projection || item.projection.lower === undefined || !item.projection.upper === undefined) {
           return 0;
         }
         return (item.projection.upper / maxProjection * 100) - (item.projection.lower / maxProjection * 100);
       },
       barWidthPositionLeftPercentage: ({ item, maxProjection }) => {
-        if (!item.projection || item.projection.lower === undefined) {
+        if (maxProjection === undefined || !item.projection || item.projection.lower === undefined) {
           return 0;
         }
         return (item.projection.lower / maxProjection * 100);

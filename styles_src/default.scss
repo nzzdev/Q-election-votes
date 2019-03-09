@@ -78,8 +78,11 @@
       &-current,
       &-previous {
         min-height: 16px;
-        padding-right: 7px;
         text-align: right;
+      }
+
+      &-trend-container {
+        padding-left: 8px;
       }
 
       &-trend {

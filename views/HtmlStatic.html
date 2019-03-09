@@ -43,10 +43,22 @@
         });
         return currentResults.length > 0;
       },
-      sortedParties: ({ parties, isProjection }) => {
+      sortedParties: ({ parties, item }) => {
         if (parties !== undefined) {
-          if (isProjection) {
+          if (item.isProjection) {
             return parties.sort(function(partyA, partyB) {
+              // if any of the 2 parties has no projection, we sort by this first
+              if (!partyA.projection && !partyB.projection) {
+                return 0;
+              }
+              if (!partyA.projection && partyB.projection) {
+                return 1;
+              }
+              if (partyA.projection && !partyB.projection) {
+                return -1;
+              }
+
+              // then move on to check for any projection data and sort accordingly
               if ((partyA.projection.upper === undefined && partyB.projection.upper === undefined) || (partyA.projection.upper === partyB.projection.upper)) {
                 return 0;
               }
@@ -84,11 +96,8 @@
         }
         return maxResult;
       },
-      maxProjection: ({ sortedParties, isProjection }) => {
-        if (!isProjection) {
-          return undefined;
-        }
-        let maxProjection = 0;
+      maxProjection: ({ sortedParties, item }) => {
+        let maxProjection = undefined;;
         // if there are already any projections the first party 
         // of sorted list of party has max projection upper bound
         if (sortedParties[0] && sortedParties[0].projection && sortedParties[0].projection.upper) {
