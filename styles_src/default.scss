@@ -47,13 +47,13 @@
   &-item {
     &-bar {
       position: relative;
-      height: 26px;
+      height: 24px;
       background-color: currentColor;
       margin-bottom: 10px;
 
       &-color {
         background-color: currentColor;
-        height: 26px;
+        height: 24px;
         position: absolute;
         top: 0;
         left: 0;
@@ -95,14 +95,32 @@
 
 .q-election-item-bar--projection {
   height: 8px;
-  margin: 9px 0;
+  margin: 8px 0;
 }
 
 .q-election-item-bar--projection .q-election-item-bar-color {
-  top: -9px;
+  top: -8px;
 }
 
 .q-election-item-bar--projection .q-election-item-bar-color::after {
+  content: "";
+  display: block;
+  width: calc(100% - 2px);
+  height: 100%;
+  position: absolute;
+  left: 1px;
+  background: white;
+  opacity: 0.7;
+}
+
+.q-election-projection-legend-symbol {
+  background-color: currentColor;
+  height: 24px;
+  width: 32px;
+  position: relative;
+}
+
+.q-election-projection-legend-symbol::after {
   content: "";
   display: block;
   width: calc(100% - 2px);
