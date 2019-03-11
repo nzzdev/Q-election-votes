@@ -1,9 +1,9 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{item.isProjection}'/>
-  <div class="q-election-parties {thresholdOffset}">
-    <Threshold threshold='{threshold}' base='{base}' />
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{isProjection}'/>
+  <div class="q-election-parties {thresholdOffsetClasses}">
+    <Threshold threshold='{threshold}' base='{base}' isProjection='{isProjection}'/>
     {#each partyItems as party}
-      {#if item.isProjection}
+      {#if isProjection}
         <ElectionItemProjection item='{party}' maxProjection='{maxProjection}'/>
       {:else}
         <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
@@ -12,7 +12,7 @@
   </div>
   {#if otherPartiesItem}
     <div class="q-election-others">
-      {#if item.isProjection}
+      {#if isProjection}
         <ElectionItemProjection item='{otherPartiesItem}' maxProjection='{maxProjection}'/>
       {:else}
         <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
@@ -236,11 +236,18 @@
       threshold: ({ item }) => {
         return item.threshold;
       },
-      thresholdOffset: ({ threshold, base }) => {
+      isProjection: ({ item }) => {
+        return item.isProjection;
+      },
+      thresholdOffsetClasses: ({ threshold, base, isProjection }) => {
         if (threshold !== undefined && threshold > 0 && base > 0) {
-          return 'q-election-threshold-offset';
+          let classes = 'q-election-threshold-offset';
+          if (isProjection) {
+            classes += ' q-election-threshold-offset--projection';
+          }
+          return classes;
         }
-        else '';
+        return '';
       },
       hideUpdatedDate: ({ item }) => {
         return item.options && item.options.hideUpdatedDate;

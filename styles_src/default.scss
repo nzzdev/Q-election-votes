@@ -113,7 +113,7 @@
   opacity: 0.7;
 }
 
-.q-election-item-bar--projection .q-election-threshold-offset {
+.q-election-threshold-offset--projection {
   padding-bottom: 8px; // we need this to be lower than the box-plot boxes as the gray bar is less high in case we have projection data
 }
 

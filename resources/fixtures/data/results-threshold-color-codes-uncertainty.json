@@ -12,7 +12,7 @@
   "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
   "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
   "isProjection": true,
-  "threshold": 50,
+  "threshold": 20,
   "parties": [
     {
       "color": {
