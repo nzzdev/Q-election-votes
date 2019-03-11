@@ -1,0 +1,89 @@
+{
+  "title": "FIXTURE: results - threshold - color code - uncertainty",
+  "sources": [
+    {
+      "text": "NZZ",
+      "link": {
+        "url": "https://nzz.ch",
+        "isValid": true
+      }
+    }
+  ],
+  "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+  "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+  "isProjection": true,
+  "threshold": 50,
+  "parties": [
+    {
+      "color": {
+        "colorCode": "#01b1c0"
+      },
+      "name": "SVP",
+      "previous": 41.5,
+      "percentage": 40,
+      "projection": {
+        "lower": 30,
+        "bestGuess": 33.4,
+        "upper": 37
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-fdp-5"
+      },
+      "name": "FDP",
+      "percentage": 4,
+      "projection": {
+        "lower": 2,
+        "bestGuess": 3,
+        "upper": 5
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-glp-5"
+      },
+      "name": "GLP",
+      "previous": 0,
+      "projection": {
+        "lower": 4,
+        "bestGuess": 5,
+        "upper": 7
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-sp-5"
+      },
+      "name": "SP",
+      "projection": {
+        "lower": 10,
+        "bestGuess": 13,
+        "upper": 14
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-gps-5"
+      },
+      "name": "Grüne",
+      "previous": 8.4,
+      "projection": {
+        "lower": 14,
+        "bestGuess": 16,
+        "upper": 20
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "andere",
+      "projection": {
+        "lower": 3,
+        "bestGuess": 7,
+        "upper": 18
+      }
+    }
+  ]
+}
