@@ -87,12 +87,15 @@
         });
         return partiesWithPreviousResult.length > 0;
       },
-      maxResult: ({ sortedParties }) => {
+      maxResult: ({ sortedParties, item }) => {
         let maxResult = 0;
         // if there are already any votes the first party 
         // of sorted list of party has max percentage
         if (sortedParties[0] && sortedParties[0].percentage) {
           maxResult = sortedParties[0].percentage;
+        }
+        if (item.threshold > maxResult) {
+          return item.threshold;
         }
         return maxResult;
       },
@@ -102,6 +105,9 @@
         // of sorted list of party has max projection upper bound
         if (sortedParties[0] && sortedParties[0].projection && sortedParties[0].projection.upper) {
           maxProjection = sortedParties[0].projection.upper;
+        }
+        if (item.threshold > maxProjection) {
+          return item.threshold;
         }
         return maxProjection;
       },
