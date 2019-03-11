@@ -1,3 +1,6 @@
+$barHeight: 25px;
+$projectionBarHeight: 3px;
+
 .q-election {
   opacity: 1 !important;
 
@@ -47,13 +50,15 @@
   &-item {
     &-bar {
       position: relative;
-      height: 24px;
+      height: $barHeight;
       background-color: currentColor;
       margin-bottom: 10px;
+      display: flex;
+      align-content: center;
 
       &-color {
         background-color: currentColor;
-        height: 24px;
+        height: $barHeight;
         position: absolute;
         top: 0;
         left: 0;
@@ -93,22 +98,36 @@
   }
 }
 
+.q-election-item-dot-color {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  background-color: currentColor;
+}
+
 .q-election-item-bar--projection {
-  height: 8px;
-  margin: 8px 0;
+  height: 3px;
+  margin: ($barHeight - $projectionBarHeight)/2 0
+    (($barHeight - $projectionBarHeight)/2 + 10px) 0;
 }
 
-.q-election-item-bar--projection .q-election-item-bar-color {
-  top: -8px;
+.q-election-item-bar-color--slim {
+  height: 3px;
 }
 
-.q-election-item-bar--projection .q-election-item-bar-color::after {
+.q-election-item-bar-color--projection {
+  top: -(($barHeight - $projectionBarHeight)/2);
+}
+
+.q-election-item-bar-color--projection::after {
   content: "";
   display: block;
-  width: calc(100% - 2px);
+  width: calc(100% - 4px);
   height: 100%;
   position: absolute;
-  left: 1px;
+  left: 2px;
   background: white;
   opacity: 0.7;
 }
@@ -117,20 +136,20 @@
   padding-bottom: 8px; // we need this to be lower than the box-plot boxes as the gray bar is less high in case we have projection data
 }
 
-.q-election-projection-legend-symbol {
+.q-election-projection-legend-symbol-margin {
   background-color: currentColor;
-  height: 24px;
+  height: $barHeight / 2;
   width: 32px;
   position: relative;
 }
 
-.q-election-projection-legend-symbol::after {
+.q-election-projection-legend-symbol-margin::after {
   content: "";
   display: block;
-  width: calc(100% - 2px);
+  width: calc(100% - 4px);
   height: 100%;
   position: absolute;
-  left: 1px;
+  left: 2px;
   background: white;
   opacity: 0.7;
 }

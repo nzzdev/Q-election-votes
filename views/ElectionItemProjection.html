@@ -2,11 +2,13 @@
   <div class="q-election-item-text">
     <div class="s-font-text-s q-election-item-text-party">{item.name}</div>
     {#if item.projection && item.projection.bestGuess}
-      <div class="s-font-note q-election-item-text-current">~ {item.projection.bestGuess}%</div>
+      <div class="s-font-note q-election-item-text-current">{item.projection.lower} - {item.projection.upper}%</div>
     {/if}
   </div>
   <div class="q-election-item-bar q-election-item-bar--projection s-color-gray-3">
-    <div class="q-election-item-bar-color {item.colorClass}" style="left: {barWidthPositionLeftPercentage}%; width: {barWidthPercentage}%; {item.colorStyle}"></div>
+    <div class="q-election-item-bar-color q-election-item-bar-color--slim {item.colorClass}" style="width: {barWidthPositionLeftPercentage}%; {item.colorStyle}"></div>
+    <div class="q-election-item-bar-color q-election-item-bar-color--projection {item.colorClass}" style="left: {barWidthPositionLeftPercentage}%; width: {barWidthPercentage}%; {item.colorStyle}"></div>
+    <div class="q-election-item-dot-color {item.colorClass}" style="left: {dotPositionLeftPercentage}%; {item.colorStyle}"></div>
   </div>
 </div>
 
@@ -24,6 +26,12 @@
           return 0;
         }
         return (item.projection.lower / maxProjection * 100);
+      },
+      dotPositionLeftPercentage: ({ item, maxProjection }) => {
+        if (maxProjection === undefined || !item.projection || item.projection.bestGuess === undefined) {
+          return 0;
+        }
+        return (item.projection.bestGuess / maxProjection * 100);
       }
     }
   }
