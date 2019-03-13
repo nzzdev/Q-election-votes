@@ -89,7 +89,7 @@ lab.experiment("projection data", function() {
     };
     var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
 
-    return elementCount(markup, "div.q-election-item-bar--projection").then(
+    return elementCount(markup, "div.q-election-item-projection-bar").then(
       value => {
         expect(value).to.be.equal(6);
       }
