@@ -5,7 +5,8 @@
       <div class="s-font-note q-election-item-text-current">{item.projection.lower} - {item.projection.upper}%</div>
     {/if}
   </div>
-  <div class="q-election-item-bar q-election-item-bar--projection s-color-gray-3">
+  <div class="q-election-item-projection-bar">
+    <div class="q-election-item-bar-color q-election-item-bar-color--fullwidth q-election-item-bar-color--slim s-color-gray-3"></div>
     <div class="q-election-item-bar-color q-election-item-bar-color--slim {item.colorClass}" style="width: {barWidthPositionLeftPercentage}%; {item.colorStyle}"></div>
     <div class="q-election-item-bar-color q-election-item-bar-color--projection {item.colorClass}" style="left: {barWidthPositionLeftPercentage}%; width: {barWidthPercentage}%; {item.colorStyle}"></div>
     <div class="q-election-item-dot-color {item.colorClass}" style="left: {dotPositionLeftPercentage}%; {item.colorStyle}"></div>

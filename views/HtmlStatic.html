@@ -43,6 +43,12 @@
         });
         return currentResults.length > 0;
       },
+      hasCurrentProjections: ({ parties }) => {
+        let currentResults = parties.filter(party => {
+          return party.projection !== undefined && party.projection.bestGuess !== undefined;
+        });
+        return currentResults.length > 0;
+      },
       sortedParties: ({ parties, item }) => {
         if (parties !== undefined) {
           if (item.isProjection) {
@@ -111,9 +117,9 @@
         }
         return maxProjection;
       },
-      base: ({ maxResult, hasCurrentResults }) => {
-        let base = maxResult;
-        if (!hasCurrentResults) {
+      base: ({ maxResult, maxProjection, hasCurrentResults, hasCurrentProjections }) => {
+        let base = Math.max(maxResult || 0, maxProjection || 0);
+        if (!hasCurrentResults && !hasCurrentProjections) {
           base = 100;
         }
         return base;
@@ -234,6 +240,8 @@
         return enhancedParties.others;
       },
       threshold: ({ item }) => {
+        debugger;
+        console.log('threshold', item.threshold);
         return item.threshold;
       },
       isProjection: ({ item }) => {
