@@ -1,5 +1,5 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{isProjection}'/>
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{isProjection}' hasErrorMargin='{hasErrorMargin}'/>
   <div class="q-election-parties {thresholdOffsetClasses}">
     <Threshold threshold='{threshold}' base='{base}' isProjection='{isProjection}'/>
     {#each partyItems as party}
@@ -243,6 +243,11 @@
       },
       isProjection: ({ item }) => {
         return item.isProjection;
+      },
+      hasErrorMargin: ({ item }) => {
+        return item.parties.some(party => {
+          return party.projection && party.projection.lower !== undefined && party.projection.upper !== undefined
+        });
       },
       thresholdOffsetClasses: ({ threshold, base, isProjection }) => {
         if (threshold !== undefined && threshold > 0 && base > 0) {

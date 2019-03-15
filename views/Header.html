@@ -3,7 +3,7 @@
 {/if}
 <div class="q-election-info s-font-note">
   {#if subtitle}{subtitle}{/if}
-  {#if isProjection}<ProjectionLegend></ProjectionLegend>{/if}
+  {#if isProjection}<ProjectionLegend hasErrorMargin='{hasErrorMargin}'></ProjectionLegend>{/if}
 </div>
 <script>
   import ProjectionLegend from './ProjectionLegend.html';

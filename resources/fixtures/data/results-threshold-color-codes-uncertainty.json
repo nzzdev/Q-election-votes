@@ -1,7 +1,5 @@
 {
-  "_id": "6d1fc99ca8eb5fa38e8ccca4799ff9c4",
-  "_rev": "8-d145fcb7de978dd7b039ad77127cba89",
-  "title": "Kopie von Test Projection",
+  "title": "FIXTURE: results - threshold - color codes - uncertainty",
   "tool": "election_votes",
   "department": "Visuals",
   "publication": "nzz",
@@ -12,9 +10,7 @@
         "colorCode": "#7b0d05"
       },
       "projection": {
-        "lower": 10,
-        "bestGuess": 13,
-        "upper": 16
+        "bestGuess": 13
       },
       "name": "Partei A",
       "percentage": 16,
@@ -47,9 +43,7 @@
         "colorCode": "#a00cb3"
       },
       "projection": {
-        "lower": 10,
-        "bestGuess": 12,
-        "upper": 18
+        "bestGuess": 12
       },
       "name": "Other Party"
     }
