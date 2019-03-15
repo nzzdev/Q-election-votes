@@ -3,13 +3,13 @@
 {/if}
 <div class="q-election-info s-font-note">
   {#if subtitle}{subtitle}{/if}
-  {#if isProjection}<ProjectionLegend hasErrorMargin='{hasErrorMargin}'></ProjectionLegend>{/if}
+  {#if isProjection}<ErrorMarginLegend hasErrorMargin='{hasErrorMargin}'></ErrorMarginLegend>{/if}
 </div>
 <script>
-  import ProjectionLegend from './ProjectionLegend.html';
+  import ErrorMarginLegend from './ErrorMarginLegend.html';
   export default {
     components: {
-      ProjectionLegend
+      ErrorMarginLegend
     }
   };
 </script>
