@@ -1,14 +1,22 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' />
-  <div class="q-election-parties {thresholdOffset}">
-    <Threshold threshold='{threshold}' base='{base}' />
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{isProjection}'/>
+  <div class="q-election-parties {thresholdOffsetClasses}">
+    <Threshold threshold='{threshold}' base='{base}' isProjection='{isProjection}'/>
     {#each partyItems as party}
-      <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
+      {#if isProjection}
+        <ElectionItemProjection item='{party}' maxProjection='{maxProjection}'/>
+      {:else}
+        <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
+      {/if}
     {/each}
   </div>
   {#if otherPartiesItem}
     <div class="q-election-others">
-      <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
+      {#if isProjection}
+        <ElectionItemProjection item='{otherPartiesItem}' maxProjection='{maxProjection}'/>
+      {:else}
+        <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
+      {/if}
     </div>
   {/if}
   <Footer sources='{item.sources}' notes='{item.notes}' updatedDate='{item.updatedDate}' hideUpdatedDate='{hideUpdatedDate}'/>
@@ -18,6 +26,7 @@
   import Header from './Header.html';
   import Threshold from './Threshold.html';
   import ElectionItem from './ElectionItem.html';
+  import ElectionItemProjection from './ElectionItemProjection.html';
   import Footer from './Footer.html';
 
   export default {
@@ -34,8 +43,37 @@
         });
         return currentResults.length > 0;
       },
-      sortedParties: ({ parties }) => {
+      hasCurrentProjections: ({ parties }) => {
+        let currentResults = parties.filter(party => {
+          return party.projection !== undefined && party.projection.bestGuess !== undefined;
+        });
+        return currentResults.length > 0;
+      },
+      sortedParties: ({ parties, item }) => {
         if (parties !== undefined) {
+          if (item.isProjection) {
+            return parties.sort(function(partyA, partyB) {
+              // if any of the 2 parties has no projection, we sort by this first
+              if (!partyA.projection && !partyB.projection) {
+                return 0;
+              }
+              if (!partyA.projection && partyB.projection) {
+                return 1;
+              }
+              if (partyA.projection && !partyB.projection) {
+                return -1;
+              }
+
+              // then move on to check for any projection data and sort accordingly
+              if ((partyA.projection.upper === undefined && partyB.projection.upper === undefined) || (partyA.projection.upper === partyB.projection.upper)) {
+                return 0;
+              }
+              if ((partyA.projection.upper === undefined && partyB.projection.upper !== undefined) || (partyA.projection.upper < partyB.projection.upper)) {
+                return 1;
+              }
+              return -1;
+            });
+          }
           return parties.sort(function(partyA, partyB) {
             if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
               return 0;
@@ -55,18 +93,33 @@
         });
         return partiesWithPreviousResult.length > 0;
       },
-      maxResult: ({ sortedParties }) => {
+      maxResult: ({ sortedParties, item }) => {
         let maxResult = 0;
         // if there are already any votes the first party 
         // of sorted list of party has max percentage
         if (sortedParties[0] && sortedParties[0].percentage) {
           maxResult = sortedParties[0].percentage;
         }
+        if (item.threshold > maxResult) {
+          return item.threshold;
+        }
         return maxResult;
       },
-      base: ({ maxResult, hasCurrentResults }) => {
-        let base = maxResult;
-        if (!hasCurrentResults) {
+      maxProjection: ({ sortedParties, item }) => {
+        let maxProjection = undefined;;
+        // if there are already any projections the first party 
+        // of sorted list of party has max projection upper bound
+        if (sortedParties[0] && sortedParties[0].projection && sortedParties[0].projection.upper) {
+          maxProjection = sortedParties[0].projection.upper;
+        }
+        if (item.threshold > maxProjection) {
+          return item.threshold;
+        }
+        return maxProjection;
+      },
+      base: ({ maxResult, maxProjection, hasCurrentResults, hasCurrentProjections }) => {
+        let base = Math.max(maxResult || 0, maxProjection || 0);
+        if (!hasCurrentResults && !hasCurrentProjections) {
           base = 100;
         }
         return base;
@@ -75,7 +128,6 @@
         // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
-            debugger;
             if (percentageValue !== undefined) {
               let percentageString = percentageValue.toString();
               let parts = percentageString.split('.');
@@ -189,11 +241,18 @@
       threshold: ({ item }) => {
         return item.threshold;
       },
-      thresholdOffset: ({ threshold, base }) => {
+      isProjection: ({ item }) => {
+        return item.isProjection;
+      },
+      thresholdOffsetClasses: ({ threshold, base, isProjection }) => {
         if (threshold !== undefined && threshold > 0 && base > 0) {
-          return 'q-election-threshold-offset';
+          let classes = 'q-election-threshold-offset';
+          if (isProjection) {
+            classes += ' q-election-threshold-offset--projection';
+          }
+          return classes;
         }
-        else '';
+        return '';
       },
       hideUpdatedDate: ({ item }) => {
         return item.options && item.options.hideUpdatedDate;
@@ -204,6 +263,7 @@
       Header,
       Threshold,
       ElectionItem,
+      ElectionItemProjection,
       Footer
     }
   };
