@@ -128,7 +128,6 @@
         // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
-            debugger;
             if (percentageValue !== undefined) {
               let percentageString = percentageValue.toString();
               let parts = percentageString.split('.');
@@ -240,8 +239,6 @@
         return enhancedParties.others;
       },
       threshold: ({ item }) => {
-        debugger;
-        console.log('threshold', item.threshold);
         return item.threshold;
       },
       isProjection: ({ item }) => {
