@@ -99,12 +99,12 @@ There is only one endpoint to get `renderingInfo` in this tool:
 
 This endpoint returns a renderingInfo object with static HTML/CSS/SVG that is fully responsive.
 
-### Projection data
+### data with error margin
 
-In case `isProjection` is true, the rendering looks different to show the error margin.
-![Election projection data](https://github.com/nzzdev/Q-election-votes/blob/master/readme-images/votes_projection.png)
+In case `withErrorMargin` is true, the rendering looks different to show the error margin.
+![Election error margin data](https://github.com/nzzdev/Q-election-votes/blob/master/readme-images/votes_error_margin.png)
 
-If `isProjection` is set to true, the parties `percentage` input is hidden, instead the inputs `projection.lower`, `projection.bestGuess` and `projection.upper` are shown. These should be used to enter the projection best guess as long as the lower and upper bound of the error margin.
+If `withErrorMargin` is set to true, the parties `percentage` input is hidden, instead the inputs `errorMargin.lower`, `errorMargin.bestGuess` and `errorMargin.upper` are shown. These should be used to enter the errorMargin best guess as long as the lower and upper bound of the error margin.
 
 ### Options
 

@@ -25,8 +25,8 @@
         "placeholder": "Falls eine Prozenthürde exisitert, bitte Zahl eintragen&#46;"
       }
     },
-    "isProjection": {
-      "title": "Hochrechnungsdaten",
+    "withErrorMargin": {
+      "title": "mit Fehlerbereich",
       "type": "boolean"
     },
     "parties": {
@@ -84,13 +84,13 @@
                   "type": "ToolEndpoint",
                   "config": {
                     "endpoint": "availability/percentage",
-                    "fields": ["isProjection"]
+                    "fields": ["withErrorMargin"]
                   }
                 }
               ]
             }
           },
-          "projection": {
+          "errorMargin": {
             "title": "Hochrechnungsdaten",
             "type": "object",
             "Q:options": {
@@ -98,8 +98,8 @@
                 {
                   "type": "ToolEndpoint",
                   "config": {
-                    "endpoint": "availability/projection",
-                    "fields": ["isProjection"]
+                    "endpoint": "availability/errorMargin",
+                    "fields": ["withErrorMargin"]
                   }
                 }
               ]

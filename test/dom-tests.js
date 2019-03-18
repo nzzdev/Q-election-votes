@@ -79,8 +79,8 @@ lab.experiment("Q election votes dom tests", function() {
   });
 });
 
-lab.experiment("projection data", function() {
-  it("should show projection layout if isProjection is set to true", function() {
+lab.experiment("error margin data", function() {
+  it("should show error margin layout if hasErrorMargin is set to true", function() {
     const renderingData = {
       item: require("../resources/fixtures/data/results-partly-previous-color-class-uncertainty.json"),
       toolRuntimeConfig: {
@@ -89,7 +89,7 @@ lab.experiment("projection data", function() {
     };
     var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
 
-    return elementCount(markup, "div.q-election-item-projection-bar").then(
+    return elementCount(markup, "div.q-election-item-error-margin-bar").then(
       value => {
         expect(value).to.be.equal(6);
       }

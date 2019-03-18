@@ -1,5 +1,5 @@
 $barHeight: 25px;
-$projectionBarHeight: 3px;
+$error-marginBarHeight: 3px;
 
 .q-election {
   opacity: 1 !important;
@@ -105,7 +105,7 @@ $projectionBarHeight: 3px;
   background-color: currentColor;
 }
 
-.q-election-item-projection-bar {
+.q-election-item-error-margin-bar {
   height: $barHeight;
   margin-bottom: 10px;
   position: relative;
@@ -122,7 +122,7 @@ $projectionBarHeight: 3px;
   position: absolute;
 }
 
-.q-election-item-bar-color--projection::after {
+.q-election-item-bar-color--error-margin::after {
   content: "";
   display: block;
   width: calc(100% - 4px);
@@ -133,14 +133,14 @@ $projectionBarHeight: 3px;
   opacity: 0.7;
 }
 
-.q-election-projection-legend-symbol-margin {
+.q-election-error-margin-legend-symbol-margin {
   background-color: currentColor;
   height: 8px;
   width: 24px;
   position: relative;
 }
 
-.q-election-projection-legend-symbol-margin::after {
+.q-election-error-margin-legend-symbol-margin::after {
   content: "";
   display: block;
   width: calc(100% - 4px);

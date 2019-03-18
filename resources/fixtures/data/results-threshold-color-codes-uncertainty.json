@@ -9,7 +9,7 @@
       "color": {
         "colorCode": "#7b0d05"
       },
-      "projection": {
+      "errorMargin": {
         "bestGuess": 13
       },
       "name": "Partei A",
@@ -20,7 +20,7 @@
       "color": {
         "colorCode": "#1b53be"
       },
-      "projection": {
+      "errorMargin": {
         "lower": 3,
         "bestGuess": 5,
         "upper": 7
@@ -31,7 +31,7 @@
       "color": {
         "colorCode": "#009ec3"
       },
-      "projection": {
+      "errorMargin": {
         "lower": 80,
         "bestGuess": 82,
         "upper": 87
@@ -42,7 +42,7 @@
       "color": {
         "colorCode": "#a00cb3"
       },
-      "projection": {
+      "errorMargin": {
         "bestGuess": 12
       },
       "name": "Other Party"
@@ -53,7 +53,7 @@
     "hideUpdatedDate": false
   },
   "subtitle": "Aktuelle Hochrechnung von 13:30",
-  "isProjection": true,
+  "withErrorMargin": true,
   "threshold": 5,
   "createdDate": "2019-03-12T07:30:52.700Z",
   "createdBy": "anna.wiederkehr@nzz.ch",

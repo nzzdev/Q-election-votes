@@ -1,10 +1,10 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' isProjection='{isProjection}' hasErrorMargin='{hasErrorMargin}'/>
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' withErrorMargin='{withErrorMargin}' hasErrorMargin='{hasErrorMargin}'/>
   <div class="q-election-parties {thresholdOffsetClasses}">
-    <Threshold threshold='{threshold}' base='{base}' isProjection='{isProjection}'/>
+    <Threshold threshold='{threshold}' base='{base}' withErrorMargin='{withErrorMargin}'/>
     {#each partyItems as party}
-      {#if isProjection}
-        <ElectionItemProjection item='{party}' maxProjection='{maxProjection}'/>
+      {#if withErrorMargin}
+        <ElectionItemErrorMargin item='{party}' maxErrorMarginValue='{maxErrorMarginValue}'/>
       {:else}
         <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
       {/if}
@@ -12,8 +12,8 @@
   </div>
   {#if otherPartiesItem}
     <div class="q-election-others">
-      {#if isProjection}
-        <ElectionItemProjection item='{otherPartiesItem}' maxProjection='{maxProjection}'/>
+      {#if withErrorMargin}
+        <ElectionItemErrorMargin item='{otherPartiesItem}' maxErrorMarginValue='{maxErrorMarginValue}'/>
       {:else}
         <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
       {/if}
@@ -26,7 +26,7 @@
   import Header from './Header.html';
   import Threshold from './Threshold.html';
   import ElectionItem from './ElectionItem.html';
-  import ElectionItemProjection from './ElectionItemProjection.html';
+  import ElectionItemErrorMargin from './ElectionItemErrorMargin.html';
   import Footer from './Footer.html';
 
   export default {
@@ -43,32 +43,32 @@
         });
         return currentResults.length > 0;
       },
-      hasCurrentProjections: ({ parties }) => {
+      hasCurrenterrorMargins: ({ parties }) => {
         let currentResults = parties.filter(party => {
-          return party.projection !== undefined && party.projection.bestGuess !== undefined;
+          return party.errorMargin !== undefined && party.errorMargin.bestGuess !== undefined;
         });
         return currentResults.length > 0;
       },
       sortedParties: ({ parties, item }) => {
         if (parties !== undefined) {
-          if (item.isProjection) {
+          if (item.withErrorMargin) {
             return parties.sort(function(partyA, partyB) {
-              // if any of the 2 parties has no projection, we sort by this first
-              if (!partyA.projection && !partyB.projection) {
+              // if any of the 2 parties has no errorMargin, we sort by this first
+              if (!partyA.errorMargin && !partyB.errorMargin) {
                 return 0;
               }
-              if (!partyA.projection && partyB.projection) {
+              if (!partyA.errorMargin && partyB.errorMargin) {
                 return 1;
               }
-              if (partyA.projection && !partyB.projection) {
+              if (partyA.errorMargin && !partyB.errorMargin) {
                 return -1;
               }
 
-              // then move on to check for any projection data and sort accordingly
-              if ((partyA.projection.upper === undefined && partyB.projection.upper === undefined) || (partyA.projection.upper === partyB.projection.upper)) {
+              // then move on to check for any errorMargin data and sort accordingly
+              if ((partyA.errorMargin.upper === undefined && partyB.errorMargin.upper === undefined) || (partyA.errorMargin.upper === partyB.errorMargin.upper)) {
                 return 0;
               }
-              if ((partyA.projection.upper === undefined && partyB.projection.upper !== undefined) || (partyA.projection.upper < partyB.projection.upper)) {
+              if ((partyA.errorMargin.upper === undefined && partyB.errorMargin.upper !== undefined) || (partyA.errorMargin.upper < partyB.errorMargin.upper)) {
                 return 1;
               }
               return -1;
@@ -105,21 +105,21 @@
         }
         return maxResult;
       },
-      maxProjection: ({ sortedParties, item }) => {
-        let maxProjection = undefined;;
-        // if there are already any projections the first party 
-        // of sorted list of party has max projection upper bound
-        if (sortedParties[0] && sortedParties[0].projection && sortedParties[0].projection.upper) {
-          maxProjection = sortedParties[0].projection.upper;
+      maxErrorMarginValue: ({ sortedParties, item }) => {
+        let maxErrorMarginValue = undefined;;
+        // if there are already any errorMargins the first party 
+        // of sorted list of party has max errorMargin upper bound
+        if (sortedParties[0] && sortedParties[0].errorMargin && sortedParties[0].errorMargin.upper) {
+          maxErrorMarginValue = sortedParties[0].errorMargin.upper;
         }
-        if (item.threshold > maxProjection) {
+        if (item.threshold > maxErrorMarginValue) {
           return item.threshold;
         }
-        return maxProjection;
+        return maxErrorMarginValue;
       },
-      base: ({ maxResult, maxProjection, hasCurrentResults, hasCurrentProjections }) => {
-        let base = Math.max(maxResult || 0, maxProjection || 0);
-        if (!hasCurrentResults && !hasCurrentProjections) {
+      base: ({ maxResult, maxErrorMarginValue, hasCurrentResults, hasCurrenterrorMargins }) => {
+        let base = Math.max(maxResult || 0, maxErrorMarginValue || 0);
+        if (!hasCurrentResults && !hasCurrenterrorMargins) {
           base = 100;
         }
         return base;
@@ -241,19 +241,19 @@
       threshold: ({ item }) => {
         return item.threshold;
       },
-      isProjection: ({ item }) => {
-        return item.isProjection;
+      withErrorMargin: ({ item }) => {
+        return item.withErrorMargin;
       },
       hasErrorMargin: ({ item }) => {
         return item.parties.some(party => {
-          return party.projection && party.projection.lower !== undefined && party.projection.upper !== undefined
+          return party.errorMargin && party.errorMargin.lower !== undefined && party.errorMargin.upper !== undefined
         });
       },
-      thresholdOffsetClasses: ({ threshold, base, isProjection }) => {
+      thresholdOffsetClasses: ({ threshold, base, withErrorMargin }) => {
         if (threshold !== undefined && threshold > 0 && base > 0) {
           let classes = 'q-election-threshold-offset';
-          if (isProjection) {
-            classes += ' q-election-threshold-offset--projection';
+          if (withErrorMargin) {
+            classes += ' q-election-threshold-offset--error-margin';
           }
           return classes;
         }
@@ -268,7 +268,7 @@
       Header,
       Threshold,
       ElectionItem,
-      ElectionItemProjection,
+      ElectionItemErrorMargin,
       Footer
     }
   };

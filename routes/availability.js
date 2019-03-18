@@ -15,7 +15,7 @@ module.exports = {
 
     if (request.params.propertyName === "percentage") {
       let isAvailable = false;
-      if (!item.isProjection) {
+      if (!item.withErrorMargin) {
         isAvailable = true;
       }
       return {
@@ -23,9 +23,9 @@ module.exports = {
       };
     }
 
-    if (request.params.propertyName === "projection") {
+    if (request.params.propertyName === "errorMargin") {
       let isAvailable = false;
-      if (item.isProjection === true) {
+      if (item.withErrorMargin === true) {
         isAvailable = true;
       }
       return {
