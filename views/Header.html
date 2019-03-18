@@ -3,7 +3,7 @@
 {/if}
 <div class="q-election-info s-font-note">
   {#if subtitle}{subtitle}{/if}
-  {#if withErrorMargin}<ErrorMarginLegend hasErrorMargin='{hasErrorMargin}'></ErrorMarginLegend>{/if}
+  {#if withErrorMargin}<ErrorMarginLegend hasErrorMargin='{hasErrorMargin}' errorMarginLabels='{errorMarginLabels}'></ErrorMarginLegend>{/if}
 </div>
 <script>
   import ErrorMarginLegend from './ErrorMarginLegend.html';

@@ -1,5 +1,5 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' withErrorMargin='{withErrorMargin}' hasErrorMargin='{hasErrorMargin}'/>
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' withErrorMargin='{withErrorMargin}' hasErrorMargin='{hasErrorMargin}' errorMarginLabels='{errorMarginLabels}'/>
   <div class="q-election-parties {thresholdOffsetClasses}">
     <Threshold threshold='{threshold}' base='{base}' withErrorMargin='{withErrorMargin}'/>
     {#each partyItems as party}
@@ -116,6 +116,9 @@
           return item.threshold;
         }
         return maxErrorMarginValue;
+      },
+      errorMarginLabels: ({ item }) => {
+        return item.errorMarginLabels
       },
       base: ({ maxResult, maxErrorMarginValue, hasCurrentResults, hasCurrenterrorMargins }) => {
         let base = Math.max(maxResult || 0, maxErrorMarginValue || 0);

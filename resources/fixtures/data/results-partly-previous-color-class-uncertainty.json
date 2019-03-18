@@ -12,6 +12,10 @@
   "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
   "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
   "withErrorMargin": true,
+  "errorMarginLabels": {
+    "bestGuessLabel": "Hochrechnung",
+    "errorMarginLabel": "Fehlermarge"
+  },
   "parties": [
     {
       "color": {

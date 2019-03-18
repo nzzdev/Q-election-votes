@@ -29,6 +29,33 @@
       "title": "mit Fehlerbereich",
       "type": "boolean"
     },
+    "errorMarginLabels": {
+      "title": "Beschriftung der Legende",
+      "type": "object",
+      "properties": {
+        "bestGuessLabel": {
+          "title": "Beschriftung des besten Werts in der Legende",
+          "type": "string",
+          "default": "Hochrechnung"
+        },
+        "errorMarginLabel": {
+          "title": "Beschriftung des Fehlerbereichs",
+          "type": "string",
+          "default": "Fehlermarge"
+        }
+      },
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "availability/errorMargin",
+              "fields": ["withErrorMargin"]
+            }
+          }
+        ]
+      }
+    },
     "parties": {
       "title": "Parteien",
       "type": "array",
