@@ -118,7 +118,7 @@
             }
           },
           "errorMargin": {
-            "title": "Hochrechnungsdaten",
+            "title": "Daten mit Fehlermarge",
             "type": "object",
             "Q:options": {
               "availabilityChecks": [
