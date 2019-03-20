@@ -103,6 +103,7 @@ $error-marginBarHeight: 3px;
   border-radius: 50%;
   position: absolute;
   background-color: currentColor;
+  transform: translateX(-50%);
 }
 
 .q-election-item-error-margin-bar {
