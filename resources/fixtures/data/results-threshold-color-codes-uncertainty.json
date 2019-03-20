@@ -58,9 +58,5 @@
     "bestGuessLabel": "Best guess",
     "errorMarginLabel": "Fehlermarge"
   },
-  "threshold": 5,
-  "createdDate": "2019-03-12T07:30:52.700Z",
-  "createdBy": "anna.wiederkehr@nzz.ch",
-  "updatedDate": "2019-03-12T07:33:13.235Z",
-  "updatedBy": "anna.wiederkehr@nzz.ch"
+  "threshold": 5
 }
