@@ -53,24 +53,18 @@
         if (parties !== undefined) {
           if (item.withErrorMargin) {
             return parties.sort(function(partyA, partyB) {
-              // if any of the 2 parties has no errorMargin, we sort by this first
-              if (!partyA.errorMargin && !partyB.errorMargin) {
+              // if both have no errorMargin set, keep the order
+              if (partyA.errorMargin === undefined && partyB.errorMargin === undefined) {
                 return 0;
-              }
-              if (!partyA.errorMargin && partyB.errorMargin) {
+              } // if only A has no errorMargin, sort B before A
+              if (partyA.errorMargin === undefined && partyB.errorMargin !== undefined) {
                 return 1;
               }
-              if (partyA.errorMargin && !partyB.errorMargin) {
-                return -1;
-              }
-
-              // then move on to check for any errorMargin data and sort accordingly
-              if ((partyA.errorMargin.upper === undefined && partyB.errorMargin.upper === undefined) || (partyA.errorMargin.upper === partyB.errorMargin.upper)) {
-                return 0;
-              }
-              if ((partyA.errorMargin.upper === undefined && partyB.errorMargin.upper !== undefined) || (partyA.errorMargin.upper < partyB.errorMargin.upper)) {
+              // if only A has no bestGuess or B bestGuess is higher than A, sort B before A
+              if ((partyA.errorMargin.bestGuess === undefined && partyB.errorMargin.bestGuess !== undefined) || (partyA.errorMargin.bestGuess < partyB.errorMargin.bestGuess)) {
                 return 1;
               }
+              // otherwise sort A before B
               return -1;
             });
           }
