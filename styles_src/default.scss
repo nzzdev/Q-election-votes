@@ -102,6 +102,7 @@ $error-marginBarHeight: 3px;
   height: 7px;
   border-radius: 50%;
   position: absolute;
+  top: ($barHeight - 7px) / 2;
   background-color: currentColor;
   transform: translateX(-50%);
 }
@@ -110,17 +111,16 @@ $error-marginBarHeight: 3px;
   height: $barHeight;
   margin-bottom: 10px;
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .q-election-item-bar-color--slim {
   height: 3px;
+  position: absolute;
+  top: ($barHeight - 3px) / 2;
 }
 
 .q-election-item-bar-color--fullwidth {
   width: 100%;
-  position: absolute;
 }
 
 .q-election-item-bar-color--error-margin::after {
