@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "title": "Parlamentswahlen",
   "properties": {
@@ -23,6 +23,37 @@
       "Q:options": {
         "step": "0.01",
         "placeholder": "Falls eine Prozenthürde exisitert, bitte Zahl eintragen&#46;"
+      }
+    },
+    "withErrorMargin": {
+      "title": "mit Fehlermarge",
+      "type": "boolean"
+    },
+    "errorMarginLabels": {
+      "title": "Beschriftung der Legende",
+      "type": "object",
+      "properties": {
+        "bestGuessLabel": {
+          "title": "Beschriftung des besten Werts in der Legende",
+          "type": "string",
+          "default": "Hochrechnung"
+        },
+        "errorMarginLabel": {
+          "title": "Beschriftung der Fehlermarge",
+          "type": "string",
+          "default": "Fehlermarge"
+        }
+      },
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "availability/errorMargin",
+              "fields": ["withErrorMargin"]
+            }
+          }
+        ]
       }
     },
     "parties": {
@@ -49,7 +80,9 @@
               "availabilityChecks": [
                 {
                   "type": "UserHasRole",
-                  "role": "expert-election-votes"
+                  "config": {
+                    "role": "expert-election-votes"
+                  }
                 }
               ]
             },
@@ -72,7 +105,54 @@
             "title": "Stimmen in %",
             "type": "number",
             "Q:options": {
-              "step": "0.01"
+              "step": "0.01",
+              "availabilityChecks": [
+                {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "availability/percentage",
+                    "fields": ["withErrorMargin"]
+                  }
+                }
+              ]
+            }
+          },
+          "errorMargin": {
+            "title": "Daten mit Fehlermarge",
+            "type": "object",
+            "Q:options": {
+              "availabilityChecks": [
+                {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "availability/errorMargin",
+                    "fields": ["withErrorMargin"]
+                  }
+                }
+              ]
+            },
+            "properties": {
+              "lower": {
+                "title": "min. Stimmen in %",
+                "type": "number",
+                "Q:options": {
+                  "step": "0.01"
+                }
+              },
+              "bestGuess": {
+                "title": "Stimmen in %",
+                "type": "number",
+                "Q:options": {
+                  "step": "0.01"
+                }
+              },
+              "upper": {
+                "title": "max. Stimmen in %",
+                "type": "number",
+                "Q:options": {
+                  "step": "0.01"
+                }
+              }
             }
           },
           "previous": {
@@ -80,13 +160,11 @@
             "type": "number",
             "Q:options": {
               "step": "0.01",
-              "placeholder" : "Die Veränderung von der vergangenen zur aktuellen Wahl wird dann automatisch berechnet&#46;"
+              "placeholder": "Die Veränderung von der vergangenen zur aktuellen Wahl wird dann automatisch berechnet&#46;"
             }
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       }
     },
     "notes": {
@@ -118,7 +196,7 @@
               },
               "isValid": {
                 "type": "boolean"
-              }    
+              }
             }
           }
         },
@@ -132,7 +210,9 @@
         "availabilityChecks": [
           {
             "type": "UserHasRole",
-            "role": "expert-election-votes"
+            "config": {
+              "role": "expert-election-votes"
+            }
           }
         ]
       },
@@ -145,7 +225,5 @@
       }
     }
   },
-  "required": [
-    "title"
-  ]
+  "required": ["title"]
 }

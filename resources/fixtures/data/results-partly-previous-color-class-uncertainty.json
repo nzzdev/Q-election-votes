@@ -1,0 +1,92 @@
+{
+  "title": "FIXTURE: results - partly previous - color classes - uncertainty",
+  "sources": [
+    {
+      "text": "NZZ",
+      "link": {
+        "url": "https://nzz.ch",
+        "isValid": true
+      }
+    }
+  ],
+  "subtitle": "Möglichkeit zusätzliche Informationen als Untertitel zu erfassen",
+  "notes": "Jemand musste Josef's K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.",
+  "withErrorMargin": true,
+  "errorMarginLabels": {
+    "bestGuessLabel": "Hochrechnung",
+    "errorMarginLabel": "Fehlermarge"
+  },
+  "parties": [
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-svp-5"
+      },
+      "name": "SVP",
+      "previous": 41.5,
+      "percentage": 40,
+      "errorMargin": {
+        "lower": 30,
+        "bestGuess": 33.4,
+        "upper": 37
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-fdp-5"
+      },
+      "name": "FDP",
+      "percentage": 4,
+      "errorMargin": {
+        "lower": 2,
+        "bestGuess": 3,
+        "upper": 5
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-glp-5"
+      },
+      "name": "GLP",
+      "previous": 0,
+      "errorMargin": {
+        "lower": 4,
+        "bestGuess": 5,
+        "upper": 7
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-sp-5"
+      },
+      "name": "SP",
+      "errorMargin": {
+        "lower": 10,
+        "bestGuess": 13,
+        "upper": 14
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-gps-5"
+      },
+      "name": "Grüne",
+      "previous": 8.4,
+      "errorMargin": {
+        "lower": 14,
+        "bestGuess": 16,
+        "upper": 20
+      }
+    },
+    {
+      "color": {
+        "classAttribute": "s-viz-color-party-default-5"
+      },
+      "name": "andere",
+      "errorMargin": {
+        "lower": 3,
+        "bestGuess": 7,
+        "upper": 18
+      }
+    }
+  ]
+}

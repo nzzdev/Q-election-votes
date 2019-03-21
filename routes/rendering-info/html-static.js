@@ -12,9 +12,9 @@ const schemaString = JSON.parse(
     encoding: "utf-8"
   })
 );
-const schema = Enjoi(schemaString);
+const schema = Enjoi.schema(schemaString);
 
-const displayOptionsSchema = Enjoi(
+const displayOptionsSchema = Enjoi.schema(
   JSON.parse(
     fs.readFileSync(resourcesDir + "display-options-schema.json", {
       encoding: "utf-8"
@@ -65,7 +65,7 @@ module.exports = {
         }
       ],
       sophieModules: [],
-      markup: staticTemplate.render(renderingData)
+      markup: staticTemplate.render(renderingData).html
     };
 
     // add sophie viz color module to stylesheets in response iff necessary

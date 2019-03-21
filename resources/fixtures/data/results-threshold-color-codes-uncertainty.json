@@ -1,0 +1,62 @@
+{
+  "title": "FIXTURE: results - threshold - color codes - uncertainty",
+  "tool": "election_votes",
+  "department": "Visuals",
+  "publication": "nzz",
+  "acronym": "awi.",
+  "parties": [
+    {
+      "color": {
+        "colorCode": "#7b0d05"
+      },
+      "errorMargin": {
+        "bestGuess": 13
+      },
+      "name": "Partei A",
+      "percentage": 16,
+      "previous": 15
+    },
+    {
+      "color": {
+        "colorCode": "#1b53be"
+      },
+      "errorMargin": {
+        "lower": 3,
+        "bestGuess": 5,
+        "upper": 7
+      },
+      "name": "Partei B"
+    },
+    {
+      "color": {
+        "colorCode": "#009ec3"
+      },
+      "errorMargin": {
+        "lower": 80,
+        "bestGuess": 82,
+        "upper": 87
+      },
+      "name": "Tollak Party "
+    },
+    {
+      "color": {
+        "colorCode": "#a00cb3"
+      },
+      "errorMargin": {
+        "bestGuess": 12
+      },
+      "name": "Other Party"
+    }
+  ],
+  "sources": [],
+  "options": {
+    "hideUpdatedDate": false
+  },
+  "subtitle": "Aktuelle Hochrechnung von 13:30",
+  "withErrorMargin": true,
+  "errorMarginLabels": {
+    "bestGuessLabel": "Best guess",
+    "errorMarginLabel": "Fehlermarge"
+  },
+  "threshold": 5
+}

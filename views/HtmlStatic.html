@@ -1,41 +1,73 @@
 <div class="q-election" style="opacity: 0;">
-  <Header title='{{item.title}}' hideTitle='{{hideTitle}}' subtitle='{{item.subtitle}}' />
-  <div class="q-election-parties {{thresholdOffset}}">
-    <Threshold threshold='{{threshold}}' base='{{base}}' />
-    {{#each partyItems as party}}
-      <ElectionItem item='{{party}}' hasTrendSpace='{{hasTrendSpace}}'/>
-    {{/each}}
+  <Header title='{item.title}' hideTitle='{hideTitle}' subtitle='{item.subtitle}' withErrorMargin='{withErrorMargin}' hasErrorMargin='{hasErrorMargin}' errorMarginLabels='{errorMarginLabels}'/>
+  <div class="q-election-parties {thresholdOffsetClasses}">
+    <Threshold threshold='{threshold}' base='{base}' withErrorMargin='{withErrorMargin}'/>
+    {#each partyItems as party}
+      {#if withErrorMargin}
+        <ElectionItemErrorMargin item='{party}' maxErrorMarginValue='{maxErrorMarginValue}'/>
+      {:else}
+        <ElectionItem item='{party}' hasTrendSpace='{hasTrendSpace}'/>
+      {/if}
+    {/each}
   </div>
-  {{#if otherPartiesItem}}
+  {#if otherPartiesItem}
     <div class="q-election-others">
-      <ElectionItem item='{{otherPartiesItem}}' hasTrendSpace='{{hasTrendSpace}}'/>
+      {#if withErrorMargin}
+        <ElectionItemErrorMargin item='{otherPartiesItem}' maxErrorMarginValue='{maxErrorMarginValue}'/>
+      {:else}
+        <ElectionItem item='{otherPartiesItem}' hasTrendSpace='{hasTrendSpace}'/>
+      {/if}
     </div>
-  {{/if}}
-  <Footer sources='{{item.sources}}' notes='{{item.notes}}' updatedDate='{{item.updatedDate}}' hideUpdatedDate='{{hideUpdatedDate}}'/>
+  {/if}
+  <Footer sources='{item.sources}' notes='{item.notes}' updatedDate='{item.updatedDate}' hideUpdatedDate='{hideUpdatedDate}'/>
 </div>
 
 <script>
   import Header from './Header.html';
   import Threshold from './Threshold.html';
   import ElectionItem from './ElectionItem.html';
+  import ElectionItemErrorMargin from './ElectionItemErrorMargin.html';
   import Footer from './Footer.html';
 
   export default {
     computed: {
-      parties: (item) => {
+      parties: ({ item }) => {
         return item.parties;
       },
-      hideTitle: (toolRuntimeConfig) => {
+      hideTitle: ({ toolRuntimeConfig }) => {
         return toolRuntimeConfig.displayOptions && toolRuntimeConfig.displayOptions.hideTitle;
       },
-      hasCurrentResults: (parties) => {
+      hasCurrentResults: ({ parties }) => {
         let currentResults = parties.filter(party => {
           return party.percentage !== undefined;
         });
         return currentResults.length > 0;
       },
-      sortedParties: (parties) => {
+      hasCurrenterrorMargins: ({ parties }) => {
+        let currentResults = parties.filter(party => {
+          return party.errorMargin !== undefined && party.errorMargin.bestGuess !== undefined;
+        });
+        return currentResults.length > 0;
+      },
+      sortedParties: ({ parties, item }) => {
         if (parties !== undefined) {
+          if (item.withErrorMargin) {
+            return parties.sort(function(partyA, partyB) {
+              // if both have no errorMargin set, keep the order
+              if (partyA.errorMargin === undefined && partyB.errorMargin === undefined) {
+                return 0;
+              } // if only A has no errorMargin, sort B before A
+              if (partyA.errorMargin === undefined && partyB.errorMargin !== undefined) {
+                return 1;
+              }
+              // if only A has no bestGuess or B bestGuess is higher than A, sort B before A
+              if ((partyA.errorMargin.bestGuess === undefined && partyB.errorMargin.bestGuess !== undefined) || (partyA.errorMargin.bestGuess < partyB.errorMargin.bestGuess)) {
+                return 1;
+              }
+              // otherwise sort A before B
+              return -1;
+            });
+          }
           return parties.sort(function(partyA, partyB) {
             if ((partyA.percentage === undefined && partyB.percentage === undefined) || (partyA.percentage === partyB.percentage)) {
               return 0;
@@ -49,29 +81,47 @@
           return [];
         }
       },
-      hasTrendSpace: (parties) => {
+      hasTrendSpace: ({ parties }) => {
         const partiesWithPreviousResult = parties.filter(party => {
           return party.previous !== undefined;
         });
         return partiesWithPreviousResult.length > 0;
       },
-      maxResult: (sortedParties) => {
+      maxResult: ({ sortedParties, item }) => {
         let maxResult = 0;
         // if there are already any votes the first party 
         // of sorted list of party has max percentage
         if (sortedParties[0] && sortedParties[0].percentage) {
           maxResult = sortedParties[0].percentage;
         }
+        if (item.threshold > maxResult) {
+          return item.threshold;
+        }
         return maxResult;
       },
-      base: (maxResult, hasCurrentResults) => {
-        let base = maxResult;
-        if (!hasCurrentResults) {
+      maxErrorMarginValue: ({ sortedParties, item }) => {
+        let maxErrorMarginValue = undefined;;
+        // if there are already any errorMargins the first party 
+        // of sorted list of party has max errorMargin upper bound
+        if (sortedParties[0] && sortedParties[0].errorMargin && sortedParties[0].errorMargin.upper) {
+          maxErrorMarginValue = sortedParties[0].errorMargin.upper;
+        }
+        if (item.threshold > maxErrorMarginValue) {
+          return item.threshold;
+        }
+        return maxErrorMarginValue;
+      },
+      errorMarginLabels: ({ item }) => {
+        return item.errorMarginLabels
+      },
+      base: ({ maxResult, maxErrorMarginValue, hasCurrentResults, hasCurrenterrorMargins }) => {
+        let base = Math.max(maxResult || 0, maxErrorMarginValue || 0);
+        if (!hasCurrentResults && !hasCurrenterrorMargins) {
           base = 100;
         }
         return base;
       },
-      enhancedParties: (sortedParties, maxResult) => {
+      enhancedParties: ({ sortedParties, maxResult }) => {
         // return the number of decimal places for each percentage number
         function getDecimalsInput(percentages) {
           return percentages.map(percentageValue => {
@@ -179,22 +229,34 @@
           }
         }
       },
-      partyItems: (enhancedParties) => {
+      partyItems: ({ enhancedParties }) => {
         return enhancedParties.parties
       },
-      otherPartiesItem : (enhancedParties) => {
+      otherPartiesItem : ({ enhancedParties }) => {
         return enhancedParties.others;
       },
-      threshold: (item) => {
+      threshold: ({ item }) => {
         return item.threshold;
       },
-      thresholdOffset: (threshold, base) => {
-        if (threshold !== undefined && threshold > 0 && base > 0) {
-          return 'q-election-threshold-offset';
-        }
-        else '';
+      withErrorMargin: ({ item }) => {
+        return item.withErrorMargin;
       },
-      hideUpdatedDate: (item) => {
+      hasErrorMargin: ({ item }) => {
+        return item.parties.some(party => {
+          return party.errorMargin && party.errorMargin.lower !== undefined && party.errorMargin.upper !== undefined
+        });
+      },
+      thresholdOffsetClasses: ({ threshold, base, withErrorMargin }) => {
+        if (threshold !== undefined && threshold > 0 && base > 0) {
+          let classes = 'q-election-threshold-offset';
+          if (withErrorMargin) {
+            classes += ' q-election-threshold-offset--error-margin';
+          }
+          return classes;
+        }
+        return '';
+      },
+      hideUpdatedDate: ({ item }) => {
         return item.options && item.options.hideUpdatedDate;
       }
     },
@@ -203,6 +265,7 @@
       Header,
       Threshold,
       ElectionItem,
+      ElectionItemErrorMargin,
       Footer
     }
   };
