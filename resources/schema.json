@@ -26,7 +26,7 @@
       }
     },
     "withErrorMargin": {
-      "title": "mit Fehlerbereich",
+      "title": "mit Fehlermarge",
       "type": "boolean"
     },
     "errorMarginLabels": {
@@ -39,7 +39,7 @@
           "default": "Hochrechnung"
         },
         "errorMarginLabel": {
-          "title": "Beschriftung des Fehlerbereichs",
+          "title": "Beschriftung der Fehlermarge",
           "type": "string",
           "default": "Fehlermarge"
         }
