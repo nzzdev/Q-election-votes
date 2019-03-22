@@ -103,6 +103,9 @@
         let maxErrorMarginValue = undefined;;
         // if there are already any errorMargins the first party 
         // of sorted list of party has max errorMargin upper bound
+        if (sortedParties[0] && sortedParties[0].errorMargin && sortedParties[0].errorMargin.bestGuess) {
+          maxErrorMarginValue = sortedParties[0].errorMargin.bestGuess;
+        }
         if (sortedParties[0] && sortedParties[0].errorMargin && sortedParties[0].errorMargin.upper) {
           maxErrorMarginValue = sortedParties[0].errorMargin.upper;
         }

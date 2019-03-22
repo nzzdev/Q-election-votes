@@ -21,9 +21,7 @@
         "colorCode": "#1b53be"
       },
       "errorMargin": {
-        "lower": 3,
-        "bestGuess": 5,
-        "upper": 7
+        "bestGuess": 5
       },
       "name": "Partei B"
     },
@@ -32,9 +30,7 @@
         "colorCode": "#009ec3"
       },
       "errorMargin": {
-        "lower": 80,
-        "bestGuess": 82,
-        "upper": 87
+        "bestGuess": 82
       },
       "name": "Tollak Party "
     },
