@@ -1,12 +1,12 @@
 {#if hideTitle !== true}
-  <h3 class="s-q-item__title">{title}</h3>
+<h3 class="s-q-item__title">{title}</h3>
 {/if}
-<div class="q-election-info s-font-note">
-  {#if subtitle}{subtitle}{/if}
-  {#if withErrorMargin}<ErrorMarginLegend hasErrorMargin='{hasErrorMargin}' errorMarginLabels='{errorMarginLabels}'></ErrorMarginLegend>{/if}
+<div class="s-q-item__subtitle">
+	{#if subtitle}{subtitle}{/if}
+	{#if withErrorMargin}<ErrorMarginLegend hasErrorMargin='{hasErrorMargin}' errorMarginLabels='{errorMarginLabels}'></ErrorMarginLegend>{/if}
 </div>
 <script>
-  import ErrorMarginLegend from './ErrorMarginLegend.html';
+  import ErrorMarginLegend from "./ErrorMarginLegend.html";
   export default {
     components: {
       ErrorMarginLegend
