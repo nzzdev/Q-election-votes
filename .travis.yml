@@ -5,6 +5,9 @@ services:
 language: node_js
 node_js:
   - "11"
+cache:
+  directories:
+    - node_modules
 install:
   - npm install
 before_script:
@@ -18,9 +21,6 @@ after_success:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker
     tag $DOCKER_IMAGE_NAME:$DOCKER_TAG nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker
     push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; fi'
-cache:
-  directories:
-    - node_modules
 notifications:
   slack:
     secure: Ji0Y/FGWpTRs9NqvnKpdccfGRhezGfgseV5BCRZ6bTwYlExEXDQOnXmd4LUdBjkTErFBpUPOEGLIoReJiANe85J48nT+5jj0/8q6iPuetHnB5akmMVJ248lWrG4ND0dV7C9PrBRCtf608mEoRt/khqxDwcvkLb3wy4to7ZeneZTiTj+nZhrGX1qYdDa3tkCHgmW4N6C9SQhumjFHPiYcMlWPQKsyNVNwuKAD/S/B0FNRiG+F2siqQOieZ6l7OWciNPdlPmwQnsu7e06zL+ZjVSGoarxGFPaBv9rOmLWAXtbC+F8aZrYZGhe8heeDrlUuSdTuBO44N2KPZ3vIxE1r8S5eGB4eZWKtzBcI5FDNPF53LhmoRKioPtrMKtIUt5kC4/podzSd2R6BKjhWwzEOU65+lOzelZnd+BNjlhv2v0huyxO6eErHxfuevRLZDp/5Wf81UqEnxBLQEA331ssxa3rSVokUsF8SzcWU0Ou0lqRrGTWVei1StXOqsp9HI9RZlWXrUIZXZAdgQ0s0BoYAloDbOB5ZmYht30U6PMgahhsYWw40O0m4/Z1nHxlhSz1coTvT7la4lFmCkaOpFDUAM+7SiotCXZxurWN3KRx/8ZJ7YHIEt2YF2Xb8gIjAtREQgLB00n+GFZ71vieXt59j+T7KLvOUaN1UPwazMHcxBPo=
