@@ -38,7 +38,7 @@
     "enjoi": "^5.0.2",
     "joi": "^14.3.1",
     "lodash": "^4.17.11",
-    "svelte": "2.16.1"
+    "svelte": "^3.6.3"
   },
   "devDependencies": {
     "@hapi/lab": "^18.1.2",
