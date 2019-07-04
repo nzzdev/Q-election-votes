@@ -93,6 +93,8 @@ Each graphic has the following three sections:
 
 The tool structure follows the general structure of each Q tool. Further information can be found in [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html).
 
+Q Election Votes uses [svelte3](https://svelte.dev) to render the markup on server-side.
+
 There is only one endpoint to get `renderingInfo` in this tool:
 
 ### `/rendering-info/html-static`
