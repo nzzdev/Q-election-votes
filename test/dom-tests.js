@@ -1,6 +1,6 @@
-const Lab = require("lab");
-const Code = require("code");
-const Hapi = require("hapi");
+const Lab = require("@hapi/lab");
+const Code = require("@hapi/code");
+const Hapi = require("@hapi/hapi");
 const lab = (exports.lab = Lab.script());
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -11,8 +11,6 @@ const after = lab.after;
 const it = lab.it;
 
 const routes = require("../routes/routes.js");
-require("svelte/ssr/register");
-const staticTpl = require("../views/HtmlStatic.html");
 
 let server;
 
@@ -49,50 +47,58 @@ function elementCount(markup, selector) {
   });
 }
 
-lab.experiment("Q election votes dom tests", function() {
-  it("should pass if threshold marker is found", function() {
-    const renderingData = {
-      item: require("../resources/fixtures/data/results-threshold-color-codes-overwrite.json"),
-      toolRuntimeConfig: {
-        displayOptions: {}
+lab.experiment("Q election votes dom tests", () => {
+  it("should pass if threshold marker is found", async () => {
+    const response = await server.inject({
+      url: "/rendering-info/html-static?_id=someid",
+      method: "POST",
+      payload: {
+        item: require("../resources/fixtures/data/results-threshold-color-codes-overwrite.json"),
+        toolRuntimeConfig: {}
       }
-    };
-    var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
+    });
 
-    return elementCount(markup, "div.q-election-threshold").then(value => {
+    return elementCount(
+      response.result.markup,
+      "div.q-election-threshold"
+    ).then(value => {
       expect(value).to.be.equal(1);
     });
   });
-
-  it("should pass if for each data entry a DOM element is created", function() {
-    const renderingData = {
-      item: require("../resources/fixtures/data/results-threshold-color-codes-overwrite.json"),
-      toolRuntimeConfig: {
-        displayOptions: {}
+  it("should pass if for each data entry a DOM element is created", async () => {
+    const response = await server.inject({
+      url: "/rendering-info/html-static?_id=someid",
+      method: "POST",
+      payload: {
+        item: require("../resources/fixtures/data/results-threshold-color-codes-overwrite.json"),
+        toolRuntimeConfig: {}
       }
-    };
-    var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
-
-    return elementCount(markup, "div.q-election-item").then(value => {
-      expect(value).to.be.equal(6);
     });
-  });
-});
 
-lab.experiment("error margin data", function() {
-  it("should show error margin layout if hasErrorMargin is set to true", function() {
-    const renderingData = {
-      item: require("../resources/fixtures/data/results-partly-previous-color-class-uncertainty.json"),
-      toolRuntimeConfig: {
-        displayOptions: {}
-      }
-    };
-    var markup = staticTpl.render(JSON.parse(JSON.stringify(renderingData)));
-
-    return elementCount(markup, "div.q-election-item-error-margin-bar").then(
+    return elementCount(response.result.markup, "div.q-election-item").then(
       value => {
         expect(value).to.be.equal(6);
       }
     );
+  });
+});
+
+lab.experiment("error margin data", () => {
+  it("should show error margin layout if hasErrorMargin is set to true", async () => {
+    const response = await server.inject({
+      url: "/rendering-info/html-static?_id=someid",
+      method: "POST",
+      payload: {
+        item: require("../resources/fixtures/data/results-partly-previous-color-class-uncertainty.json"),
+        toolRuntimeConfig: {}
+      }
+    });
+
+    return elementCount(
+      response.result.markup,
+      "div.q-election-item-error-margin-bar"
+    ).then(value => {
+      expect(value).to.be.equal(6);
+    });
   });
 });

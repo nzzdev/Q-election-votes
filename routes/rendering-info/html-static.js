@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("joi");
+const Joi = require("@hapi/joi");
 const _ = require("lodash");
 const resourcesDir = __dirname + "/../../resources/";
 const viewsDir = __dirname + "/../../views/";
@@ -22,8 +22,9 @@ const displayOptionsSchema = Enjoi.schema(
   )
 );
 
-require("svelte/ssr/register");
-const staticTemplate = require(viewsDir + "HtmlStatic.html");
+// setup svelte
+require("svelte/register");
+const staticTemplate = require(viewsDir + "HtmlStatic.svelte").default;
 
 module.exports = {
   method: "POST",
@@ -47,7 +48,8 @@ module.exports = {
     // rendering data will be used by template to create the markup
     // it contains the item itself and additional options impacting the markup
     let renderingData = {
-      item: request.payload.item
+      item: request.payload.item,
+      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
     };
 
     if (request.query.updatedDate) {
