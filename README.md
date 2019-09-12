@@ -1,6 +1,6 @@
 # Q Election Votes [![Build Status](https://travis-ci.com/nzzdev/Q-election-votes.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-election-votes) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-election-votes.svg)](https://greenkeeper.io/)
 
-**Maintainer**: [benib](https://github.com/benib)
+**Maintainer**: [philipkueng](https://github.com/philipkueng)
 
 Q election votes is one tool of the Q toolbox to display results of parliamentary elections.
 Test it in the [demo](https://editor.q.tools)
