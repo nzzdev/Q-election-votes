@@ -5,7 +5,7 @@
 
 <div class="q-election-item">
   <div class="q-election-item-text">
-    <div class="s-font-text-s q-election-item-text-party">{item.name}</div>
+    <div class="s-font-note q-election-item-text-party">{item.name}</div>
     {#if item.percentage}
       <div class="s-font-note q-election-item-text-current">
          {item.percentage}%
