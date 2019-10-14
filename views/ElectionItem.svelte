@@ -1,4 +1,16 @@
 <script>
+  import * as d3format from 'd3-format';
+
+  const locale = d3format.formatDefaultLocale({
+    decimal: ",",
+    thousands: " ", // this is a viertelgeviert U+2005
+    type: " ",
+    minus: "–" // U+2013
+  });
+
+  const formatSigned = d3format.format('+~r');
+  const format = d3format.format('~r');
+
   export let item;
   export let hasTrendSpace;
 </script>
@@ -8,13 +20,13 @@
     <div class="s-font-note q-election-item-text-party">{item.name}</div>
     {#if item.percentage}
       <div class="s-font-note q-election-item-text-current">
-         {item.percentage}%
+         {format(item.percentage)}%
       </div>
       {#if hasTrendSpace}
         <div
           class="s-font-note q-election-item-text-previous"
           style="width: {item.trendWidth};">
-          {#if item.trend}{#if item.trend > 0}+{/if}{#if item.trend != 0}{item.trend}{/if}{/if}
+          {#if item.trend}{#if item.trend != 0}{formatSigned(item.trend)}{/if}{/if}
         </div>
         <div class="q-election-item-text-trend-container">
           {#if item.trend}
