@@ -94,7 +94,7 @@
 
 <div class="q-election-item">
   <div class="q-election-item-text">
-    <div class="s-font-text-s q-election-item-text-party">{item.name}</div>
+    <div class="s-font-note q-election-item-text-party">{item.name}</div>
     {#if hasErrorMargin}
       <div class="s-font-note q-election-item-text-current">
          {format(item.errorMargin.lower)}–{format(item.errorMargin.upper)}%
