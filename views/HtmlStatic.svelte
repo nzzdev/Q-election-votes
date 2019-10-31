@@ -102,11 +102,11 @@
 
   function getMaxResult(sortedParties, item) {
     let maxResult = 0;
-    // if there are already any votes the first party
-    // of sorted list of party has max percentage
-    if (sortedParties[0] && sortedParties[0].percentage) {
-      maxResult = sortedParties[0].percentage;
-    }
+    // get maxResult of all parties, others included
+    maxResult = Math.max(
+      ...sortedParties.map(parties => parties.percentage),
+      0
+    );
     if (item.threshold > maxResult) {
       return item.threshold;
     }

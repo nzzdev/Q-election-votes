@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-election-votes",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "Q Election Votes",
   "keywords": [
     "storytelling",
@@ -31,25 +31,25 @@
     "url": "git+https://github.com/nzzdev/Q-election-votes.git"
   },
   "dependencies": {
-    "@hapi/boom": "^7.4.2",
-    "@hapi/hapi": "^18.3.1",
-    "@hapi/inert": "^5.2.1",
-    "@hapi/joi": "^15.1.0",
+    "@hapi/boom": "^7.4.11",
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/joi": "^15.1.1",
     "d3-format": "^1.4.1",
     "enjoi": "^5.0.2",
     "joi": "^14.3.1",
-    "lodash": "^4.17.14",
-    "svelte": "^3.6.7"
+    "lodash": "^4.17.15",
+    "svelte": "^3.12.1"
   },
   "devDependencies": {
     "@hapi/code": "^5.3.1",
     "@hapi/lab": "^18.1.2",
-    "autoprefixer": "^9.6.1",
+    "autoprefixer": "^9.6.5",
     "cssnano": "^4.1.10",
-    "glob": "^7.1.4",
+    "glob": "^7.1.5",
     "jsdom": "^14.1.0",
-    "postcss": "^7.0.17",
+    "postcss": "^7.0.18",
     "postcss-import": "^12.0.1",
-    "sass": "^1.22.4"
+    "sass": "^1.23.1"
   }
 }
