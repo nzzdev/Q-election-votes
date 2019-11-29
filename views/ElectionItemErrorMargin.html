@@ -1,0 +1,59 @@
+<div class="q-election-item">
+  <div class="q-election-item-text" style="color: white;">
+    <div class="s-font-text-s q-election-item-text-party">{item.name}</div>
+    {#if hasErrorMargin}
+      <div class="s-font-note q-election-item-text-current">{item.errorMargin.lower}–{item.errorMargin.upper}%</div>
+    {:elseif item.errorMargin && item.errorMargin.bestGuess}
+      <div class="s-font-note q-election-item-text-current">{item.errorMargin.bestGuess}%</div>
+    {/if}
+  </div>
+  <div class="q-election-item-error-margin-bar">
+    <div class="q-election-item-bar-color q-election-item-bar-color--fullwidth q-election-item-bar-color--slim s-color-gray-3"></div>
+    <div class="q-election-item-bar-color q-election-item-bar-color--slim {item.colorClass}" style="width: {coloredSlimBarWidthPercentage}%; {item.colorStyle}"></div>
+    {#if hasErrorMargin}
+      <div class="q-election-item-bar-color q-election-item-bar-color--error-margin {item.colorClass}" style="left: {errorMarginLeftPercentage}%; width: {barWidthPercentage}%; {item.colorStyle}"></div>
+    {/if}
+    <div class="q-election-item-dot-color {item.colorClass}" style="left: {dotPositionLeftPercentage}%; {item.colorStyle}"></div>
+  </div>
+</div>
+
+<script>
+  export default {
+    computed: {
+      barWidthPercentage: ({ item, maxErrorMarginValue }) => {
+        if (maxErrorMarginValue === undefined || !item.errorMargin || item.errorMargin.lower === undefined || !item.errorMargin.upper === undefined) {
+          return 0;
+        }
+        return (item.errorMargin.upper / maxErrorMarginValue * 100) - (item.errorMargin.lower / maxErrorMarginValue * 100);
+      },
+      coloredSlimBarWidthPercentage: ({ item, maxErrorMarginValue, hasErrorMargin}) => {
+        if (hasErrorMargin) {
+          if (maxErrorMarginValue === undefined || !item.errorMargin || item.errorMargin.lower === undefined) {
+            return 0;
+          }
+          return (item.errorMargin.lower / maxErrorMarginValue * 100);
+        } else {
+          if (maxErrorMarginValue === undefined || !item.errorMargin || item.errorMargin.bestGuess === undefined) {
+            return 0;
+          }
+          return (item.errorMargin.bestGuess / maxErrorMarginValue * 100);
+        }
+      },
+      errorMarginLeftPercentage: ({ item, maxErrorMarginValue }) => {
+        if (maxErrorMarginValue === undefined || !item.errorMargin || item.errorMargin.lower === undefined) {
+          return 0;
+        }
+        return (item.errorMargin.lower / maxErrorMarginValue * 100);
+      },
+      dotPositionLeftPercentage: ({ item, maxErrorMarginValue }) => {
+        if (maxErrorMarginValue === undefined || !item.errorMargin || item.errorMargin.bestGuess === undefined) {
+          return 0;
+        }
+        return (item.errorMargin.bestGuess / maxErrorMarginValue * 100);
+      },
+      hasErrorMargin: ({ item }) => {
+        return item.errorMargin && item.errorMargin.lower !== undefined && item.errorMargin.upper !== undefined;
+      }
+    }
+  }
+</script>

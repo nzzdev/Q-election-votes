@@ -1,5 +1,5 @@
 <script>
-  import * as d3format from 'd3-format';
+  import * as d3format from "d3-format";
 
   const locale = d3format.formatDefaultLocale({
     decimal: ",",
@@ -8,8 +8,8 @@
     minus: "–" // U+2013
   });
 
-  const formatSigned = d3format.format('+~r');
-  const format = d3format.format('~r');
+  const formatSigned = d3format.format("+~r");
+  const format = d3format.format("~r");
 
   export let item;
   export let maxErrorMarginValue;
@@ -93,34 +93,38 @@
 </script>
 
 <div class="q-election-item">
-  <div class="q-election-item-text">
+  <div class="q-election-item-text" style="color: white;">
     <div class="s-font-note q-election-item-text-party">{item.name}</div>
     {#if hasErrorMargin}
-      <div class="s-font-note q-election-item-text-current">
-         {format(item.errorMargin.lower)}–{format(item.errorMargin.upper)}%
-      </div>
+    <div class="s-font-note q-election-item-text-current">
+      {format(item.errorMargin.lower)}–{format(item.errorMargin.upper)}%
+    </div>
     {:else if item.errorMargin && item.errorMargin.bestGuess}
-      <div class="s-font-note q-election-item-text-current">
-         {format(item.errorMargin.bestGuess)}%
-      </div>
+    <div class="s-font-note q-election-item-text-current">
+      {format(item.errorMargin.bestGuess)}%
+    </div>
     {/if}
   </div>
   <div class="q-election-item-error-margin-bar">
     <div
       class="q-election-item-bar-color q-election-item-bar-color--fullwidth
-      q-election-item-bar-color--slim s-color-gray-3" />
+      q-election-item-bar-color--slim s-color-gray-3"
+    />
     <div
       class="q-election-item-bar-color q-election-item-bar-color--slim {item.colorClass}"
-      style="width: {coloredSlimBarWidthPercentage}%; {item.colorStyle}" />
+      style="width: {coloredSlimBarWidthPercentage}%; {item.colorStyle}"
+    />
     {#if hasErrorMargin}
-      <div
-        class="q-election-item-bar-color q-election-item-bar-color--error-margin
+    <div
+      class="q-election-item-bar-color q-election-item-bar-color--error-margin
         {item.colorClass}"
-        style="left: {errorMarginLeftPercentage}%; width: {barWidthPercentage}%;
-        {item.colorStyle}" />
+      style="left: {errorMarginLeftPercentage}%; width: {barWidthPercentage}%;
+        {item.colorStyle}"
+    />
     {/if}
     <div
       class="q-election-item-dot-color {item.colorClass}"
-      style="left: {dotPositionLeftPercentage}%; {item.colorStyle}" />
+      style="left: {dotPositionLeftPercentage}%; {item.colorStyle}"
+    />
   </div>
 </div>
