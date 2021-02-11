@@ -242,7 +242,7 @@
           party.trend = party.trend.toFixed(trendNumberDecimals);
         }
       }
-      party.trendWidth = 24 + trendNumberDecimals * 8 + "px";
+      party.trendWidth = 32 + trendNumberDecimals * 8 + "px"; // 32px as base-width
     });
 
     // process the group of other parties differently - not part of the threshold
