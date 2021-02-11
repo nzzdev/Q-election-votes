@@ -1,5 +1,5 @@
 <script>
-  import * as d3format from 'd3-format';
+  import * as d3format from "d3-format";
 
   const locale = d3format.formatDefaultLocale({
     decimal: ",",
@@ -8,8 +8,8 @@
     minus: "–" // U+2013
   });
 
-  const formatSigned = d3format.format('+~r');
-  const format = d3format.format('~r');
+  const formatSigned = d3format.format("+~r");
+  const format = d3format.format("~r");
 
   export let item;
   export let maxErrorMarginValue;
@@ -96,12 +96,14 @@
   <div class="q-election-item-text">
     <div class="s-font-note q-election-item-text-party">{item.name}</div>
     {#if hasErrorMargin}
-      <div class="s-font-note q-election-item-text-current">
-         {format(item.errorMargin.lower)}–{format(item.errorMargin.upper)}%
+      <div
+        class="s-font-note s-font-note--tabularnums q-election-item-text-current">
+        {format(item.errorMargin.lower)}–{format(item.errorMargin.upper)}%
       </div>
     {:else if item.errorMargin && item.errorMargin.bestGuess}
-      <div class="s-font-note q-election-item-text-current">
-         {format(item.errorMargin.bestGuess)}%
+      <div
+        class="s-font-note s-font-note--tabularnums q-election-item-text-current">
+        {format(item.errorMargin.bestGuess)}%
       </div>
     {/if}
   </div>
