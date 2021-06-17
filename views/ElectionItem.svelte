@@ -1,12 +1,5 @@
 <script>
-  import * as d3format from "d3-format";
-
-  const locale = d3format.formatDefaultLocale({
-    decimal: ",",
-    thousands: " ", // this is a viertelgeviert U+2005
-    type: " ",
-    minus: "–" // U+2013
-  });
+    import * as d3format from "d3-format";
 
   const formatSigned = d3format.format("+~r");
   const format = d3format.format("~r");
