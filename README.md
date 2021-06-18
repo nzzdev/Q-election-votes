@@ -1,4 +1,4 @@
-# Q Election Votes [![Build Status](https://travis-ci.com/nzzdev/Q-election-votes.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-election-votes) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-election-votes.svg)](https://greenkeeper.io/)
+# Q Election Votes [![Build Status](https://travis-ci.com/nzzdev/Q-election-votes.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-election-votes)
 
 **Maintainer**: [philipkueng](https://github.com/philipkueng)
 
