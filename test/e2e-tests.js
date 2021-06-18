@@ -114,7 +114,7 @@ lab.experiment("fixture data endpoint", () => {
 });
 
 // all the fixtures render
-lab.experiment("all fixtures render", async () => {
+lab.experiment("all fixtures render", () => {
   const fixtureFiles = glob.sync(
     `${__dirname}/../resources/fixtures/data/*.json`
   );
@@ -135,7 +135,7 @@ lab.experiment("all fixtures render", async () => {
   }
 });
 
-lab.experiment("rendering-info", async () => {
+lab.experiment("rendering-info", () => {
   it("html-static: returns error 400 if invalid item is given", async () => {
     const request = {
       method: "POST",

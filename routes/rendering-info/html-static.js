@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Enjoi = require("enjoi");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const _ = require("lodash");
 const resourcesDir = __dirname + "/../../resources/";
 const viewsDir = __dirname + "/../../views/";
@@ -34,12 +34,12 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
+      payload: Joi.object({
         item: schema,
-        toolRuntimeConfig: {
+        toolRuntimeConfig: Joi.object({
           displayOptions: displayOptionsSchema
-        }
-      }
+        })
+      })
     },
     cache: false, // do not send cache control header to let it be added by Q Server
     cors: true

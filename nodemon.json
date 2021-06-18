@@ -1,0 +1,17 @@
+{
+  "ignore": [
+    ".git",
+    "node_modules",
+    "scripts/*",
+    "styles/*"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "npm run build && node index.js"
+  },
+  "delay": "3.2",
+  "ext": "html, scss, js, ts, svelte",
+  "watch": [
+    "."
+  ]
+}
