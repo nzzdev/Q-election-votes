@@ -42,7 +42,6 @@ module.exports = {
       })
     },
     cache: false, // do not send cache control header to let it be added by Q Server
-    cors: true
   },
   handler: function(request, h) {
     // rendering data will be used by template to create the markup
